@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace De_Tutjes.Models
 {
-    class Sleep
+    public class Sleep
     {
         public int SleepID { get; set; }
         public string SleepingPosition { get; set; }

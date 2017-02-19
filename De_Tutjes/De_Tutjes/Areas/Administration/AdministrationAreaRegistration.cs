@@ -16,8 +16,8 @@ namespace De_Tutjes.Areas.Administration
         {   
             context.MapRoute(
                 "Administration_Child_CreateStep",
-                "Administration/Children/Create/{step}/{id}",
-                new { step = UrlParameter.Optional, id = UrlParameter.Optional }
+                "Administration/{controller}/{action}/{step}/{id}",
+                new { action = "Create", step = UrlParameter.Optional, id = UrlParameter.Optional }
             );
 
             context.MapRoute(

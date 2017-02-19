@@ -8,8 +8,15 @@ namespace De_Tutjes.Models
 {
     public class DeTutjesContext : DbContext
     {
+        // Person info
         public DbSet<Person> Persons { get; set; }
+        public DbSet<ContactDetail> ContactDetails { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
-        public System.Data.Entity.DbSet<De_Tutjes.Models.Toddler> Toddlers { get; set; }
+        // Toddlers info
+        public DbSet<RelationLink> RelationLinks { get; set; }
+        public DbSet<Food> Eating { get; set; }
+        public DbSet<Sleep> Sleeping { get; set; }
+        public DbSet<Medical> Medical { get; set; }
     }
 }

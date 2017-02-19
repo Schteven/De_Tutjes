@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace De_Tutjes.Models
 {
-    class Medical
+   public class Medical
     {
         public int MedicalID { get; set; }
-        public int DoctorID { get; set; }
+        public Doctor Doctor { get; set; }
         public string HealthServiceNumber { get; set; }
         public bool Medication { get; set; }
         public string MedicationName { get; set; }

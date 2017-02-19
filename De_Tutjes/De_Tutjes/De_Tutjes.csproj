@@ -211,13 +211,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702141925240_InitialCreate.cs" />
-    <Compile Include="Migrations\201702141925240_InitialCreate.Designer.cs">
-      <DependentUpon>201702141925240_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201702191851393_initialCreate.cs" />
+    <Compile Include="Migrations\201702191851393_initialCreate.Designer.cs">
+      <DependentUpon>201702191851393_initialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\ContactDetail.cs" />
     <Compile Include="Models\DeTutjesContext.cs" />
     <Compile Include="Models\DeTutjesInitializer.cs" />
     <Compile Include="Models\Doctor.cs" />
@@ -345,8 +346,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702141925240_InitialCreate.resx">
-      <DependentUpon>201702141925240_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702191851393_initialCreate.resx">
+      <DependentUpon>201702191851393_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

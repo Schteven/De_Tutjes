@@ -10,6 +10,7 @@ namespace De_Tutjes.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(De_Tutjes.Models.DeTutjesContext context)

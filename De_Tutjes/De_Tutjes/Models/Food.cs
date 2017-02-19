@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace De_Tutjes.Models
 {
-    class Food
+    public class Food
     {
         public int FoodID { get; set; }
         public string SpecialDiet { get; set; }

@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Create";
+    int? Step = ViewBag.FormStep;
 }
 
 <div class="row">
@@ -26,16 +27,15 @@
 <div class="row">
     <div class="col-lg-3 col-md-3">
         <div role="group" class="btn-group-vertical btn-group-lg center-block">
-            <button class="btn btn-default active" type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 1<br><h6>Kind en ouders</h6></button>
-            <button class="btn btn-default" type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 2<br><h6>Opvangdagen</h6></button>
-            <button class="btn btn-default" type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 3<br><h6>Medische gegevens</h6></button>
-            <button class="btn btn-default" type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 4<br><h6>Voeding en slapen</h6></button>
-            <button class="btn btn-default" type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 5<br><h6>Opmerkingen dagverloop</h6></button>
+            <button class="btn btn-default @((Step == 1) || (Step == 0) ? "active" : "") " type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 1<br><h6>Kind en ouders</h6></button>
+            <button class="btn btn-default @(Step == 2 ? "active" : "") " type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 2<br><h6>Opvangdagen</h6></button>
+            <button class="btn btn-default @(Step == 3 ? "active" : "") " type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 3<br><h6>Medische gegevens</h6></button>
+            <button class="btn btn-default @(Step == 4 ? "active" : "") " type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 4<br><h6>Voeding en slapen</h6></button>
+            <button class="btn btn-default @(Step == 5 ? "active" : "") " type="button"><span class="fa fa-square-o fa-1x pull-left"></span> Stap 5<br><h6>Opmerkingen dagverloop</h6></button>
         </div>
     </div>
     <div class="col-lg-9 col-md-12">
         @{
-            int Step = ViewBag.FormStep;
             switch (Step) {
                 default:
                 case 1:
