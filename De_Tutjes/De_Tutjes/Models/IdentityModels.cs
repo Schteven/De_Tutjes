@@ -3,6 +3,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Collections.Generic;
 
 namespace De_Tutjes.Models
 {
@@ -16,18 +19,44 @@ namespace De_Tutjes.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<Person> Persons { get; set; }
+
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class DeTutjesContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DeTutjesContext", throwIfV1Schema: false)
+        public DeTutjesContext() : base("DeTutjesContext")
         {
+            Database.SetInitializer<DeTutjesContext>(null);// Remove default initializer
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
-        public static ApplicationDbContext Create()
+        public static DeTutjesContext Create()
         {
-            return new ApplicationDbContext();
+            return new DeTutjesContext();
+        }
+
+        // Person info
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<ContactDetail> ContactDetails { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+
+        // Toddlers info
+        public DbSet<RelationLink> RelationLinks { get; set; }
+        public DbSet<Food> Eating { get; set; }
+        public DbSet<Sleep> Sleeping { get; set; }
+        public DbSet<Medical> Medical { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+
+            base.OnModelCreating(builder);
+
+            builder.Conventions.Remove<PluralizingTableNameConvention>();
+            builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
         }
     }
 }

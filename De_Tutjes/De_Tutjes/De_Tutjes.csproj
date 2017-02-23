@@ -197,7 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Areas\Administration\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Administration\Controllers\ChildrenController.cs" />
     <Compile Include="Areas\Administration\Controllers\DiaryController.cs" />
@@ -211,15 +211,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702191851393_initialCreate.cs" />
-    <Compile Include="Migrations\201702191851393_initialCreate.Designer.cs">
-      <DependentUpon>201702191851393_initialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ContactDetail.cs" />
-    <Compile Include="Models\DeTutjesContext.cs" />
     <Compile Include="Models\DeTutjesInitializer.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -265,7 +260,7 @@
     <Content Include="Areas\Administration\Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Areas\Administration\Views\Children\Overview.cshtml" />
     <Content Include="Areas\Parents\Views\web.config" />
-    <Content Include="Areas\Administration\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Administration\Views\User\Login.cshtml" />
     <Content Include="Areas\Administration\Views\Calendar\Overview.cshtml" />
     <Content Include="Areas\Administration\Views\Diary\Overview.cshtml" />
     <Content Include="Areas\Administration\Views\Invoice\Overview.cshtml" />
@@ -344,11 +339,6 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702191851393_initialCreate.resx">
-      <DependentUpon>201702191851393_initialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

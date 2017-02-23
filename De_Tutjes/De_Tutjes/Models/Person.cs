@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace De_Tutjes.Models
         public DateTime BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
+
+        public virtual ICollection<ApplicationUser> UserAccounts { get; set; }
 
         public Person()
         {

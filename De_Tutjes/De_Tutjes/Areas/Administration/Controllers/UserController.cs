@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
-    public class AccountController : Controller
+    public class UserController : Controller
     {
         // GET: Administration/Account
         public ActionResult Login()
