@@ -13,6 +13,8 @@ namespace De_Tutjes.Models
         public int ParentID { get; set; }
         public string Relation { get; set; } // Mother or father
 
+        public virtual Person Person { get; set; }
+
         public Parent()
         {
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace De_Tutjes.Models
 {
     [Table("Persons")]
-    public abstract class Person
+    public class Person
     {
         public int PersonId { get; set; }
         public string FirstName { get; set; }
@@ -19,7 +19,9 @@ namespace De_Tutjes.Models
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
 
-        public virtual ICollection<ApplicationUser> UserAccounts { get; set; }
+        public virtual ApplicationUser UserAccount { get; set; }
+        public virtual ICollection<RelationLink> RelationLinks { get; set; }
+
 
         public Person()
         {

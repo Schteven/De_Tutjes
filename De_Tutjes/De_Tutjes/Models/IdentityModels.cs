@@ -20,7 +20,7 @@ namespace De_Tutjes.Models
             return userIdentity;
         }
 
-        public virtual ICollection<Person> Persons { get; set; }
+        public virtual Person Person { get; set; }
 
     }
 
@@ -30,7 +30,7 @@ namespace De_Tutjes.Models
         {
             Database.SetInitializer<DeTutjesContext>(null);// Remove default initializer
             Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
         }
 
         public static DeTutjesContext Create()
@@ -40,6 +40,11 @@ namespace De_Tutjes.Models
 
         // Person info
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Toddler> Toddlers { get; set; }
+        public DbSet<Parent> Parents { get; set; }
+        public DbSet<Pickup> Pickups { get; set;  }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
@@ -47,16 +52,40 @@ namespace De_Tutjes.Models
         public DbSet<RelationLink> RelationLinks { get; set; }
         public DbSet<Food> Eating { get; set; }
         public DbSet<Sleep> Sleeping { get; set; }
-        public DbSet<Medical> Medical { get; set; }
+        public DbSet<Medical> MedicalInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
 
-            base.OnModelCreating(builder);
-
             builder.Conventions.Remove<PluralizingTableNameConvention>();
             builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
+            base.OnModelCreating(builder);
+
+            //  one-to-zero
+            builder.Entity<Person>()
+               .HasOptional(s => s.UserAccount)
+               .WithRequired(ad => ad.Person);
+
+            /*  one-to-many 
+            modelBuilder.Entity<Student>()
+                        .HasOptional<Standard>(s => s.Standard)
+                        .WithMany(s => s.Students)
+                        .HasForeignKey(s => s.StdId);
+
+                many-to-many
+            modelBuilder.Entity<Student>()
+                .HasMany<Course>(s => s.Courses)
+                .WithMany(c => c.Students)
+                .Map(cs =>
+                        {
+                            cs.MapLeftKey("StudentRefId");
+                            cs.MapRightKey("CourseRefId");
+                            cs.ToTable("StudentCourse");
+                        });
+
+            */
         }
     }
 }
+ 

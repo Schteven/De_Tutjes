@@ -7,10 +7,12 @@ using System.Web;
 namespace De_Tutjes.Models
 {
     [Table("Doctors")]
-    public class Doctor : Person
+    public class Doctor
     {
         public int DoctorId { get; set; }
         public int Title { get; set; }
+
+        public virtual Person Person { get; set; }
 
         public virtual ICollection<Toddler> Toddlers { get; set; }
     }
