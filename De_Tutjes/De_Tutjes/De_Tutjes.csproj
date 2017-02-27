@@ -211,9 +211,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702231808078_AddTables.cs" />
-    <Compile Include="Migrations\201702231808078_AddTables.Designer.cs">
-      <DependentUpon>201702231808078_AddTables.cs</DependentUpon>
+    <Compile Include="Migrations\201702261649562_NewInitial.cs" />
+    <Compile Include="Migrations\201702261649562_NewInitial.Designer.cs">
+      <DependentUpon>201702261649562_NewInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -345,8 +345,11 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702231808078_AddTables.resx">
-      <DependentUpon>201702231808078_AddTables.cs</DependentUpon>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702261649562_NewInitial.resx">
+      <DependentUpon>201702261649562_NewInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

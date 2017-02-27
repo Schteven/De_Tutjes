@@ -7,13 +7,13 @@ namespace De_Tutjes.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddTables : IMigrationMetadata
+    public sealed partial class NewInitial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NewInitial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702231808078_AddTables"; }
+            get { return "201702261649562_NewInitial"; }
         }
         
         string IMigrationMetadata.Source

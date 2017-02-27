@@ -25,5 +25,16 @@ namespace De_Tutjes.Areas.Administration.Controllers
             ViewBag.FormStep = step;
             return View();
         }
+
+        [Route("{step}")]
+        //POST: Administration/Children/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(int? step, )
+        {
+
+            return View();
+        }
+        
     }
 }

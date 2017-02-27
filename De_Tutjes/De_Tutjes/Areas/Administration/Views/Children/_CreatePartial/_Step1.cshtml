@@ -4,39 +4,36 @@
             <h3 class="panel-title"><i class="fa fa-square-o"></i> Kind </h3>
         </div>
         <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label>Voornaam </label>
-                            </td>
-                            <td>
-                                <input id="Text1" type="text" />
-                            </td>
-                            <td>
-                                <label>Geslacht </label>
-                            </td>
-                            <td>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Achternaam </label>
-                            </td>
-                            <td>
-                                <input id="Text1" type="text" />
-                            </td>
-                            <td>
-                                <label>Geboortedatum </label>
-                            </td>
-                            <td>
-                                <input class="form-control" type="date" id="datepicker" name="datepicker"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Voornaam </label>
+                    <input type="text" name="childFirstname" class="form-control input-sm" />
+                </div>
+                <div class="col-md-6">
+                    <label>Geslacht </label>
+                </div>
+                <div class="col-md-6">
+                    <span>
+                        <label class="radio-inline">
+                            <input type="radio" />meisje
+                        </label>
+                    </span>
+                    <span>
+                        <label class="radio-inline">
+                            <input type="radio" />jongen
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Achternaam </label>
+                    <input type="text" name="childLastname" class="form-control input-sm" />
+                </div>
+                <div class="col-md-6">
+                    <label>Geboortedatum </label>
+                    <input type="date" name="childBirthdate" class="form-control input-sm" />
+                </div>
             </div>
         </div>
     </div>
@@ -45,44 +42,122 @@
             <h3 class="panel-title"><i class="fa fa-square-o"></i> Ouders </h3>
         </div>
         <div class="panel-body">
-            <h3>Vader </h3>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Personalia </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Voornaam </td>
-                            <td> </td>
-                        </tr>
-                        <tr>
-                            <td>Achternaam </td>
-                            <td>Geboortedatum </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right btn-group-xs">
+                        <a class="btn btn-default" href="#">
+                            <i class="fa fa-mars-double fa-2x"></i>
+                        </a>
+                        <a class="btn btn-primary" href="#">
+                            <i class="fa fa-venus-mars fa-2x"></i>
+                        </a>
+                        <a class="btn btn-default" href="#">
+                            <i class="fa fa-venus-double fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="page-header">
+                        <h4 class="text-left">Moeder </h4>
+                    </div>
+                    <label for="frontname">Voornaam </label>
+                    <input type="text" name="firstParentFrontname" class="form-control input-sm" />
+                    <label>Achternaam </label>
+                    <input type="text" name="firstParentLastname" class="form-control input-sm" />
+                    <label>Geboortedatum </label>
+                    <input type="date" name="firstParentBirthdate"class="form-control input-sm" />
+                </div>
+                <div class="col-md-6">
+                    <div class="page-header">
+                        <h4>Vader </h4>
+                    </div>
+                    <label for="frontname">Voornaam </label>
+                    <input type="text" name="secondParentFrontname" class="form-control input-sm" />
+                    <label>Achternaam </label>
+                    <input type="text" name="secondParentLastname" class="form-control input-sm" />
+                    <label>Geboortedatum </label>
+                    <input type="date" name="secondParentBirthdate" class="form-control input-sm" />
+                </div>
+                <div class="col-md-12">
+                    <hr />
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Contactgegevens </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Vaste telefoon</td>
-                            <td>Mobiele telefoon</td>
-                        </tr>
-                        <tr>
-                            <td>E-mailadres </td>
-                            <td> </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Adresgegevens </h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" checked id="LivingTogether"/>Samenwonend
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Straat</label>
+                    <input type="text" name="firstParentStreet" class="form-control input-sm" />
+                    <label>Nr </label>
+                    <input type="text" name="firstParentHouseNumber" class="form-control" />
+                    <label>Bus </label>
+                    <input type="text" name="firstParentHouseBus" class="form-control" />
+                    <label>Postcode </label>
+                    <input type="text" name="firstParentPostalCode" class="form-control" />
+                    <label>Stad </label>
+                    <input type="text" name="firstParentCity" class="form-control" />
+                </div>
+                <div class="col-md-6" id="LivingTogetherDiv">
+                    <label>Straat</label>
+                    <input type="text" name="secondParentStreet" class="form-control input-sm" />
+                    <label>Nr </label>
+                    <input type="text" name="secondParentHouseNumber" class="form-control" />
+                    <label>Bus </label>
+                    <input type="text" name="secondParentHouseBus" class="form-control" />
+                    <label>Postcode </label>
+                    <input type="text" name="secondParentPostalCode" class="form-control" />
+                    <label>Stad </label>
+                    <input type="text" name="secondParentCity" class="form-control" />
+                </div>
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Contactgegevens </h4>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Telefoonnummer thuis</label>
+                    <input type="text" name="firstParentPhoneHome" class="form-control input-sm" />
+                    <label>Telefoonnummer mobiel</label>
+                    <input type="text" name="firstParentPhoneMobile" class="form-control" />
+                    <label>Telefoonnummer werk</label>
+                    <input type="text" name="firstParentPhoneWork" class="form-control" />
+                    <label>E-mailadres </label>
+                    <input type="text" name="firstParentEmailAddress" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label>Telefoonnummer thuis </label>
+                    <input type="text" name="secondParentPhoneHome" class="form-control input-sm" />
+                    <label>Telefoonnummer mobiel</label>
+                    <input type="text" name="secondParentPhoneMobile" class="form-control" />
+                    <label>Telefoonnummer werk</label>
+                    <input type="text" name="secondParentPhoneWork" class="form-control" />
+                    <label>E-mailadres </label>
+                    <input type="text" name="secondParentEmailaddress" class="form-control" />
+                </div>
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger btn-lg" type="submit">Volgende stap</button>
+                </div>
             </div>
         </div>
     </div>

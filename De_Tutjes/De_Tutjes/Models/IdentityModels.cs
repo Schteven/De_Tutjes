@@ -37,7 +37,7 @@ namespace De_Tutjes.Models
         {
             return new DeTutjesContext();
         }
-
+        
         // Person info
         public DbSet<Person> Persons { get; set; }
         public DbSet<Toddler> Toddlers { get; set; }
@@ -53,17 +53,19 @@ namespace De_Tutjes.Models
         public DbSet<Food> Eating { get; set; }
         public DbSet<Sleep> Sleeping { get; set; }
         public DbSet<Medical> MedicalInfo { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder builder)
+        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            builder.Conventions.Remove<PluralizingTableNameConvention>();
-            builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
+
+
 
             //  one-to-zero
-            builder.Entity<Person>()
+            modelBuilder.Entity<Person>()
                .HasOptional(s => s.UserAccount)
                .WithRequired(ad => ad.Person);
 
