@@ -203,6 +203,7 @@
     <Compile Include="Areas\Administration\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Administration\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Administration\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
     <Compile Include="Areas\Parents\ParentsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -330,7 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Areas\Administration\Views\CreateChild\" />
     <Folder Include="Areas\Diary\Controllers\" />
     <Folder Include="Areas\Diary\Models\" />
     <Folder Include="Areas\Diary\Views\Shared\" />
