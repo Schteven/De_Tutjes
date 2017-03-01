@@ -212,10 +212,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702261649562_NewInitial.cs" />
-    <Compile Include="Migrations\201702261649562_NewInitial.Designer.cs">
-      <DependentUpon>201702261649562_NewInitial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -271,11 +267,6 @@
     <Content Include="Areas\Administration\Views\Invoice\Overview.cshtml" />
     <Content Include="Areas\Administration\Views\Settings\Overview.cshtml" />
     <Content Include="Areas\Administration\Views\Children\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_CreatePartial\_Step1.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_CreatePartial\_Step2.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_CreatePartial\_Step3.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_CreatePartial\_Step4.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_CreatePartial\_Step5.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -331,7 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Views\CreateChild\" />
     <Folder Include="Areas\Diary\Controllers\" />
     <Folder Include="Areas\Diary\Models\" />
     <Folder Include="Areas\Diary\Views\Shared\" />
@@ -347,11 +337,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702261649562_NewInitial.resx">
-      <DependentUpon>201702261649562_NewInitial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -20,6 +20,8 @@ namespace De_Tutjes.Models
 
         public virtual Person Person { get; set; }
 
+        public virtual ICollection<RelationLink> RelationLinks { get; set; }
+
         public Toddler()
         {
 

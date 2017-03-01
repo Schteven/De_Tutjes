@@ -62,12 +62,19 @@ namespace De_Tutjes.Models
 
             base.OnModelCreating(modelBuilder);
 
-
-
             //  one-to-zero
             modelBuilder.Entity<Person>()
                .HasOptional(s => s.UserAccount)
                .WithRequired(ad => ad.Person);
+
+            modelBuilder.Entity<Person>()
+                .HasOptional(s => s.Address)
+                .WithMany(ad => ad.Persons);
+
+            modelBuilder.Entity<Person>()
+                .HasOptional(s => s.ContactDetail)
+                .WithRequired(s => s.Person);
+                
 
             /*  one-to-many 
             modelBuilder.Entity<Student>()

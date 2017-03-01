@@ -19,6 +19,8 @@ namespace De_Tutjes.Models
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
 
+        public virtual Address Address { get; set; }
+        public virtual ContactDetail ContactDetail { get; set; }
         public virtual ApplicationUser UserAccount { get; set; }
         public virtual ICollection<RelationLink> RelationLinks { get; set; }
 
