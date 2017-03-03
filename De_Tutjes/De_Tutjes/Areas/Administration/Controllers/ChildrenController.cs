@@ -46,18 +46,28 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 toddler.Person.Sex = model.childSex;
                 toddler.Person.BirthDate = model.childBirthdate;
                 toddler.Person.RegistrationDate = DateTime.Now;
+                toddler.Person.Active = true;
 
                 db.Toddlers.Add(toddler);
                 db.SaveChanges();
 
                 // First Parent
                 Parent firstParent = new Parent();
+                if (model.firstParentSex == "m")
+                {
+                    firstParent.Relation = "Vader";
+                }
+                else
+                {
+                    firstParent.Relation = "Moeder";
+                }
                 firstParent.Person = new Person();
                 firstParent.Person.FirstName = model.firstParentFirstname;
                 firstParent.Person.LastName = model.firstParentLastname;
                 firstParent.Person.BirthDate = model.firstParentBirthdate;
-                firstParent.Person.Sex = "sex";
+                firstParent.Person.Sex = model.firstParentSex;
                 firstParent.Person.RegistrationDate = DateTime.Now;
+                firstParent.Person.Active = true;
 
                 firstParent.Person.Address = new Address();
                 firstParent.Person.Address.Street = model.firstParentStreet;
@@ -77,17 +87,26 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 // Second Parent
                 Parent secondParent = new Parent();
+                if (model.secondParentSex == "m")
+                {
+                    secondParent.Relation = "Vader";
+                }
+                else
+                {
+                    secondParent.Relation = "Moeder";
+                }
                 secondParent.Person = new Person();
                 secondParent.Person.FirstName = model.secondParentFirstname;
                 secondParent.Person.LastName = model.secondParentLastname;
                 secondParent.Person.BirthDate = model.secondParentBirthdate;
-                secondParent.Person.Sex = "sex";
+                secondParent.Person.Sex = model.secondParentSex;
                 secondParent.Person.RegistrationDate = DateTime.Now;
+                secondParent.Person.Active = true;
 
                 
                 if (model.isLivingTogether)
                 {
-                    secondParent.Person.Address = firstParent.Person.Address;
+                    secondParent.Person.Address = db.Addresses.Find(firstParent.Person.Address);
                 }
                 else
                 {
@@ -108,7 +127,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 db.Parents.Add(secondParent);
                 db.SaveChanges();
 
-                return View(model);
+                return View("~/Areas/Administration/Children/Create/#b");
                 }
             return View(model);
         }

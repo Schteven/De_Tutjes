@@ -17,7 +17,7 @@ namespace De_Tutjes.Areas.Administration.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime childBirthdate { get; set; }
+        public DateTime? childBirthdate { get; set; }
 
         // Parents
         public bool isLivingTogether { get; set; }
@@ -32,6 +32,7 @@ namespace De_Tutjes.Areas.Administration.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime firstParentBirthdate { get; set; }
+        public string firstParentSex { get; set; }
 
         [Required]
         public string firstParentStreet { get; set; }
@@ -58,6 +59,7 @@ namespace De_Tutjes.Areas.Administration.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime secondParentBirthdate { get; set; }
+        public string secondParentSex { get; set; }
 
         public string secondParentStreet { get; set; }
         public int secondParentHouseNumber { get; set; }
