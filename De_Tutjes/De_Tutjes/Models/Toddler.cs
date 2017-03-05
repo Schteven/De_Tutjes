@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace De_Tutjes.Models
     [Table("Toddlers")]
     public class Toddler
     {
+        [Key]
         public int ToddlerId { get; set; }
         public string DailyRoutine { get; set; }
         public string ImportantNotice { get; set; }
@@ -18,6 +20,9 @@ namespace De_Tutjes.Models
         public virtual Medical Medical { get; set; }
         public virtual Sleep Sleep { get; set; }
 
+
+        [ForeignKey("Person")]
+        public int PersonId { get; set; }
         public virtual Person Person { get; set; }
 
         public virtual ICollection<RelationLink> RelationLinks { get; set; }

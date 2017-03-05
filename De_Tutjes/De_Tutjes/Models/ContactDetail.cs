@@ -17,6 +17,8 @@ namespace De_Tutjes.Models
         public int? WorkPhone { get; set; }
         public string Email { get; set; }
 
+        [ForeignKey("Person")]
+        public int? PersonId { get; set; }
         public virtual Person Person { get; set; }
     }
 }

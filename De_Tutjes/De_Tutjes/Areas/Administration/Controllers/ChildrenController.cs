@@ -34,7 +34,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         //POST: Administration/Children/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateChildAndParentsModel model)
+        public ActionResult Create(CreateNewChildModel model)
         {
             if (ModelState.IsValid)
             {
@@ -43,7 +43,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 toddler.Person = new Person();
                 toddler.Person.FirstName = model.childFirstname;
                 toddler.Person.LastName = model.childLastname;
-                toddler.Person.Sex = model.childSex;
+                toddler.Person.Gender = model.childGender;
                 toddler.Person.BirthDate = model.childBirthdate;
                 toddler.Person.RegistrationDate = DateTime.Now;
                 toddler.Person.Active = true;
@@ -53,7 +53,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 // First Parent
                 Parent firstParent = new Parent();
-                if (model.firstParentSex == "m")
+                if (model.firstParentGender == "m")
                 {
                     firstParent.Relation = "Vader";
                 }
@@ -65,7 +65,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 firstParent.Person.FirstName = model.firstParentFirstname;
                 firstParent.Person.LastName = model.firstParentLastname;
                 firstParent.Person.BirthDate = model.firstParentBirthdate;
-                firstParent.Person.Sex = model.firstParentSex;
+                firstParent.Person.Gender = model.firstParentGender;
                 firstParent.Person.RegistrationDate = DateTime.Now;
                 firstParent.Person.Active = true;
 
@@ -87,7 +87,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 // Second Parent
                 Parent secondParent = new Parent();
-                if (model.secondParentSex == "m")
+                if (model.secondParentGender == "m")
                 {
                     secondParent.Relation = "Vader";
                 }
@@ -99,14 +99,15 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 secondParent.Person.FirstName = model.secondParentFirstname;
                 secondParent.Person.LastName = model.secondParentLastname;
                 secondParent.Person.BirthDate = model.secondParentBirthdate;
-                secondParent.Person.Sex = model.secondParentSex;
+                secondParent.Person.Gender = model.secondParentGender;
                 secondParent.Person.RegistrationDate = DateTime.Now;
                 secondParent.Person.Active = true;
 
-                
+
                 if (model.isLivingTogether)
                 {
-                    secondParent.Person.Address = db.Addresses.Find(firstParent.Person.Address);
+                    Address address = db.Addresses.Find(firstParent.Person.AddressId);
+                    secondParent.Person.AddressId = address.AddressId;
                 }
                 else
                 {
@@ -117,7 +118,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     secondParent.Person.Address.PostalCode = model.secondParentPostalCode;
                     secondParent.Person.Address.City = model.secondParentCity;
                 }
-
+                
                 secondParent.Person.ContactDetail = new ContactDetail();
                 secondParent.Person.ContactDetail.HomePhone = model.secondParentPhoneHome;
                 secondParent.Person.ContactDetail.CellPhone = model.secondParentPhoneMobile;

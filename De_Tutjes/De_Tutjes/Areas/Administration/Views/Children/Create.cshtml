@@ -1,5 +1,38 @@
 ﻿<script type="text/javascript">
 
+    window.onload = function () {
+        document.getElementById('childFirstname').value = "Wannes";
+        document.getElementById('childLastname').value = "Devos";
+        document.getElementById('isLivingTogether').value = true;
+        //document.getElementByName('childGender')[2].checked = true;
+        document.getElementById('firstParentFirstname').value = "Jana";
+        document.getElementById('firstParentLastname').value = "Declercq";
+        //document.getElementByName('firstParentGender')[0].checked = true;
+        document.getElementById('firstParentBirthdate').value = new Date().toISOString().substring(0, 10),
+        document.getElementById('secondParentFirstname').value = "Kris";
+        document.getElementById('secondParentLastname').value = "Devos";
+        //document.getElementByName('secondParentGender')[1].checked = true;
+        document.getElementById('secondParentBirthdate').value = new Date().toISOString().substring(0, 10),
+        document.getElementById('firstParentStreet').value = "Beekstraat";
+        document.getElementById('firstParentHouseNumber').value = "9";
+        document.getElementById('firstParentHouseBus').value = "";
+        document.getElementById('firstParentPostalCode').value = "3300";
+        document.getElementById('firstParentCity').value = "Tienen";
+        document.getElementById('secondParentStreet').value = "Beekstraat";
+        document.getElementById('secondParentHouseNumber').value = "9";
+        document.getElementById('secondParentHouseBus').value = "";
+        document.getElementById('secondParentPostalCode').value = "3300";
+        document.getElementById('secondParentCity').value = "Tienen";
+        document.getElementById('firstParentPhoneHome').value = "016818554";
+        document.getElementById('firstParentPhoneMobile').value = "0473421895";
+        document.getElementById('firstParentPhoneWork').value = "0";
+        document.getElementById('firstParentEmailAddress').value = "jana.dclrcq@hotmail.com";
+        document.getElementById('secondParentPhoneHome').value = "016818554";
+        document.getElementById('secondParentPhoneMobile').value = "0478886524";
+        document.getElementById('secondParentPhoneWork').value = "0";
+        document.getElementById('secondParentEmailAddress').value = "kris.devos@gmail.com";
+    };
+
     var isLivingTogether = true;
     var isBoy = true;
 
@@ -56,7 +89,7 @@
     }
 
 </script>
-@model De_Tutjes.Areas.Administration.Models.CreateChildAndParentsModel
+@model De_Tutjes.Areas.Administration.Models.CreateNewChildModel
 @{
     ViewBag.Title = "Create";
 }
@@ -127,11 +160,14 @@
                 </ul>
             <div class="tab-content col-md-9">
                 <div class="tab-pane active" id="a">
+                    <!--- Child panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-square-o"></i> Kind </h3>
                         </div>
-                        <div class="panel-body">
+
+                        <!-- Dynamic form (show on modal complete)-->
+                        <div class="panel-body" id="ChildForm">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -140,20 +176,21 @@
                                         @Html.ValidationMessageFor(model => model.childFirstname, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Geslacht </label>
+                                        @Html.LabelFor(model => model.childGender, htmlAttributes: new { @class = "control-label" })
                                     </div>
                                     <div class="col-md-6">
                                         <div class="btn-group btn-group-xs" data-toggle="buttons">
                                             <label class="btn btn-primary">
-                                                @Html.RadioButtonFor(model => model.childSex, "M", false)@Html.Label("jongen")
+                                                @Html.RadioButtonFor(model => model.childGender, "m", false)@Html.Label("jongen")
                                             </label>
                                             <label class="btn btn-primary">
-                                                @Html.RadioButtonFor(model => model.childSex, "F", false)@Html.Label("meisje")
+                                                @Html.RadioButtonFor(model => model.childGender, "f", false)@Html.Label("meisje")
                                             </label>
                                             <label class="btn btn-primary">
-                                                @Html.RadioButtonFor(model => model.childSex, "N", false)@Html.Label("niet gekend")
+                                                @Html.RadioButtonFor(model => model.childGender, "n", new { Checked = "checked" })@Html.Label("niet gekend")
                                             </label>
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.childGender, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="row">
@@ -168,86 +205,152 @@
                                         @Html.ValidationMessageFor(model => model.childBirthdate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.CheckBoxFor(model => model.hasGotSibling)
+                                        @Html.LabelFor(model => model.hasGotSibling, htmlAttributes: new { @class = "control-label" })
+                                        @Html.ValidationMessageFor(model => model.hasGotSibling, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Modal Child Form 
+                        <script type="text/javascript">window.onload = function () { document.getElementById('ChildForm').style.display = "none"; }</script>
+                        <div class="row" id="ChildFormModalButton">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                <br />
+                                <button class="btn btn-default btn-block btn-lg" type="button" data-toggle="modal" data-target="#ChildFormModal">
+                                    <i class="fa fa-user-plus fa-2x"></i><br />Nieuw tutje inschrijven
+                                </button>
+                                <br />
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="ChildFormModal" tabindex="-1" role="dialog" aria-labelledby="NewChildTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="NewChildTitle">Nieuw tutje</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Voornaam </label>
+                                                    <input type="text" class="form-control input-sm" onkeyup="document.getElementById('childFirstname').value = this.value"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Geslacht </label>
+                                                </div>
+                                                <div class="col-md-6"><span><label class="radio-inline"><input type="radio" />meisje</label></span><span><label class="radio-inline"><input type="radio" />jongen</label></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Achternaam </label>
+                                                    <input type="text" class="form-control input-sm" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Geboortedatum </label>
+                                                    <input type="date" class="form-control input-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="document.getElementById('ChildForm').style.display = 'block'; document.getElementById('ChildFormModalButton').style.display = 'none'; this.close">Opslaan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal End -->
                     </div>
+                    <!-- End Child Panel-->
+                    <!-- Parent Panel -->
                     <div class="panel panel-default" id="Parents">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-square-o"></i> Ouders </h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div id="MotherFather">
-                                    <div class="col-md-6">
-                                        <div class="page-header">
-                                            <h4 class="text-left" name="firstParentFirstname"></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="page-header">
-                                            <h4 class="text-left" name="secondParentFirstname"></h4>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="page-header">
+                                        <h4 class="text-left" name="firstParentFirstname">{{firstParentFirstname}}</h4>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="page-header">
+                                        <h4 class="text-left" name="secondParentFirstname">{{secondParentFirstname}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
 
                                 <div class="col-md-6">
                                     @Html.LabelFor(model => model.firstParentFirstname, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)" } })
+                                    @Html.EditorFor(model => model.firstParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)", ng_model = "firstParentFirstname" } })
                                     @Html.ValidationMessageFor(model => model.firstParentFirstname, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentLastname, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentLastname, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.firstParentLastname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)" } })
                                     @Html.ValidationMessageFor(model => model.firstParentLastname, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentBirthdate, htmlAttributes: new { @class = "control-label" })
                                     @Html.EditorFor(model => model.firstParentBirthdate, new { htmlAttributes = new { @class = "form-control input-sm" } })
                                     @Html.ValidationMessageFor(model => model.firstParentBirthdate, "", new { @class = "text-danger" })
 
-                                    @Html.LabelFor(model => model.firstParentSex, htmlAttributes: new { @class = "control-label" })<br />
+                                    @Html.LabelFor(model => model.firstParentGender, htmlAttributes: new { @class = "control-label" })<br />
                                     <div class="btn-group btn-group-xs" data-toggle="buttons">
                                         <label class="btn btn-primary">
-                                            @Html.RadioButtonFor(model => model.firstParentSex, "m", false)@Html.Label("man")
+                                            @Html.RadioButtonFor(model => model.firstParentGender, "m", false)@Html.Label("man")
                                         </label>
                                         <label class="btn btn-primary">
-                                            @Html.RadioButtonFor(model => model.firstParentSex, "f", false)@Html.Label("vrouw")
+                                            @Html.RadioButtonFor(model => model.firstParentGender, "f", new { Checked = "checked" })@Html.Label("vrouw")
                                         </label>
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.firstParentSex, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.firstParentGender, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-6">
-                                        @Html.LabelFor(model => model.secondParentFirstname, htmlAttributes: new { @class = "control-label" })
-                                        @Html.EditorFor(model => model.secondParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)" } })
-                                        @Html.ValidationMessageFor(model => model.secondParentFirstname, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.secondParentFirstname, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.secondParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)", ng_model = "secondParentFirstname" } })
+                                    @Html.ValidationMessageFor(model => model.secondParentFirstname, "", new { @class = "text-danger" })
 
-                                        @Html.LabelFor(model => model.secondParentLastname, htmlAttributes: new { @class = "control-label" })
-                                        @Html.EditorFor(model => model.secondParentLastname, new { htmlAttributes = new { @class = "form-control input-sm" } })
-                                        @Html.ValidationMessageFor(model => model.secondParentLastname, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.secondParentLastname, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.secondParentLastname, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.ValidationMessageFor(model => model.secondParentLastname, "", new { @class = "text-danger" })
 
-                                        @Html.LabelFor(model => model.secondParentBirthdate, htmlAttributes: new { @class = "control-label" })
-                                        @Html.EditorFor(model => model.secondParentBirthdate, new { htmlAttributes = new { @class = "form-control input-sm" } })
-                                        @Html.ValidationMessageFor(model => model.secondParentBirthdate, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.secondParentBirthdate, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.secondParentBirthdate, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.ValidationMessageFor(model => model.secondParentBirthdate, "", new { @class = "text-danger" })
 
-                                        @Html.LabelFor(model => model.secondParentSex, htmlAttributes: new { @class = "control-label" })<br />
-                                        <div class="btn-group btn-group-xs" data-toggle="buttons">
-                                            <label class="btn btn-primary">
-                                                @Html.RadioButtonFor(model => model.secondParentSex, "m", false)@Html.Label("man")
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                @Html.RadioButtonFor(model => model.secondParentSex, "f", false)@Html.Label("vrouw")
-                                            </label>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.secondParentSex, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.secondParentGender, htmlAttributes: new { @class = "control-label" })<br />
+                                    <div class="btn-group btn-group-xs" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            @Html.RadioButtonFor(model => model.secondParentGender, "m", new { Checked = "checked" })@Html.Label("man")
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            @Html.RadioButtonFor(model => model.secondParentGender, "f", false)@Html.Label("vrouw")
+                                        </label>
                                     </div>
-                                    <div class="col-md-12">
-                                        <hr />
-                                    </div>
+                                    @Html.ValidationMessageFor(model => model.secondParentGender, "", new { @class = "text-danger" })
                                 </div>
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4>Adresgegevens </h4>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="isLivingTogether" checked name="ctrlLt" onclick="showMe('ctrlLt', 'LivingTogetherDiv'); toggleLivingTogether()" /> Samenwonend
+                                            <input type="checkbox" id="isLivingTogether" name="isLivingTogether" checked onclick="showMe('isLivingTogether', 'LivingTogetherDiv'); toggleLivingTogether()" /> Samenwonend
+                                            @Html.ValidationMessageFor(model => model.isLivingTogether, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                 </div>
@@ -361,6 +464,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- End Parent Panel-->
                 </div>
                 <div class="tab-pane" id="b">
                     Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.

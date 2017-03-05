@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using De_Tutjes.Models;
+using System.ComponentModel;
 
 namespace De_Tutjes.Areas.Administration.Models
 {
-    public class CreateChildAndParentsModel
+    public class CreateNewChildModel
     {
+        //public Toddler child { get; set; }
+        //public Parent firstParent { get; set; }
+        //public Parent secondParent { get; set; }
+        
         // Child
         [Required]
         public string childFirstname { get; set; }
         [Required]
         public string childLastname { get; set; }
-        public string childSex { get; set; }
+        public string childGender { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime? childBirthdate { get; set; }
+        public DateTime childBirthdate { get; set; }
 
         // Parents
+        public bool hasGotSibling { get; set; }
         public bool isLivingTogether { get; set; }
 
         // First Parent
@@ -28,11 +35,10 @@ namespace De_Tutjes.Areas.Administration.Models
         [Required]
         public string firstParentLastname { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime firstParentBirthdate { get; set; }
-        public string firstParentSex { get; set; }
+        public string firstParentGender { get; set; }
 
         [Required]
         public string firstParentStreet { get; set; }
@@ -59,7 +65,7 @@ namespace De_Tutjes.Areas.Administration.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime secondParentBirthdate { get; set; }
-        public string secondParentSex { get; set; }
+        public string secondParentGender { get; set; }
 
         public string secondParentStreet { get; set; }
         public int secondParentHouseNumber { get; set; }
@@ -73,7 +79,7 @@ namespace De_Tutjes.Areas.Administration.Models
 
         [EmailAddress]
         public string secondParentEmailAddress { get; set; }
-
+    
     }
 
     public class CreateReservationDaysModel

@@ -12,9 +12,11 @@ namespace De_Tutjes.Models
     public class Parent
     {
         [Key]
-        public int ParentID { get; set; }
+        public int ParentId { get; set; }
         public string Relation { get; set; } // Mother or father
 
+        [ForeignKey("Person")]
+        public int PersonId { get; set; }
         public virtual Person Person { get; set; }
 
         public Parent()

@@ -11,17 +11,25 @@ namespace De_Tutjes.Models
     [Table("Persons")]
     public class Person
     {
+        [Key]
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Sex { get; set; }
+        public string Gender { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
 
+        [ForeignKey("Address")]
+        public int? AddressId { get; set; }
         public virtual Address Address { get; set; }
+        [ForeignKey("ContactDetail")]
+        public int? ContactDetailId { get; set; }
         public virtual ContactDetail ContactDetail { get; set; }
+        [ForeignKey("UserAccount")]
+        public string UserAccountId { get; set; }
         public virtual ApplicationUser UserAccount { get; set; }
+
         public virtual ICollection<RelationLink> RelationLinks { get; set; }
 
 
