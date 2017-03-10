@@ -82,23 +82,4 @@ namespace De_Tutjes.Areas.Administration.Models
     
     }
 
-    public class CreateReservationDaysModel
-    {
-
-    }
-
-    public class CreateMedicalModel
-    {
-
-    }
-
-    public class CreateFoodAndSleepingModel
-    {
-
-    }
-
-    public class CreateSpecialNoticesAndDayroutineModel
-    {
-
-    }
 }
