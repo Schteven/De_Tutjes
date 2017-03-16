@@ -33,60 +33,15 @@
         document.getElementById('secondParentEmailAddress').value = "kris.devos@gmail.com";
     };
 
-    var isLivingTogether = true;
-    var isBoy = true;
+    var app = angular.module('Administration', [])
+    app.controller('Address', ['$scope', function ($scope) {
+        $scope.sa = {};
+        $scope.ba = {};
 
-    function toggleLivingTogether() {
-        if (isLivingTogether) {
-            isLivingTogether = false;
-        } else {
-            isLivingTogether = true;
-        }
-    }
-
-    function syncTelephoneNumber(input) {
-        if (isLivingTogether) {
-            var telFirstParent = document.getElementById('firstParentPhoneHome');
-            var telSecondParent = document.getElementById('secondParentPhoneHome');
-            if (input.getAttribute('id') == 'firstParentPhoneHome') {
-                telSecondParent.value = telFirstParent.value;
-            } else {
-                telFirstParent.value = telSecondParent.value;
-            }
-        }
-    }
-
-    function syncThisField(field) {
-        if (isLivingTogether) {
-            var fromThis = field.getAttribute('id');
-            var toThis = fromThis.replace("first", "second");
-
-            document.getElementById(toThis).value = document.getElementById(fromThis).value;
-        }
-    }
-
-    function showMe(input, box) {
-        var chboxs = document.getElementsByName(input);
-        var vis = "none";
-        for (var i = 0; i < chboxs.length; i++) {
-            if (!chboxs[i].checked) {
-                vis = "block";
-                break;
-            }
-        }
-        document.getElementById(box).style.display = vis;
-    }
-
-    function fillFirstName(label) {
-        var field = label.getAttribute('id');
-        var firstParentFirstname = document.getElementById('firstParentFirstname');
-        var secondParentFirstname = document.getElementById('secondParentFirstname');
-        if (field == 'firstParentFirstname') {
-            document.getElementByName(field).innerHTML = firstParentFirstname.value;
-        } else {
-            document.getElementByName(field).innerHTML = secondParentFirstname.value;
-        }
-    }
+        $scope.update = function (sa) {
+            $scope.ba = angular.copy($scope.sa);
+        };  
+    }]);
 
 </script>
 @model De_Tutjes.Areas.Administration.Models.CreateNewChildModel
@@ -97,7 +52,7 @@
 <div class="row">
     <div class="col-lg-3 col-md-3">
         <img class="center-block" src="http://placehold.it/185x185" />
-        <a class="btn btn-link btn-xs center-block" role="button" href="#">KLik hier om een foto toe te voegen</a>
+        <a class="btn btn-link btn-xs center-block" role="button" href="#">Klik hier om een foto toe te voegen</a>
     </div>
     <div class="col-lg-9 col-md-9">
 
@@ -120,41 +75,31 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="tabbable">
+    <div class="tabbable tabs-left">
                 <ul class="nav nav-pills nav-stacked col-md-3">
                     <li class="active">
                         <a href="#a" data-toggle="tab">
-                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 1
-                            <br />
-                            <h6>Kind en ouders</h6>
+                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 1<br /><h6>Kind en ouders</h6>
                         </a>
                     </li>
                     <li>
                         <a href="#b" data-toggle="tab">
-                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 2
-                            <br />
-                            <h6>Opvangdagen</h6>
+                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 2<br /><h6>Opvangdagen</h6>
                         </a>
                     </li>
                     <li>
                         <a href="#c" data-toggle="tab">
-                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 3
-                            <br />
-                            <h6>Medische gegevens</h6>
+                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 3<br /><h6>Medische gegevens</h6>
                         </a>
                     </li>
                     <li>
                         <a href="#d" data-toggle="tab">
-                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 4
-                            <br />
-                            <h6>Voeding en slapen</h6>
+                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 4<br /><h6>Voeding en slapen</h6>
                         </a>
                     </li>
                     <li>
                         <a href="#e" data-toggle="tab">
-                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 5
-                            <br />
-                            <h6>Opmerkingen dagverloop</h6>
+                            <span class="fa fa-square-o fa-1x pull-right"></span>Stap 5<br /><h6>Opmerkingen dagverloop</h6>
                         </a>
                     </li>
                 </ul>
@@ -273,7 +218,7 @@
                     </div>
                     <!-- End Child Panel-->
                     <!-- Parent Panel -->
-                    <div class="panel panel-default" id="Parents">
+                    <div class="panel panel-default" id="Parents" ng-controller="Address">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-square-o"></i> Ouders </h3>
                         </div>
@@ -294,11 +239,11 @@
 
                                 <div class="col-md-6">
                                     @Html.LabelFor(model => model.firstParentFirstname, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)", ng_model = "firstParentFirstname" } })
+                                    @Html.EditorFor(model => model.firstParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "firstParentFirstname" } })
                                     @Html.ValidationMessageFor(model => model.firstParentFirstname, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentLastname, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentLastname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)" } })
+                                    @Html.EditorFor(model => model.firstParentLastname, new { htmlAttributes = new { @class = "form-control input-sm" } })
                                     @Html.ValidationMessageFor(model => model.firstParentLastname, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentBirthdate, htmlAttributes: new { @class = "control-label" })
@@ -318,7 +263,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     @Html.LabelFor(model => model.secondParentFirstname, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "fillFirstName(this)", ng_model = "secondParentFirstname" } })
+                                    @Html.EditorFor(model => model.secondParentFirstname, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "secondParentFirstname" } })
                                     @Html.ValidationMessageFor(model => model.secondParentFirstname, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentLastname, htmlAttributes: new { @class = "control-label" })
@@ -349,7 +294,7 @@
                                     <h4>Adresgegevens </h4>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="isLivingTogether" name="isLivingTogether" checked onclick="showMe('isLivingTogether', 'LivingTogetherDiv'); toggleLivingTogether()" /> Samenwonend
+                                            <input type="checkbox" id="isLivingTogether" name="isLivingTogether" ng-init="sameAddress=true" ng-model="sameAddress" ng-change="sameAddress && update()"/> Samenwonend
                                             @Html.ValidationMessageFor(model => model.isLivingTogether, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
@@ -360,46 +305,46 @@
                                 <div class="col-md-6">
 
                                     @Html.LabelFor(model => model.firstParentStreet, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentStreet, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncThisField(this)" } })
+                                    @Html.EditorFor(model => model.firstParentStreet, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.Street", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentStreet, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentHouseNumber, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentHouseNumber, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncThisField(this)" } })
+                                    @Html.EditorFor(model => model.firstParentHouseNumber, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.Number", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentHouseNumber, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentHouseBus, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentHouseBus, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncThisField(this)" } })
+                                    @Html.EditorFor(model => model.firstParentHouseBus, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.Bus", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentHouseBus, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentPostalCode, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentPostalCode, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncThisField(this)" } })
+                                    @Html.EditorFor(model => model.firstParentPostalCode, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.Postal", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentPostalCode, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentCity, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentCity, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncThisField(this)" } })
+                                    @Html.EditorFor(model => model.firstParentCity, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.City", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentCity, "", new { @class = "text-danger" })
 
                                 </div>
-                                <div class="col-md-6" id="LivingTogetherDiv" style="display: none">
+                                <div class="col-md-6" ng-hide="sameAddress">
 
                                     @Html.LabelFor(model => model.secondParentStreet, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentStreet, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.secondParentStreet, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.Street", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentStreet, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentHouseNumber, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentHouseNumber, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.secondParentHouseNumber, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.Number", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentHouseNumber, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentHouseBus, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentHouseBus, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.secondParentHouseBus, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.Bus", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentHouseBus, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentPostalCode, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentPostalCode, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.secondParentPostalCode, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.Postal", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentPostalCode, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentCity, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentCity, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                    @Html.EditorFor(model => model.secondParentCity, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.City", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentCity, "", new { @class = "text-danger" })
 
                                 </div>
@@ -417,7 +362,7 @@
                                 <div class="col-md-6">
 
                                     @Html.LabelFor(model => model.firstParentPhoneHome, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.firstParentPhoneHome, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncTelephoneNumber(this)" } })
+                                    @Html.EditorFor(model => model.firstParentPhoneHome, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "sa.Phone", ng_change = "sameAddress && update()" } })
                                     @Html.ValidationMessageFor(model => model.firstParentPhoneHome, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.firstParentPhoneMobile, htmlAttributes: new { @class = "control-label" })
@@ -436,7 +381,7 @@
                                 <div class="col-md-6">
 
                                     @Html.LabelFor(model => model.secondParentPhoneHome, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.secondParentPhoneHome, new { htmlAttributes = new { @class = "form-control input-sm", @onkeyup = "syncTelephoneNumber(this)" } })
+                                    @Html.EditorFor(model => model.secondParentPhoneHome, new { htmlAttributes = new { @class = "form-control input-sm", ng_model = "ba.Phone", ng_disabled = "sameAddress" } })
                                     @Html.ValidationMessageFor(model => model.secondParentPhoneHome, "", new { @class = "text-danger" })
 
                                     @Html.LabelFor(model => model.secondParentPhoneMobile, htmlAttributes: new { @class = "control-label" })
@@ -458,8 +403,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6"></div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-danger btn-lg" type="submit">Volgende stap</button>
+                                <div class="col-md-6 tabbable">
+                                    <a href="#b" class="btn btn-danger btn-lg" role="button" data-toggle="tab">Volgende stap</a>
                                 </div>
                             </div>
                         </div>
@@ -467,12 +412,44 @@
                     <!-- End Parent Panel-->
                 </div>
                 <div class="tab-pane" id="b">
-                    Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-                    Aliquam in felis sit amet augue.
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-square-o"></i> Opvang</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label>Startdatum </label>
+                                                    </td>
+                                                    <td>
+                                                        <label>Einddatum </label>
+                                                    </td>
+                                                </tr>
+                                                <tr></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Ophaalpersonen </h3>
+                                </div>
+                                <div class="panel-body"><span>Panel Body</span></div>
+                            </div>
                 </div>
                 <div class="tab-pane" id="c">
                     Thirdamuno, ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
                     Quisque mauris augue, molestie tincidunt condimentum vitae.
+                </div>
+                <div class="tab-pane" id="d">
+                    quattro
+                </div>
+                <div class="tab-pane" id="e">
+                    quinto
                 </div>
             </div>
     </div>

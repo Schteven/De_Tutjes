@@ -53,6 +53,11 @@ namespace De_Tutjes.Models
         public DbSet<Food> Eating { get; set; }
         public DbSet<Sleep> Sleeping { get; set; }
         public DbSet<Medical> MedicalInfo { get; set; }
+        public DbSet<AgreedDays> AgreedDays { get; set; }
+        public DbSet<VacationDay> VacationDays { get; set; }
+
+        // Daycare info
+        public DbSet<Location> Locations { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
