@@ -8,6 +8,25 @@ using System.ComponentModel;
 
 namespace De_Tutjes.Areas.Administration.Models
 {
+    public class StartWizardOverview
+    {
+        public RelationLink relationLink { get; set; }
+        public ICollection<RelationLink> relationLinks { get; set; }
+    }
+
+    public class CreateToddlerOverview
+    {
+        public Toddler toddler { get;  set;}
+        public ICollection<Toddler> toddlers { get; set; }
+    }
+
+    public class CreateParentsOverview
+    {
+        public Parent parent { get; set; }
+        public ICollection<Parent> parents { get; set; }
+        public ICollection<RelationLink> relationLinks { get; set; }
+    }
+
     public class CreateNewChildModel
     {
 

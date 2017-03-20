@@ -16,8 +16,14 @@ namespace De_Tutjes.Models
         public string DailyRoutine { get; set; }
         public string ImportantNotice { get; set; }
 
+        [ForeignKey("Food")]
+        public int? FoodId { get; set; }
         public virtual Food Food { get; set; }
+        [ForeignKey("Medical")]
+        public int? MedicalId { get; set; }
         public virtual Medical Medical { get; set; }
+        [ForeignKey("Sleep")]
+        public int? SleepId { get; set; }
         public virtual Sleep Sleep { get; set; }
 
 

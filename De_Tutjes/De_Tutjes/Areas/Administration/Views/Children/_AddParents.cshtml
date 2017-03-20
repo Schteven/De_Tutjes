@@ -1,0 +1,148 @@
+﻿@model De_Tutjes.Areas.Administration.Models.CreateParentsOverview
+
+@using (Ajax.BeginForm("CreateParent", null, new AjaxOptions { UpdateTargetId = "parentList", OnSuccess = "submitParentForm()" }, new { id = "AddParentForm" }))
+{
+
+    @Html.AntiForgeryToken();
+
+
+
+    <div class="modal fade" id="addParentModal" tabindex="-1" role="dialog" aria-labelledby="addParentLabel" aria-hidden="true">
+        @{
+            int toddlerId = 0;
+            if (!string.IsNullOrEmpty(HttpContext.Current.Session["ToddlerId"] as string))
+            {
+                toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
+            }
+        }
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addParentLabel">
+                        Ouder toevoegen
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <fieldset>
+                        <legend>Personal for child @toddlerId</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Address</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Address.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Address.City, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Address.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Address.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Address.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Address.PostalCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Address.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Address.Street, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Address.Street, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Address.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Address.Number, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Address.Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.Address.Bus, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.Address.Bus, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.Address.Bus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Contact</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.ContactDetail.HomePhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.ContactDetail.HomePhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.ContactDetail.HomePhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.ContactDetail.CellPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.ContactDetail.CellPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.ContactDetail.CellPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.ContactDetail.WorkPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.ContactDetail.WorkPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.ContactDetail.WorkPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.parent.Person.ContactDetail.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.parent.Person.ContactDetail.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.parent.Person.ContactDetail.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveParent">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="tab-pane" id="b">
+    <div id="parentList">
+        @Html.Partial("_ListParents", Model.parents)
+    </div>
+</div>
