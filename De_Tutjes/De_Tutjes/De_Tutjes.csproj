@@ -230,6 +230,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Pickup.cs" />
     <Compile Include="Models\RelationLink.cs" />
+    <Compile Include="Models\Sessions.cs" />
     <Compile Include="Models\Sleep.cs" />
     <Compile Include="Models\Toddler.cs" />
     <Compile Include="Models\VacationDay.cs" />

@@ -58,6 +58,9 @@ namespace De_Tutjes.Models
 
         // Daycare info
         public DbSet<Location> Locations { get; set; }
+
+        // System attributes
+        public DbSet<NewChildWizardSession> NewChildWizardSessions { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

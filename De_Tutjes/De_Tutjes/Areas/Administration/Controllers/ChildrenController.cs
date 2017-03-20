@@ -14,6 +14,17 @@ namespace De_Tutjes.Areas.Administration.Controllers
     {
         private DeTutjesContext db = new DeTutjesContext();
 
+        public ActionResult NewChildWizardSession(string username)
+        {
+
+            NewChildWizardSession ncws = new NewChildWizardSession();
+
+            ncws.Username = "demo";
+            ncws.Start = DateTime.Now;
+            ncws.Complete = false;
+
+            return this.Json(new { success = true });
+        }
 
         // GET: Administration/Children
         public ActionResult Overview()

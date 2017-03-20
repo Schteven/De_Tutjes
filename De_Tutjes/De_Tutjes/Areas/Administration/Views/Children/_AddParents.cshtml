@@ -10,7 +10,7 @@
     <div class="modal fade" id="addParentModal" tabindex="-1" role="dialog" aria-labelledby="addParentLabel" aria-hidden="true">
         @{
             int toddlerId = 0;
-            if (!string.IsNullOrEmpty(HttpContext.Current.Session["ToddlerId"] as string))
+            if (HttpContext.Current.Session["ToddlerId"] != null)
             {
                 toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
             }

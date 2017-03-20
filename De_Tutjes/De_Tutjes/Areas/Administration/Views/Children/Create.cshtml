@@ -1,4 +1,8 @@
 ﻿<script>
+    $(function () {
+        $.post('/Children/NewChildWizardSession', { Username: "demo" }, function (data) {});
+    });
+
     function submitToddlerForm() {
         $(function () {
             $('#addToddlerModal').modal('hide');

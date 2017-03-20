@@ -4,7 +4,7 @@
     string completed = "fa-square-o";
     if (models == 1) { completed = "fa-check-square-o"; }
     int toddlerId = 0;
-    if (!string.IsNullOrEmpty(HttpContext.Current.Session["ToddlerId"] as string))
+    if (HttpContext.Current.Session["ToddlerId"] != null)
     {
         toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
     }
