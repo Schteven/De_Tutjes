@@ -14,18 +14,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
     {
         private DeTutjesContext db = new DeTutjesContext();
 
-        public ActionResult NewChildWizardSession(string username)
-        {
-
-            NewChildWizardSession ncws = new NewChildWizardSession();
-
-            ncws.Username = "demo";
-            ncws.Start = DateTime.Now;
-            ncws.Complete = false;
-
-            return this.Json(new { success = true });
-        }
-
         // GET: Administration/Children
         public ActionResult Overview()
         {
@@ -35,6 +23,34 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children/Create
         public ActionResult Create()
         {
+            string username = "demo";
+            NewChildWizardSession ncws = db.NewChildWizardSessions.Where(u => u.Username.Equals(username)).Where(s => s.Stop == null).FirstOrDefault();
+            if (ncws == null)
+            {
+
+                string key = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "" + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+
+                ncws = new NewChildWizardSession();
+
+                ncws.Username = "demo";
+                ncws.ToddlerSession = key;
+                ncws.Start = DateTime.Now;
+                ncws.Complete = false;
+
+                db.NewChildWizardSessions.Add(ncws);
+                db.SaveChanges();
+
+                Session["NewChildWizardSession"] = key;
+                ViewBag.Session = key;
+
+            }
+            else
+            {
+                Session["NewChildWizardSession"] = ncws.ToddlerSession;
+                ViewBag.NotFinished = ncws.ToddlerSession;
+                ViewBag.SessionStarted = ncws.Start;
+                ViewBag.Session = ncws.ToddlerSession;
+            }
             return View();
         }
 
@@ -50,10 +66,9 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children/_AddToddler
         public PartialViewResult _AddToddler()
         {
+            string session = GetNewChildWizardSession();
             CreateToddlerOverview cto = new CreateToddlerOverview();
-            cto.toddlers = db.Toddlers
-                .Include(i => i.Person)
-                .ToList();
+            cto.toddlers = GetToddlersOfCurrentSession();
             cto.toddler = new Toddler();
             return PartialView(cto);
         }
@@ -73,10 +88,12 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreateToddler(CreateToddlerOverview model)
         {
+            string session = GetNewChildWizardSession();
             if (ModelState.IsValid)
             {
                 Toddler toddler = new Toddler();
-           
+                toddler.ToddlerSession = GetNewChildWizardSession();
+
                 toddler.Person = new Person();
                 toddler.Person.FirstName = model.toddler.Person.FirstName;
                 toddler.Person.LastName = model.toddler.Person.LastName;
@@ -96,32 +113,22 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 db.RelationLinks.Add(relationLink);
                 db.SaveChanges();
 
-                Session["ToddlerId"] = db.Toddlers.Find(toddler.ToddlerId).ToddlerId;
-
             }
-            return PartialView("_ListToddler", db.Toddlers.Include(i => i.Person).ToList());
+            return PartialView("_ListToddler", GetToddlersOfCurrentSession());
         }
 
         /**PARENTS****************************/
         // GET: Administration/Children/Parents
         public PartialViewResult _AddParents()
         {
-            int id = 0;
+            string session = GetNewChildWizardSession();
+            int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
+
             CreateParentsOverview cvo = new CreateParentsOverview();
-            cvo.relationLinks = db.RelationLinks
-                .Include(i => i.Person)
-                .Include(i => i.Person.Address)
-                .Include(i => i.Person.ContactDetail)
-                .Where(i => (i.ToddlerId == id) && (i.RelationToChild == "isParent"))
-                .ToList();
-
-            cvo.parents = db.Parents
-                .Include(i => i.Person)
-                .Include(i => i.Person.Address)
-                .Include(i => i.Person.ContactDetail)
-                .ToList();
-
+            cvo.relationLinks = GetRelationLinksOfCurrentToddler(); 
+            cvo.parents = GetParentsOfCurrentToddler();
             cvo.parent = new Parent();
+
             return PartialView(cvo);
         }
 
@@ -141,6 +148,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreateParent(CreateParentsOverview model)
         {
+            string session = GetNewChildWizardSession();
             if (ModelState.IsValid)
             {
                 Parent parent = new Parent();
@@ -168,11 +176,77 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 
                 db.Parents.Add(parent);
                 db.SaveChanges();
+
+                RelationLink relationLink = new RelationLink();
+                relationLink.Person = db.Persons.Find(parent.PersonId);
+                relationLink.Toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).FirstOrDefault();
+                relationLink.RelationToChild = "isParent";
+
+                db.RelationLinks.Add(relationLink);
+                db.SaveChanges();
+
             }
-            return PartialView("_ListParents",
-                            db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList()
-            );
+            return PartialView("_ListParents", GetParentsOfCurrentToddler());
         }
+
+
+        /** FUNCTIONS *******************************************/
+
+        public string GetNewChildWizardSession()
+        {
+            string session = "";
+            if (!string.IsNullOrEmpty(Session["NewChildWizardSession"].ToString())) {
+                session = Session["NewChildWizardSession"].ToString();
+            }
+            return session;
+        }
+
+        public ICollection<RelationLink> GetRelationLinksOfCurrentToddler()
+        {
+            string session = GetNewChildWizardSession();
+
+            ICollection<RelationLink> RelationLinks = new List<RelationLink>();
+
+            int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
+            RelationLinks = db.RelationLinks
+                .Include(i => i.Person)
+                .Include(i => i.Person.Address)
+                .Include(i => i.Person.ContactDetail)
+                .Where(i => (i.ToddlerId.Equals(ToddlerId)) && (i.RelationToChild.Equals("isParent")))
+                .ToList();
+
+            return RelationLinks;
+        }
+
+        public ICollection<Parent> GetParentsOfCurrentToddler()
+        {
+
+            ICollection<Parent> Parents = new List<Parent>();
+            
+            foreach (RelationLink rl in GetRelationLinksOfCurrentToddler())
+            {
+                foreach (Parent p in db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
+                {
+                    if (rl.PersonId.Equals(p.PersonId))
+                    {
+                        Parents.Add(p);
+                    }
+                }
+            }
+
+            return Parents;
+        }
+
+        public ICollection<Toddler> GetToddlersOfCurrentSession()
+        {
+            string session = GetNewChildWizardSession();
+
+            ICollection<Toddler> Toddlers = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).Include(i => i.Person).ToList();
+
+            return Toddlers;
+        }
+
+
 
     }
 }

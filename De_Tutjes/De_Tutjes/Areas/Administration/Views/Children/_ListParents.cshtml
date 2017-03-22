@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<De_Tutjes.Models.Parent>
 @{
-    int models = Model.Count();
+    int models = 0;
+    if (Model != null)
+    {
+        models = Model.Count();
+    }
     string completed = "fa-square-o";
     if (models == 1) { completed = "fa-plus-square-o"; }
     else if (models == 2) { completed = "fa-check-square-o";  }
     int toddlerId = 0;
-    if (HttpContext.Current.Session["ToddlerId"] != null)
+    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
     {
-        toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
+        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
     }
 
         <div class="panel panel-default">
@@ -21,8 +25,6 @@
 
                         <div class="panel-group" id="accordion">
                             @{
-                                //if (toddlerId == 0)
-                                //{
                                     int i = 1;
                                     foreach (var parent in Model)
                                     {
@@ -59,7 +61,7 @@
                                     </div>
                                 </div>
                                             i++;
-                                        //}
+
                                     }
                                 }
                         </div>
@@ -71,7 +73,7 @@
                     @{
                         string disabledNext;
                         string disabledCreate;
-                        if (Model.Count() > 0)
+                        if (models > 0)
                         {
                             disabledNext = "";
                         }
@@ -79,7 +81,7 @@
                         {
                             disabledNext = "disabled";
                         }
-                        if (Model.Count() == 2)
+                        if (models == 2)
                         {
                             disabledCreate = "disabled";
                         }

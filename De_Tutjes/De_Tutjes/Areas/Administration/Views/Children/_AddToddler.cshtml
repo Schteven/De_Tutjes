@@ -9,18 +9,17 @@
     <div class="modal fade" id="addToddlerModal" tabindex="-1" role="dialog" aria-labelledby="addToddlerLabel" aria-hidden="true">
         @{ 
             int toddlerId = 0;
-            string toddler = "";
-            if (HttpContext.Current.Session["ToddlerId"] != null)
-                {
-                    toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
-                }
+            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
+            {
+                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
+            }
 
         }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addToddlerLabel">
-                        Kind @toddler toevoegen 
+                        Kind @HttpContext.Current.Session["NewChildWizardSession"] toevoegen 
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

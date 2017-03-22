@@ -13,6 +13,8 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int ToddlerId { get; set; }
+
+        public string ToddlerSession { get; set; }
         public string DailyRoutine { get; set; }
         public string ImportantNotice { get; set; }
 

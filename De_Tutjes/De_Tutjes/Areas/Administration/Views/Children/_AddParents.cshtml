@@ -10,16 +10,16 @@
     <div class="modal fade" id="addParentModal" tabindex="-1" role="dialog" aria-labelledby="addParentLabel" aria-hidden="true">
         @{
             int toddlerId = 0;
-            if (HttpContext.Current.Session["ToddlerId"] != null)
+            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
             {
-                toddlerId = int.Parse(HttpContext.Current.Session["ToddlerId"].ToString());
+                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
             }
         }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addParentLabel">
-                        Ouder toevoegen
+                        Ouder @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
