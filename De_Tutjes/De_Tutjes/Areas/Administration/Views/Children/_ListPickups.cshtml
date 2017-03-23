@@ -1,1 +1,110 @@
-﻿
+﻿@model IEnumerable<De_Tutjes.Models.Pickup>
+@{
+    int models = 0;
+    if (Model != null)
+    {
+        models = Model.Count();
+    }
+    string completed = "fa-square-o";
+    if (models == 1) { completed = "fa-plus-square-o"; }
+    else if (models == 2) { completed = "fa-check-square-o"; }
+    int toddlerId = 0;
+    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
+    {
+        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
+    }
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa @completed"></i> Ophaalpersonen</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="panel-group" id="accordion">
+                        @{
+                            int i = 1;
+                            foreach (var pickup in Model)
+                            {
+                                string collapsed = "in";
+                                if (models == 2)
+                                {
+                                    if (i == 1)
+                                    {
+                                        collapsed = "";
+                                    }
+                                }
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => pickup.PickupId)">@Html.DisplayFor(model => pickup.Person.FirstName)</a></h4>
+                                    </div>
+                                    <div id="@Html.DisplayFor(model => pickup.PickupId)" class="panel-collapse collapse @collapsed">
+                                        <div class="panel-body">
+                                            <fieldset>
+                                                <legend>Personal</legend>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Firstname</label>
+                                                    <div class="col-sm-10">
+                                                        @Html.DisplayFor(model => pickup.Person.FirstName)
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Lastname</label>
+                                                    <div class="col-sm-10">
+                                                        @Html.DisplayFor(model => pickup.Person.LastName)
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                i++;
+
+                            }
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                @{
+                    string disabledNext;
+                    string disabledCreate;
+                    if (models > 0)
+                    {
+                        disabledNext = "";
+                    }
+                    else
+                    {
+                        disabledNext = "disabled";
+                    }
+                    if (models == 2)
+                    {
+                        disabledCreate = "disabled";
+                    }
+                    else
+                    {
+                        disabledCreate = "";
+                    }
+                }
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" id="step2">Vorige</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addPickupModal" id="openPickupForm" @disabledCreate><i class="fa fa-user-plus"></i> Opvangpersoon toevoegen</a>
+                </div>
+
+                <div class="col-md-3">
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" id="step4" @disabledNext>Volgende</a>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </div>
+}
