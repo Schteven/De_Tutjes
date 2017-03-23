@@ -323,6 +323,9 @@
     <Content Include="Areas\Administration\Views\Children\_AddToddler.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListParents.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListToddler.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_AddAgreedDaysAndPickups.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_ListAgreedDays.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_ListPickups.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

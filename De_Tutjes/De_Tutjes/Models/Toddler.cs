@@ -35,6 +35,8 @@ namespace De_Tutjes.Models
 
         public virtual ICollection<RelationLink> RelationLinks { get; set; }
 
+        public virtual ICollection<AgreedDays> AgreedDays { get; set; }
+
         public Toddler()
         {
 
