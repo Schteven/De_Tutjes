@@ -204,7 +204,9 @@
     <Compile Include="Areas\Administration\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Administration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
+    <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
+    <Compile Include="Areas\Diary\Models\DiaryModel.cs" />
     <Compile Include="Areas\Parents\ParentsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -289,6 +291,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Functions\Data\easter.txt" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
@@ -323,9 +326,16 @@
     <Content Include="Areas\Administration\Views\Children\_AddToddler.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListParents.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListToddler.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_AddAgreedDaysAndPickups.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_ListAgreedDays.cshtml" />
-    <Content Include="Areas\Administration\Views\Children\_ListPickups.cshtml" />
+    <Content Include="Areas\Diary\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Diary\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Diary\Views\Diary\Index.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
@@ -346,6 +356,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -389,9 +400,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Diary\Controllers\" />
-    <Folder Include="Areas\Diary\Models\" />
-    <Folder Include="Areas\Diary\Views\Shared\" />
     <Folder Include="Areas\Parents\Controllers\" />
     <Folder Include="Areas\Parents\Models\" />
     <Folder Include="Areas\Parents\Views\Shared\" />
