@@ -332,6 +332,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Administration\Views\Children\_AddAgreedDaysAndPickups.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_ListAgreedDays.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_ListPickups.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

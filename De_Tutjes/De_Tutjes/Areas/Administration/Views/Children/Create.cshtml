@@ -8,6 +8,12 @@
 
             var addParentModal = $("#addParentModal").html();
             $("#addParentModal").html(addParentModal);
+
+            var addAgreedDaysModal = $("#addAgreedDaysModal").html();
+            $("#addAgreedDaysModal").html(addParentModal);
+
+            var addPickupModal = $("#addPickupModal").html();
+            $("#addPickupModal").html(addParentModal);
         });
     }
 
@@ -17,12 +23,32 @@
         });
     }
 
+    function submitAgreedDaysForm() {
+        $(function () {
+            $('#addAgreedDaysModal').modal('hide');
+        });
+    }
+
+    function submitPickupForm() {
+        $(function () {
+            $('#addPickupModal').modal('hide');
+        });
+    }
+
     $(function () {
         $('#addParentModal').on('hidden.bs.modal', function () {
             $(this).find("input,textarea,select").val('').end();
         });
 
         $('#addToddlerModal').on('hidden.bs.modal', function () {
+            $(this).find("input,textarea,select").val('').end();
+        });
+
+        $('#addAgreedDaysModal').on('hidden.bs.modal', function () {
+            $(this).find("input,textarea,select").val('').end();
+        });
+
+        $('#addPickupModal').on('hidden.bs.modal', function () {
             $(this).find("input,textarea,select").val('').end();
         });
     });

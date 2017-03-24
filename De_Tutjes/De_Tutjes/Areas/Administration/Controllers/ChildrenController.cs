@@ -189,6 +189,47 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return PartialView("_ListParents", GetParentsOfCurrentToddler());
         }
 
+        /**AGREEDDAYSANDPICKUPS***************/
+        // GET: Administration/Children/AgreedDaysAndPickups
+        public PartialViewResult _AddAgreedDaysAndPickups()
+        {
+            string session = GetNewChildWizardSession();
+            int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
+
+            CreateAgreedDaysAndPickup caap = new CreateAgreedDaysAndPickup();
+            caap.relationLinks = GetRelationLinksOfCurrentToddler();
+            caap.agreedDaysList = GetAgreedDaysOfCurrentToddler();
+            caap.pickups = GetPickupsOfCurrentToddler();
+            caap.agreedDays = new AgreedDays();
+            caap.pickup = new Pickup();
+
+            return PartialView(caap);
+        }
+
+        //POST: Administration/Children/AgreedDaysAndPickups
+        [HttpPost]
+        [ChildActionOnly]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult _AddAgreedDaysAndPickups(CreateAgreedDaysAndPickup model)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("_AddAgreedDaysAndPickups");
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateAgreedDays(CreateAgreedDaysAndPickup model)
+        {
+            return PartialView("_ListAgreedDays", GetAgreedDaysOfCurrentToddler());
+        }
+
+        [HttpPost]
+        public PartialViewResult CreatePickup(CreateAgreedDaysAndPickup model)
+        {
+            return PartialView("_ListPickups", GetPickupsOfCurrentToddler());
+        }
 
         /** FUNCTIONS *******************************************/
 
@@ -246,7 +287,41 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return Toddlers;
         }
 
+        public Toddler GetCurrentToddler()
+        {
+            string session = GetNewChildWizardSession();
+            Toddler toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).Include(i => i.Person).FirstOrDefault();
+            return toddler;
+        }
 
+        public ICollection<AgreedDays> GetAgreedDaysOfCurrentToddler()
+        {
+            Toddler toddler = GetCurrentToddler();
+            ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>();
+            agreedDaysList = db.AgreedDays.Where(t => t.Toddler.Equals(toddler)).ToList();
+            return agreedDaysList;
+        }
+
+        public ICollection<Pickup> GetPickupsOfCurrentToddler()
+        {
+            Toddler toddler = GetCurrentToddler();
+            ICollection<RelationLink> relationLinks = GetRelationLinksOfCurrentToddler();
+            ICollection<Pickup> pickups = new List<Pickup>();
+
+            foreach (RelationLink rl in GetRelationLinksOfCurrentToddler())
+            {
+                foreach (Pickup p in db.Pickups.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
+                {
+                    if (rl.PersonId.Equals(p.PersonId))
+                    {
+                        pickups.Add(p);
+                    }
+                }
+            }
+
+            return pickups;
+
+        }
 
     }
 }
