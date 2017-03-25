@@ -1,5 +1,23 @@
 ﻿@model De_Tutjes.Areas.Administration.Models.CreateAgreedDaysAndPickup
 
+<script>
+    $(function () {
+        $('#agreedDays_StartDate').datepicker({
+            format: "dd/mm/yyyy",
+            language: "nl",
+            daysOfWeekDisabled: "0,6",
+            autoclose: true
+        });
+
+        $('#agreedDays_EndDate').datepicker({
+            format: "dd/mm/yyyy",
+            language: "nl",
+            daysOfWeekDisabled: "0,6",
+            autoclose: true
+        });
+    });
+</script>
+
 @using (Ajax.BeginForm("CreateAgreedDays", null, new AjaxOptions { UpdateTargetId = "agreedDaysList", OnSuccess = "submitAgreedDaysForm()" }, new { id = "AddAgreedDaysForm" }))
 {
 
@@ -30,17 +48,18 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <fieldset>
-                        <legend>Period for AgreedDays @toddlerId</legend>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
-                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2 pull-left" })
+                                @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2 pull-right" })
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
+                            <div class="col-sm-6" id="startdate">
+                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6" id="enddate">
                                 @Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
                             </div>
@@ -63,7 +82,7 @@
 
 
 
-    <div class="modal fade" id="addAgreedDaysModal" tabindex="-1" role="dialog" aria-labelledby="addAgreedDaysLabel" aria-hidden="true">
+    <div class="modal fade" id="addPickupModal" tabindex="-1" role="dialog" aria-labelledby="addPickupLabel" aria-hidden="true">
         @{
             int toddlerId = 0;
             if (HttpContext.Current.Session["NewChildWizardSession"] != null)
@@ -147,7 +166,7 @@
             }
 
 
-<div class="tab-pane" id="b">
+<div class="tab-pane" id="c">
     <div id="agreedDaysList">
         @Html.Partial("_ListAgreedDays", Model.agreedDaysList)
     </div>

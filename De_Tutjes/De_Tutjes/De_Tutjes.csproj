@@ -240,6 +240,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -335,6 +336,9 @@
     <Content Include="Areas\Administration\Views\Children\_AddAgreedDaysAndPickups.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListAgreedDays.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListPickups.cshtml" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Scripts\datepicker-nl.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

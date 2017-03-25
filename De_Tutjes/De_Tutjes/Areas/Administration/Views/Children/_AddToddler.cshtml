@@ -1,5 +1,16 @@
 ﻿@model De_Tutjes.Areas.Administration.Models.CreateToddlerOverview
 
+<script>
+    $(function () {
+        $('#toddler_Person_BirthDate').datepicker({
+            format: "dd/mm/yyyy",
+            language: "nl",
+            daysOfWeekDisabled: "0,6",
+            autoclose: true
+        });
+    });
+</script>
+
 @using (Ajax.BeginForm("CreateToddler", null, new AjaxOptions { UpdateTargetId = "toddlerList", OnSuccess = "submitToddlerForm()" }, new { id = "AddToddlerForm" }))
 {
 

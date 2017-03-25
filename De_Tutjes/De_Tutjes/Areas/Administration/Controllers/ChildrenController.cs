@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using De_Tutjes.Models;
+using De_Tutjes.Functions;
 using De_Tutjes.Areas.Administration.Models;
 using Newtonsoft.Json;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -298,7 +300,13 @@ namespace De_Tutjes.Areas.Administration.Controllers
         {
             Toddler toddler = GetCurrentToddler();
             ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>();
-            agreedDaysList = db.AgreedDays.Where(t => t.Toddler.Equals(toddler)).ToList();
+            foreach (AgreedDays agreedDays in agreedDaysList)
+            {
+                if (agreedDays.Toddler == toddler)
+                {
+                    agreedDaysList.Add(agreedDays);
+                }
+            }
             return agreedDaysList;
         }
 
@@ -321,6 +329,37 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return pickups;
 
+        }
+        [HttpPost]
+        public JsonResult CalculateReadyForDaycare(string birthdate)
+        {
+            string format = "ddd MMM dd yyyy HH:mm:ss";
+            birthdate = birthdate.Replace(" GMT+0100 (Romance (standaardtijd))", "");
+            DateTime birthdateDT;
+            DateTime readyForDaycare;
+            bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
+            Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
+
+            // SETTINGOPTION!!!
+            readyForDaycare = birthdateDT.AddMonths(2);
+
+            return Json(new { readyForDaycare = readyForDaycare.ToString("dd'/'MM'/'yyyy") });
+        }
+
+        [HttpPost]
+        public JsonResult CalculateReadyForSchool(string birthdate)
+        {
+            string format = "ddd MMM dd yyyy HH:mm:ss";
+            birthdate = birthdate.Replace(" GMT+0100 (Romance (standaardtijd))", "");
+            DateTime birthdateDT;
+            DateTime readyForSchool;
+            bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
+            Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
+
+            SchoolHolidays schoolHolidays = new SchoolHolidays(birthdateDT);
+
+            readyForSchool = schoolHolidays.CanGoToSchoolFrom();
+            return Json(new { readyForSchool = readyForSchool.ToString("dd'/'MM'/'yyyy") });
         }
 
     }

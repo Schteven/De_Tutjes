@@ -1,6 +1,42 @@
 ﻿<script>
     function submitToddlerForm() {
         $(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Children/CalculateReadyForDaycare",
+                data: '{birthdate: "' + $('#toddler_Person_BirthDate').datepicker('getDate') + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("passed: " + response.readyForDaycare);
+                    $("#agreedDays_StartDate").val(response.readyForDaycare);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/Children/CalculateReadyForSchool",
+                data: '{birthdate: "' + $('#toddler_Person_BirthDate').datepicker('getDate') + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("passed: " + response.readyForSchool);
+                    $("#agreedDays_EndDate").val(response.readyForSchool);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
             $('#addToddlerModal').modal('hide');
 
             var addToddlerModal = $("#addToddlerModal").html();
@@ -10,10 +46,10 @@
             $("#addParentModal").html(addParentModal);
 
             var addAgreedDaysModal = $("#addAgreedDaysModal").html();
-            $("#addAgreedDaysModal").html(addParentModal);
+            $("#addAgreedDaysModal").html(addAgreedDaysModal);
 
             var addPickupModal = $("#addPickupModal").html();
-            $("#addPickupModal").html(addParentModal);
+            $("#addPickupModal").html(addAgreedDaysModal);
         });
     }
 
@@ -60,7 +96,7 @@
         $('#step4').click(function (e) { e.preventDefault(); $('#steps a[href="#d"]').tab('show'); });
         $('#step5').click(function (e) { e.preventDefault(); $('#steps a[href="#e"]').tab('show'); });
         $('#step6').click(function (e) { e.preventDefault(); $('#steps a[href="#f"]').tab('show'); });
-    })
+    });
 
 </script>
 @{
@@ -137,10 +173,8 @@
 
                     @Html.Action("_AddParents", "Children")
 
-                <div class="tab-pane" id="c">
-                    Thirdamuno, ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                    Quisque mauris augue, molestie tincidunt condimentum vitae.
-                </div>
+                    @Html.Action("_AddAgreedDaysAndPickups", "Children")
+
                 <div class="tab-pane" id="d">
                     quattro
                 </div>

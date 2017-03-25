@@ -11,17 +11,24 @@ namespace De_Tutjes.Functions
         private static DateTime now = DateTime.Now;
         private static DateTime zero = new DateTime(2000, 1, 1);
         //debug
-        private static DateTime birthday;
+        public static DateTime birthday { get; set; }
         //private static DateTime birthday = new DateTime(2015, 7, 1);
         //public static DateTime birthday { get; set; }
 
         private static DateTime readyForSchool;
 
+        public SchoolHolidays(DateTime birthdate)
+        {
+            birthday = birthdate;
+        }
+
         private static DateTime ReadyForSchool(DateTime birthday)
         {
+            // SETTINGOPTION!!!
             int MonthsAfterBirth = 30;
             DateTime Birthday = birthday;
             DateTime ReadyForSchool = Birthday.AddMonths(MonthsAfterBirth);
+            readyForSchool = ReadyForSchool;
 
             return ReadyForSchool;
         }
@@ -48,8 +55,9 @@ namespace De_Tutjes.Functions
             return zero;
         }
 
-        public static DateTime CanGoToSchoolFrom()
+        public DateTime CanGoToSchoolFrom()
         {
+            readyForSchool = ReadyForSchool(birthday);
             DateTime canGoOn = zero;
             switch (readyForSchool.Month)
             {
