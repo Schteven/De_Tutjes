@@ -1,16 +1,5 @@
 ﻿@model De_Tutjes.Areas.Administration.Models.CreateParentsOverview
 
-<script>
-    $(function () {
-        $('#parent_Person_BirthDate').datepicker({
-            format: "dd/mm/yyyy",
-            language: "nl",
-            daysOfWeekDisabled: "0,6",
-            autoclose: true
-        });
-    });
-</script>
-
 @using (Ajax.BeginForm("CreateParent", null, new AjaxOptions { UpdateTargetId = "parentList", OnSuccess = "submitParentForm()" }, new { id = "AddParentForm" }))
 {
 

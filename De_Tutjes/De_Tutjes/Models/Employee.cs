@@ -20,6 +20,10 @@ namespace De_Tutjes.Models
         public int PersonId { get; set; }
         public virtual Person Person { get; set; }
 
+        [ForeignKey("Location")]
+        public int LocationId { get; set; }
+        public virtual Location Location { get; set; }
+
         public Employee()
         {
 

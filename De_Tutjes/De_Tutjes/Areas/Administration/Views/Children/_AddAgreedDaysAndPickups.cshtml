@@ -1,23 +1,5 @@
 ﻿@model De_Tutjes.Areas.Administration.Models.CreateAgreedDaysAndPickup
 
-<script>
-    $(function () {
-        $('#agreedDays_StartDate').datepicker({
-            format: "dd/mm/yyyy",
-            language: "nl",
-            daysOfWeekDisabled: "0,6",
-            autoclose: true
-        });
-
-        $('#agreedDays_EndDate').datepicker({
-            format: "dd/mm/yyyy",
-            language: "nl",
-            daysOfWeekDisabled: "0,6",
-            autoclose: true
-        });
-    });
-</script>
-
 @using (Ajax.BeginForm("CreateAgreedDays", null, new AjaxOptions { UpdateTargetId = "agreedDaysList", OnSuccess = "submitAgreedDaysForm()" }, new { id = "AddAgreedDaysForm" }))
 {
 
@@ -49,20 +31,71 @@
 
                     <fieldset>
                         <div class="row">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2 pull-left" })
-                                @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2 pull-right" })
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-sm-6" id="startdate">
-                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForDaycare } })
                                 @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-sm-6" id="enddate">
-                                @Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForSchool } })
                                 @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
                             </div>
+                        </div>
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Monday)
+                                    </button>
+                                    @if (Model.agreedDays.Monday == null) { Model.agreedDays.Monday = false; }
+                                    @Html.CheckBoxFor(model => model.agreedDays.Monday.Value, new { @class = "hidden" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Tuesday)
+                                    </button>
+                                    @if (Model.agreedDays.Tuesday == null) { Model.agreedDays.Tuesday = false; }
+                                    @Html.CheckBoxFor(model => model.agreedDays.Tuesday.Value, new { @class = "hidden" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Wednesday)
+                                    </button>
+                                    @if (Model.agreedDays.Wednesday == null) { Model.agreedDays.Wednesday = false; }
+                                    @Html.CheckBoxFor(model => model.agreedDays.Wednesday.Value, new { @class = "hidden" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Thursday)
+                                    </button>
+                                    @if (Model.agreedDays.Thursday == null) { Model.agreedDays.Thursday = false; }
+                                    @Html.CheckBoxFor(model => model.agreedDays.Thursday.Value, new { @class = "hidden" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Friday)
+                                    </button>
+                                    @if (Model.agreedDays.Friday == null) { Model.agreedDays.Friday = false; }
+                                    @Html.CheckBoxFor(model => model.agreedDays.Friday.Value, new { @class = "hidden" })
+                                </span>
+                            </div>
+                        </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                @Html.LabelFor(model => model.agreedDays.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.TextAreaFor(model => model.agreedDays.SpecialNotice, new { @class = "form-control", @rows = "4" })
+                                @Html.ValidationMessageFor(model => model.agreedDays.SpecialNotice, "", new { @class = "text-danger" })
+                            </div>                        
+                        </div>
                         </div>
                     </fieldset>
                 </div>

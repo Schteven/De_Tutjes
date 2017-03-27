@@ -18,39 +18,42 @@
             <h3 class="panel-title"><i class="fa @completed"></i> Kind</h3>
         </div>
         <div class="panel-body">
+        @{
+            foreach (var toddler in Model)
+            {
             <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="panel-group" id="accordion">
+                <div class="col-md-2">
+                    <blockquote class="blockquote">
                         @{
-                            foreach (var toddler in Model)
+                            if (toddler.Person.Gender == "man")
                             {
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => toddler.ToddlerId)">@Html.DisplayFor(model => toddler.Person.FirstName)</a></h4>
-                                    </div>
-                                    <div id="@Html.DisplayFor(model => toddler.ToddlerId)" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <fieldset>
-                                                <legend>Personal</legend>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 col-form-label">Firstname</label>
-                                                    <div class="col-sm-10">
-                                                        @Html.DisplayFor(model => toddler.Person.FirstName)
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                                }
+                                <img class="d-flex" src="~/Images/baby-boy.png" alt="boy" height="64" width="64">
                             }
-                    </div>
-
+                            else
+                            {
+                                <img class="d-flex" src="~/Images/baby-girl.png" alt="girl" height="64" width="64">
+                            }
+                        }
+                    </blockquote>
                 </div>
-
+                <div class="col-md-10">
+                    <h5 class="mt-0">@Html.DisplayFor(model => toddler.Person.FirstName)</h5>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => toddler.Person.BirthDate, htmlAttributes: new { @class = "col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => toddler.Person.BirthDate)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => toddler.Person.Gender, htmlAttributes: new { @class = "col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => toddler.Person.Gender)
+                            </div>
+                        </div>
+                </div> 
             </div>
+                }
+            }
             <div class="row">
                 @{
 
@@ -82,7 +85,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#b" data-toggle="tab" id="step2" @disabledNext>Volgende</a>
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2" @disabledNext>Volgende</a>
                 </div>
                 <div class="col-md-1">
                 </div>

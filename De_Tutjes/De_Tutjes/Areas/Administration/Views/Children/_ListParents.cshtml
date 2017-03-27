@@ -19,56 +19,42 @@
                 <h3 class="panel-title"><i class="fa @completed"></i> Ouders</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-
-                    <div class="col-md-12">
-
-                        <div class="panel-group" id="accordion">
-                            @{
-                                    int i = 1;
-                                    foreach (var parent in Model)
-                                    {
-                                        string collapsed = "in";
-                                        if (models == 2)
+                @{
+                    foreach (var parent in Model)
+                    {
+                        <div class="row">
+                            <div class="col-md-2">
+                                <blockquote class="blockquote">
+                                    @{
+                                        if (parent.Person.Gender == "man")
                                         {
-                                            if (i == 1)
-                                            {
-                                                collapsed = "";
+                                            <img class="d-flex" src="~/Images/male.png" alt="male" height="64" width="64">
+                                        }
+                                        else
+                                        {
+                                            <img class="d-flex" src="~/Images/female.png" alt="female" height="64" width="64">
                                             }
                                         }
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => parent.ParentId)">@Html.DisplayFor(model => parent.Person.FirstName)</a></h4>
-                                    </div>
-                                    <div id="@Html.DisplayFor(model => parent.ParentId)" class="panel-collapse collapse @collapsed">
-                                        <div class="panel-body">
-                                            <fieldset>
-                                                <legend>Personal</legend>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 col-form-label">Firstname</label>
-                                                    <div class="col-sm-10">
-                                                        @Html.DisplayFor(model => parent.Person.FirstName)
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 col-form-label">Lastname</label>
-                                                    <div class="col-sm-10">
-                                                        @Html.DisplayFor(model => parent.Person.LastName)
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
+                                </blockquote>
+                            </div>
+                            <div class="col-md-10">
+                                <h5 class="mt-0">@Html.DisplayFor(model => parent.Person.FirstName)</h5>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => parent.Person.BirthDate, htmlAttributes: new { @class = "col-md-2" })
+                                    <div class="col-sm-10">
+                                        @Html.DisplayFor(model => parent.Person.BirthDate)
                                     </div>
                                 </div>
-                                            i++;
-
-                                    }
-                                }
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => parent.Person.Gender, htmlAttributes: new { @class = "col-md-2" })
+                                    <div class="col-sm-10">
+                                        @Html.DisplayFor(model => parent.Person.Gender)
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-
-                </div>
+                    }
+                }
                 <div class="row">
                     @{
                         string disabledNext;
@@ -93,14 +79,14 @@
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-3">
-                        <a class="btn btn-info btn-block btn-sm" role="button" href="#a" data-toggle="tab" id="step1">Vorige</a>
+                        <a class="btn btn-info btn-block btn-sm" role="button" href="#a" data-toggle="tab" name="step1">Vorige</a>
                     </div>
                     <div class="col-md-4">
                         <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addParentModal" id="openParentForm" @disabledCreate><i class="fa fa-user-plus"></i> Ouder toevoegen</a>
                     </div>
 
                     <div class="col-md-3">
-                        <a class="btn btn-success btn-block btn-sm" role="button" href="#c" data-toggle="tab" id="step3" @disabledNext>Volgende</a>
+                        <a class="btn btn-success btn-block btn-sm" role="button" href="#c" data-toggle="tab" name="step3" @disabledNext>Volgende</a>
                     </div>
                     <div class="col-md-1">
                     </div>

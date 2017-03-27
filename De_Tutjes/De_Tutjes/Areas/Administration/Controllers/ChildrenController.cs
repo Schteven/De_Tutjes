@@ -30,7 +30,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
             if (ncws == null)
             {
 
-                string key = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "" + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                int sessionKey = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                string key = sessionKey.ToString();
 
                 ncws = new NewChildWizardSession();
 
@@ -198,6 +199,19 @@ namespace De_Tutjes.Areas.Administration.Controllers
             string session = GetNewChildWizardSession();
             int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
 
+            Toddler toddler = db.Toddlers.Where(t => t.ToddlerId == ToddlerId).Include(p => p.Person).FirstOrDefault();
+            string readyForDaycare = "";
+            string readyForSchool = "";
+            if (toddler != null)
+            {
+                DateTime birthdate = toddler.Person.BirthDate;
+
+                if (birthdate != null)
+                {
+                    readyForDaycare = CalculateReadyForDaycare(birthdate);
+                    readyForSchool = CalculateReadyForSchool(birthdate);
+                }
+            }
             CreateAgreedDaysAndPickup caap = new CreateAgreedDaysAndPickup();
             caap.relationLinks = GetRelationLinksOfCurrentToddler();
             caap.agreedDaysList = GetAgreedDaysOfCurrentToddler();
@@ -205,6 +219,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
             caap.agreedDays = new AgreedDays();
             caap.pickup = new Pickup();
 
+            ViewBag.ReadyForDaycare = readyForDaycare;
+            ViewBag.ReadyForSchool = readyForSchool;
             return PartialView(caap);
         }
 
@@ -330,11 +346,32 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return pickups;
 
         }
+
+        public string CalculateReadyForDaycare(DateTime birthdate)
+        {
+
+            DateTime readyForDaycare;
+            // SETTINGOPTION!!!
+            readyForDaycare = birthdate.AddMonths(2);
+            string date = readyForDaycare.ToString("dd'/'MM'/'yyyy");
+            return date;
+        }
+
+        public string CalculateReadyForSchool(DateTime birthdate)
+        {
+            DateTime readyForSchool;
+            SchoolHolidays schoolHolidays = new SchoolHolidays(birthdate);
+
+            readyForSchool = schoolHolidays.CanGoToSchoolFrom();
+            string date = readyForSchool.ToString("dd'/'MM'/'yyyy");
+            return date;
+        }
+
         [HttpPost]
-        public JsonResult CalculateReadyForDaycare(string birthdate)
+        public JsonResult CalculateReadyForDaycareAJAX(string birthdate)
         {
             string format = "ddd MMM dd yyyy HH:mm:ss";
-            birthdate = birthdate.Replace(" GMT+0100 (Romance (standaardtijd))", "");
+            birthdate = birthdate.Substring(0, 24);
             DateTime birthdateDT;
             DateTime readyForDaycare;
             bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
@@ -347,10 +384,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public JsonResult CalculateReadyForSchool(string birthdate)
+        public JsonResult CalculateReadyForSchoolAJAX(string birthdate)
         {
             string format = "ddd MMM dd yyyy HH:mm:ss";
-            birthdate = birthdate.Replace(" GMT+0100 (Romance (standaardtijd))", "");
+            birthdate = birthdate.Substring(0, 24);
             DateTime birthdateDT;
             DateTime readyForSchool;
             bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
