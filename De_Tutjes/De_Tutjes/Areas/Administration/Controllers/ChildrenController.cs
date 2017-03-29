@@ -54,6 +54,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 ViewBag.SessionStarted = ncws.Start;
                 ViewBag.Session = ncws.ToddlerSession;
             }
+
             return View();
         }
 
@@ -371,32 +372,49 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public JsonResult CalculateReadyForDaycareAJAX(string birthdate)
         {
             string format = "ddd MMM dd yyyy HH:mm:ss";
-            birthdate = birthdate.Substring(0, 24);
-            DateTime birthdateDT;
-            DateTime readyForDaycare;
-            bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
-            Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
+            if (string.IsNullOrEmpty(birthdate))
+            {
+                birthdate = birthdate.Substring(0, 24);
 
-            // SETTINGOPTION!!!
-            readyForDaycare = birthdateDT.AddMonths(2);
+                DateTime birthdateDT;
+                DateTime readyForDaycare;
+                bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
+                Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
 
-            return Json(new { readyForDaycare = readyForDaycare.ToString("dd'/'MM'/'yyyy") });
+                // SETTINGOPTION!!!
+                readyForDaycare = birthdateDT.AddMonths(2);
+
+                return Json(new { readyForDaycare = readyForDaycare.ToString("dd'/'MM'/'yyyy") });
+            }
+            else
+            {
+                string date = CalculateReadyForDaycare(GetCurrentToddler().Person.BirthDate);
+                return Json(new { readyForDaycare = date });
+            }
         }
 
         [HttpPost]
         public JsonResult CalculateReadyForSchoolAJAX(string birthdate)
         {
             string format = "ddd MMM dd yyyy HH:mm:ss";
-            birthdate = birthdate.Substring(0, 24);
-            DateTime birthdateDT;
-            DateTime readyForSchool;
-            bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
-            Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
+            if (string.IsNullOrEmpty(birthdate))
+            {
+                birthdate = birthdate.Substring(0, 24);
+                DateTime birthdateDT;
+                DateTime readyForSchool;
+                bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
+                Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
 
-            SchoolHolidays schoolHolidays = new SchoolHolidays(birthdateDT);
+                SchoolHolidays schoolHolidays = new SchoolHolidays(birthdateDT);
 
-            readyForSchool = schoolHolidays.CanGoToSchoolFrom();
-            return Json(new { readyForSchool = readyForSchool.ToString("dd'/'MM'/'yyyy") });
+                readyForSchool = schoolHolidays.CanGoToSchoolFrom();
+                return Json(new { readyForSchool = readyForSchool.ToString("dd'/'MM'/'yyyy") });
+            }
+            else
+            {
+                string date = CalculateReadyForSchool(GetCurrentToddler().Person.BirthDate);
+                return Json(new { readyForSchool = date });
+            }
         }
 
     }

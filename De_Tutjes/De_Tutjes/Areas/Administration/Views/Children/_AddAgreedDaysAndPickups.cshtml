@@ -20,34 +20,31 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="addAgreedDaysLabel">
                         AgreedDay @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h5>
-
                 </div>
+
                 <div class="modal-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    <fieldset>
                         <div class="row">
-                        <div class="form-group">
-                            <div class="col-sm-6" id="startdate">
-                                @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForDaycare } })
-                                @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-sm-6" id="enddate">
-                                @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForSchool } })
-                                @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                            <!--div class="form-group">-->
+                                <div class="col-sm-6" id="startdate">
+                                    @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <input type="text" class="form-control" name="agreedDays_StartDate" id="agreedDays_StartDate" value="">
+                                    @{/*Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForDaycare } });*/}
+                                    @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6" id="enddate">
+                                    @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <input type="text" class="form-control" name="agreedDays_EndDate" id="agreedDays_EndDate" value="">
+                                    @{/*Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForSchool } });*/}
+                                    @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
+                                </div>
+                            <!--</div>-->
                         </div>
                         <hr />
 
                         <div class="row">
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <span class="button-checkbox">
                                     <button type="button" class="btn btn-sm btn-block" data-color="primary">
@@ -86,18 +83,15 @@
                                 </span>
                             </div>
                         </div>
-                        </div>
                         <hr />
                         <div class="row">
-                        <div class="form-group">
                             <div class="col-sm-12">
                                 @Html.LabelFor(model => model.agreedDays.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-2" })
                                 @Html.TextAreaFor(model => model.agreedDays.SpecialNotice, new { @class = "form-control", @rows = "4" })
                                 @Html.ValidationMessageFor(model => model.agreedDays.SpecialNotice, "", new { @class = "text-danger" })
                             </div>                        
                         </div>
-                        </div>
-                    </fieldset>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,7 +185,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="submit" class="btn btn-primary" id="savePickup">Save</button>
                 </div>
             </div>
         </div>

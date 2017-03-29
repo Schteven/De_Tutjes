@@ -314,6 +314,7 @@
     <Content Include="Images\baby-girl.png" />
     <Content Include="Images\female.png" />
     <Content Include="Images\male.png" />
+    <Content Include="Images\stork.png" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
