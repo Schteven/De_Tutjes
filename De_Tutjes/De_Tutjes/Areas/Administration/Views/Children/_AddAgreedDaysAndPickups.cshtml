@@ -27,20 +27,16 @@
                 <div class="modal-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="row">
-                            <!--div class="form-group">-->
                                 <div class="col-sm-6" id="startdate">
                                     @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <input type="text" class="form-control" name="agreedDays_StartDate" id="agreedDays_StartDate" value="">
-                                    @{/*Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForDaycare } });*/}
                                     @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-sm-6" id="enddate">
                                     @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <input type="text" class="form-control" name="agreedDays_EndDate" id="agreedDays_EndDate" value="">
-                                    @{/*Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ReadyForSchool } });*/}
                                     @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
                                 </div>
-                            <!--</div>-->
                         </div>
                         <hr />
 

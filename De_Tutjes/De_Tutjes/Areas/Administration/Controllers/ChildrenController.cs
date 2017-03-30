@@ -241,6 +241,26 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreateAgreedDays(CreateAgreedDaysAndPickup model)
         {
+            string session = GetNewChildWizardSession();
+            if (ModelState.IsValid)
+            {
+                Toddler toddler = GetCurrentToddler();
+                AgreedDays agreedDays = new AgreedDays();
+
+                agreedDays.ToddlerId = toddler.ToddlerId;
+
+                agreedDays.StartDate = model.agreedDays.StartDate;
+                agreedDays.EndDate = model.agreedDays.EndDate;
+
+                agreedDays.Monday = model.agreedDays.Monday;
+                agreedDays.Tuesday = model.agreedDays.Tuesday;
+                agreedDays.Wednesday = model.agreedDays.Wednesday;
+                agreedDays.Thursday = model.agreedDays.Thursday;
+                agreedDays.Friday = model.agreedDays.Friday;
+
+                agreedDays.SpecialNotice = model.agreedDays.SpecialNotice;
+
+            }
             return PartialView("_ListAgreedDays", GetAgreedDaysOfCurrentToddler());
         }
 

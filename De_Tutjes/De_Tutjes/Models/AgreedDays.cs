@@ -34,7 +34,7 @@ namespace De_Tutjes.Models
         public virtual Toddler Toddler { get; set; }
 
         [ForeignKey("Location")]
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
 
 
