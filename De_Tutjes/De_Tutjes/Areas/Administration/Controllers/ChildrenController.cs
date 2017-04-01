@@ -398,6 +398,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
             ICollection<FreePlace> freePlaces = new List<FreePlace>();
             ICollection<DateTime> period = new List<DateTime>();
 
+            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.ToList();
+
             double totalDays = (agreedDays.EndDate - agreedDays.StartDate).TotalDays;
             double i;
             for (i = 0; i < totalDays; i++)
@@ -417,8 +419,15 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     default:
                         break;
                 }
+
+                foreach (AgreedDays agreedDay in agreedDaysList)
+                {
+
+                }
                 
             }
+
+
 
             return freePlaces;
         }
