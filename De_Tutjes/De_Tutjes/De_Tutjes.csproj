@@ -204,6 +204,7 @@
     <Compile Include="Areas\Administration\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Administration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
+    <Compile Include="Areas\Administration\Models\FreePlace.cs" />
     <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
     <Compile Include="Areas\Diary\Models\DiaryModel.cs" />

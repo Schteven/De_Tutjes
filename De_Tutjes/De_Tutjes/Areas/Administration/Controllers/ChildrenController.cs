@@ -260,6 +260,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 agreedDays.SpecialNotice = model.agreedDays.SpecialNotice;
 
+                db.AgreedDays.Add(agreedDays);
+                db.SaveChanges();
+
+
             }
             return PartialView("_ListAgreedDays", GetAgreedDaysOfCurrentToddler());
         }
@@ -386,6 +390,46 @@ namespace De_Tutjes.Areas.Administration.Controllers
             readyForSchool = schoolHolidays.CanGoToSchoolFrom();
             string date = readyForSchool.ToString("dd'/'MM'/'yyyy");
             return date;
+        }
+
+        public ICollection<FreePlace> CalculateFreePlacesOnDay(AgreedDays agreedDays)
+        {
+            int max = 17;
+            ICollection<FreePlace> freePlaces = new List<FreePlace>();
+            ICollection<DateTime> period = new List<DateTime>();
+
+            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.ToList();
+
+            double totalDays = (agreedDays.EndDate - agreedDays.StartDate).TotalDays;
+            double i;
+            for (i = 0; i < totalDays; i++)
+            {
+                DateTime date = agreedDays.StartDate.AddDays(i);
+                switch (date.ToString("dddd"))
+                {
+                    case "maandag":
+                    case "dinsdag":
+                    case "woensdag":
+                    case "donderdag":
+                    case "vrijdag":
+                        period.Add(date);
+                        break;
+                    case "zaterdag":
+                    case "zondag":
+                    default:
+                        break;
+                }
+
+                foreach (AgreedDays agreedDay in agreedDaysList)
+                {
+
+                }
+                
+            }
+
+
+
+            return freePlaces;
         }
 
         [HttpPost]
