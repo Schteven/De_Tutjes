@@ -13,7 +13,6 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int EmployeeID { get; set; }
-        public int LocationID { get; set; }
         public int Role { get; set; }
 
         [ForeignKey("Person")]
