@@ -43,37 +43,42 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <span class="button-checkbox">
-                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Monday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Monday)
                                     </button>
+                                    <span class="label label-info" id="checkMonday"></span>
                                     @if (Model.agreedDays.Monday == null) { Model.agreedDays.Monday = false; }
                                     @Html.CheckBoxFor(model => model.agreedDays.Monday.Value, new { @class = "hidden" })
                                 </span>
                                 <span class="button-checkbox">
-                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Tuesday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Tuesday)
                                     </button>
+                                    <span class="label label-info" id="checkTuesday"></span>
                                     @if (Model.agreedDays.Tuesday == null) { Model.agreedDays.Tuesday = false; }
                                     @Html.CheckBoxFor(model => model.agreedDays.Tuesday.Value, new { @class = "hidden" })
                                 </span>
                                 <span class="button-checkbox">
-                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Wednesday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Wednesday)
                                     </button>
+                                    <span class="label label-info" id="checkWednesday"></span>
                                     @if (Model.agreedDays.Wednesday == null) { Model.agreedDays.Wednesday = false; }
                                     @Html.CheckBoxFor(model => model.agreedDays.Wednesday.Value, new { @class = "hidden" })
                                 </span>
                                 <span class="button-checkbox">
-                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Thursday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Thursday)
                                     </button>
+                                    <span class="label label-info" id="checkThursday"></span>
                                     @if (Model.agreedDays.Thursday == null) { Model.agreedDays.Thursday = false; }
                                     @Html.CheckBoxFor(model => model.agreedDays.Thursday.Value, new { @class = "hidden" })
                                 </span>
                                 <span class="button-checkbox">
-                                    <button type="button" class="btn btn-sm btn-block" data-color="primary">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Friday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Friday)
                                     </button>
+                                    <span class="label label-info" id="checkFriday"></span>
                                     @if (Model.agreedDays.Friday == null) { Model.agreedDays.Friday = false; }
                                     @Html.CheckBoxFor(model => model.agreedDays.Friday.Value, new { @class = "hidden" })
                                 </span>

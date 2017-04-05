@@ -1,4 +1,6 @@
 ﻿// MAIN CREATE/CHILD
+var readyEnd = false;
+var readyStart = false;
 
 function readyForDaycareAJAX() {
     $(function () {
@@ -10,6 +12,7 @@ function readyForDaycareAJAX() {
             dataType: "json",
             success: function (response) {
                 $("#agreedDays_StartDate").val(response.readyForDaycare);
+                readyStart = true;
             }
         });
     });
@@ -25,6 +28,7 @@ function readyForSchoolAJAX() {
             dataType: "json",
             success: function (response) {
                 $("#agreedDays_EndDate").val(response.readyForSchool);
+                readyEnd = true;
             }
         });
     });
@@ -145,6 +149,31 @@ $(function () {
 
 // CREATE/CHILD/AGREEDDAYS
 
+function CalculateFreePlacesOnDayAJAX(id) {
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Children/CalculateFreePlacesOnDayAJAX",
+            data: '{day: "' + id + '", startdate: "' + $('#agreedDays_StartDate').datepicker('getDate') + '", enddate: "' + $('#agreedDays_EndDate').datepicker('getDate') + '" }',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#check" + id).html(response.freeplace);
+            }
+        });
+    });
+}
+
+function CalculateAll() {
+
+    CalculateFreePlacesOnDayAJAX("Monday");
+    CalculateFreePlacesOnDayAJAX("Tuesday");
+    CalculateFreePlacesOnDayAJAX("Wednesday");
+    CalculateFreePlacesOnDayAJAX("Thursday");
+    CalculateFreePlacesOnDayAJAX("Friday");
+
+}
+
 function setDatePickerAgreedDaysAndPickups() {
     $(function () {
         $('#agreedDays_StartDate').datepicker({
@@ -163,10 +192,37 @@ function setDatePickerAgreedDaysAndPickups() {
     });
 };
 
+
 $(function () {
+    
+    $("#Monday").click(function () {
+        CalculateFreePlacesOnDayAJAX(this.id);
+    });
+    $("#Tuesday").click(function () {
+        CalculateFreePlacesOnDayAJAX(this.id);
+    });
+    $("#Wednesday").click(function () {
+        CalculateFreePlacesOnDayAJAX(this.id);
+    });
+    $("#Thursday").click(function () {
+        CalculateFreePlacesOnDayAJAX(this.id);
+    });
+    $("#Friday").click(function () {
+        CalculateFreePlacesOnDayAJAX(this.id);
+    });
+    
     $('#addAgreedDaysModal').on('shown.bs.modal', function () {
         readyForDaycareAJAX();
         readyForSchoolAJAX();
+    });
+
+    $('#agreedDays_EndDate').change(function () {
+        if ($("#agreedDays_EndDate").datepicker("getDate") != null) {
+            readyEnd = true;
+            if (readyStart == true) {
+                CalculateAll();
+            }
+        }
     });
 
         $('.button-checkbox').each(function () {

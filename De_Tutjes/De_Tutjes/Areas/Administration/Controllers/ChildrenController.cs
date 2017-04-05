@@ -392,19 +392,34 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return date;
         }
 
-        public ICollection<FreePlace> CalculateFreePlacesOnDay(AgreedDays agreedDays)
+        [HttpPost]
+        public JsonResult CalculateFreePlacesOnDayAJAX(string day, string startdate, string enddate)
         {
+            DateTime StartDate = DateTime.Now;
+            DateTime EndDate = DateTime.Now;
+
+            // CONVERT JQUERY TO DATETIME
+            string format = "ddd MMM dd yyyy HH:mm:ss";
+            if (string.IsNullOrEmpty(day) && string.IsNullOrEmpty(startdate) && string.IsNullOrEmpty(enddate))
+            {
+                startdate = startdate.Substring(0, 24);
+                enddate = enddate.Substring(0, 24);
+                bool  isValidStartDate = DateTime.TryParseExact(startdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out StartDate);
+                bool isValidEndDate = DateTime.TryParseExact(enddate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out EndDate);
+            }
+
             int max = 17;
+            int freeplaces = 0;
             ICollection<FreePlace> freePlaces = new List<FreePlace>();
-            ICollection<DateTime> period = new List<DateTime>();
+            ICollection<DateTime> newPeriod = new List<DateTime>();
 
-            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.ToList();
+            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.Where(st => st.EndDate >= StartDate).ToList();
 
-            double totalDays = (agreedDays.EndDate - agreedDays.StartDate).TotalDays;
+            double totalDays = (EndDate - StartDate).TotalDays;
             double i;
             for (i = 0; i < totalDays; i++)
             {
-                DateTime date = agreedDays.StartDate.AddDays(i);
+                DateTime date = StartDate.AddDays(i);
                 switch (date.ToString("dddd"))
                 {
                     case "maandag":
@@ -412,24 +427,48 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     case "woensdag":
                     case "donderdag":
                     case "vrijdag":
-                        period.Add(date);
+                        newPeriod.Add(date);
                         break;
                     case "zaterdag":
                     case "zondag":
                     default:
                         break;
                 }
-
+            }
                 foreach (AgreedDays agreedDay in agreedDaysList)
                 {
-
+                    ICollection<DateTime> existingPeriod = new List<DateTime>();
+                    double existingTotalDays = (agreedDay.EndDate - agreedDay.StartDate).TotalDays;
+                    double i2;
+                    for (i2 = 0; i2 < totalDays; i2++)
+                    {
+                        DateTime date2 = StartDate.AddDays(i);
+                        switch (date2.ToString("dddd"))
+                        {
+                            case "maandag":
+                            case "dinsdag":
+                            case "woensdag":
+                            case "donderdag":
+                            case "vrijdag":
+                                existingPeriod.Add(date2);
+                                break;
+                            case "zaterdag":
+                            case "zondag":
+                            default:
+                                break;
+                        }
+                    }
+                    foreach (DateTime existingDay in existingPeriod)
+                    {
+                        if (newPeriod.Contains(existingDay))
+                        {
+                            max--;
+                        }
+                    }
                 }
-                
-            }
 
 
-
-            return freePlaces;
+            return Json(new { freeplace = max });
         }
 
         [HttpPost]
