@@ -6,8 +6,7 @@
         models = Model.Count();
     }
     string completed = "fa-square-o";
-    if (models == 1) { completed = "fa-plus-square-o"; }
-    else if (models == 2) { completed = "fa-check-square-o"; }
+    if (models > 0) { completed = "fa-check-square-o"; }
     int toddlerId = 0;
     if (HttpContext.Current.Session["NewChildWizardSession"] != null)
     {
@@ -70,37 +69,16 @@
 
             </div>
             <div class="row">
-                @{
-                    string disabledNext;
-                    string disabledCreate;
-                    if (models > 0)
-                    {
-                        disabledNext = "";
-                    }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
-                    if (models == 2)
-                    {
-                        disabledCreate = "disabled";
-                    }
-                    else
-                    {
-                        disabledCreate = "";
-                    }
-                }
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2">Vorige</a>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addPickupModal" id="openPickupForm" @disabledCreate><i class="fa fa-user-plus"></i> Opvangpersoon toevoegen</a>
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addPickupModal" id="openPickupForm"><i class="fa fa-user-plus"></i> Opvangpersoon toevoegen</a>
                 </div>
 
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4" @disabledNext>Volgende</a>
+
                 </div>
                 <div class="col-md-1">
                 </div>

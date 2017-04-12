@@ -1,34 +1,20 @@
 ﻿// MAIN CREATE/CHILD
-var readyEnd = false;
-var readyStart = false;
+var readyStart = "test";
+var readyEnd = "test";
 
-function readyForDaycareAJAX() {
+function readyDatesAJAX() {
     $(function () {
         $.ajax({
             type: "POST",
-            url: "/Children/CalculateReadyForDaycareAJAX",
+            url: "/Children/CalculateReadyDateAJAX",
             data: '{birthdate: "' + $('#toddler_Person_BirthDate').datepicker('getDate') + '" }',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
                 $("#agreedDays_StartDate").val(response.readyForDaycare);
-                readyStart = true;
-            }
-        });
-    });
-}
-
-function readyForSchoolAJAX() {
-    $(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Children/CalculateReadyForSchoolAJAX",
-            data: '{birthdate: "' + $('#toddler_Person_BirthDate').datepicker('getDate') + '" }',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
                 $("#agreedDays_EndDate").val(response.readyForSchool);
-                readyEnd = true;
+                readyStart = response.readyForDaycare;
+                readyEnd = response.readyForSchool;
             }
         });
     });
@@ -36,9 +22,7 @@ function readyForSchoolAJAX() {
 
 function submitToddlerForm() {
 
-    readyForDaycareAJAX();
-
-    readyForSchoolAJAX();
+    readyDatesAJAX();
 
     $(function () {
         $('#addToddlerModal').modal('hide');
@@ -109,7 +93,10 @@ $(function () {
         var addPickupModal = $("#addPickupModal").html();
         $("#addPickupModal").html(addPickupModal);
         */
+
         setDatePickerAgreedDaysAndPickups();
+
+        readyDatesAJAX();
 
         $('#steps a[href="#c"]').tab('show');
     });
@@ -154,11 +141,11 @@ function CalculateFreePlacesOnDayAJAX(id) {
         $.ajax({
             type: "POST",
             url: "/Children/CalculateFreePlacesOnDayAJAX",
-            data: '{day: "' + id + '", startdate: "' + $('#agreedDays_StartDate').datepicker('getDate') + '", enddate: "' + $('#agreedDays_EndDate').datepicker('getDate') + '" }',
+            data: '{day: "' + id + '", startdate: "' + readyStart + '", enddate: "' + readyEnd + '" }',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                $("#check" + id).html(response.freeplace);
+                //$("#check" + id).html(response.freeplace);
             }
         });
     });
@@ -190,11 +177,11 @@ function setDatePickerAgreedDaysAndPickups() {
             autoclose: true
         });
     });
-};
+}
 
 
 $(function () {
-    
+    /*
     $("#Monday").click(function () {
         CalculateFreePlacesOnDayAJAX(this.id);
     });
@@ -210,19 +197,19 @@ $(function () {
     $("#Friday").click(function () {
         CalculateFreePlacesOnDayAJAX(this.id);
     });
-    
-    $('#addAgreedDaysModal').on('shown.bs.modal', function () {
-        readyForDaycareAJAX();
-        readyForSchoolAJAX();
+    */
+
+    $("#agreedDays_StartDate").change(function () {
+        readyStart = $("#agreedDays_StartDate").datepicker('getDate');
     });
 
-    $('#agreedDays_EndDate').change(function () {
-        if ($("#agreedDays_EndDate").datepicker("getDate") != null) {
-            readyEnd = true;
-            if (readyStart == true) {
-                CalculateAll();
-            }
-        }
+    $("#agreedDays_EndDate").change(function () {
+        readyEnd = $("#agreedDays_StartDate").datepicker('getDate');
+        CalculateAll();
+    });
+
+    $('#addAgreedDaysModal').on('shown.bs.modal', function () {
+        CalculateAll();
     });
 
         $('.button-checkbox').each(function () {
@@ -248,7 +235,7 @@ $(function () {
             });
             function updateDisplay() {
                 var isChecked = $checkbox.is(':checked');
-                $button.data('state', (isChecked) ? "on" : "off");
+                $button.data('state', isChecked ? "on" : "off");
                 $button.find('.state-icon')
                     .removeClass()
                     .addClass('state-icon ' + settings[$button.data('state')].icon);
@@ -265,7 +252,7 @@ $(function () {
             }
             function init() {
                 updateDisplay();
-                if ($button.find('.state-icon').length == 0) {
+                if ($button.find('.state-icon').length === 0) {
                     $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
                 }
             }

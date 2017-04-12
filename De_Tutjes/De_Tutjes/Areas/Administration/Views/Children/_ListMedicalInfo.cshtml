@@ -1,0 +1,75 @@
+﻿@model De_Tutjes.Areas.Administration.Models.CreateMedicalInformation
+@{
+    string completed = "fa-square-o";
+    if (Model.medicalInfo != null) { completed = "fa-check-square-o"; }
+    int toddlerId = 0;
+    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
+    {
+        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
+    }
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa @completed"></i> Medische informatie</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    @if (Model.medicalInfo != null)
+                    {
+                    <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => model.medicalInfo.MedicalID)">Medisch</a></h4>
+                                    </div>
+                                    <div id="@Html.DisplayFor(model => model.medicalInfo.MedicalID)" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <fieldset>
+                                                <legend>Personal</legend>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Huisarts</label>
+                                                    <div class="col-sm-10">
+                                                        @Html.DisplayFor(model => model.medicalInfo.Doctor.Person.FirstName)
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    }
+
+                </div>
+
+            </div>
+            <div class="row">
+                @{
+                    string disabledNext = "disabled";
+                    string disabledCreate = "";
+                    if (Model.medicalInfo != null)
+                    {
+                        disabledCreate = "disabled";
+                        disabledNext = "";
+                    }
+                    
+                }
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2">Vorige</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addMedicalInformationModal" id="openMedicalInformationForm" @disabledCreate><i class="fa fa-calendar-plus-o"></i> Medische fiche toevoegen</a>
+                </div>
+
+                <div class="col-md-3">
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4" @disabledNext>Volgende</a>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

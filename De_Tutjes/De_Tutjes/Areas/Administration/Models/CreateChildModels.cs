@@ -36,4 +36,10 @@ namespace De_Tutjes.Areas.Administration.Models
         public ICollection<RelationLink> relationLinks { get; set; }
     }
 
+    public class CreateMedicalInformation
+    {
+        public Medical medical { get; set; }
+        public Medical medicalInfo { get; set; }
+    }
+
 }

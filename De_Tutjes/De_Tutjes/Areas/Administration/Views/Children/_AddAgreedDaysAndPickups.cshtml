@@ -29,12 +29,12 @@
                         <div class="row">
                                 <div class="col-sm-6" id="startdate">
                                     @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <input type="text" class="form-control" name="agreedDays_StartDate" id="agreedDays_StartDate" value="">
+                                    <input type="text" class="form-control" name="agreedDays.StartDate" id="agreedDays_StartDate" value="">
                                     @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-sm-6" id="enddate">
                                     @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <input type="text" class="form-control" name="agreedDays_EndDate" id="agreedDays_EndDate" value="">
+                                    <input type="text" class="form-control" name="agreedDays.EndDate" id="agreedDays_EndDate" value="">
                                     @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
                                 </div>
                         </div>
@@ -47,40 +47,35 @@
                                         @Html.DisplayNameFor(model => model.agreedDays.Monday)
                                     </button>
                                     <span class="label label-info" id="checkMonday"></span>
-                                    @if (Model.agreedDays.Monday == null) { Model.agreedDays.Monday = false; }
-                                    @Html.CheckBoxFor(model => model.agreedDays.Monday.Value, new { @class = "hidden" })
+                                    @Html.CheckBoxFor(model => model.agreedDays.Monday, new { @class = "hidden", @value = "true" })
                                 </span>
                                 <span class="button-checkbox">
                                     <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Tuesday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Tuesday)
                                     </button>
                                     <span class="label label-info" id="checkTuesday"></span>
-                                    @if (Model.agreedDays.Tuesday == null) { Model.agreedDays.Tuesday = false; }
-                                    @Html.CheckBoxFor(model => model.agreedDays.Tuesday.Value, new { @class = "hidden" })
+                                    @Html.CheckBoxFor(model => model.agreedDays.Tuesday, new { @class = "hidden", @value = "true" })
                                 </span>
                                 <span class="button-checkbox">
                                     <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Wednesday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Wednesday)
                                     </button>
                                     <span class="label label-info" id="checkWednesday"></span>
-                                    @if (Model.agreedDays.Wednesday == null) { Model.agreedDays.Wednesday = false; }
-                                    @Html.CheckBoxFor(model => model.agreedDays.Wednesday.Value, new { @class = "hidden" })
+                                    @Html.CheckBoxFor(model => model.agreedDays.Wednesday, new { @class = "hidden", @value = "true" })
                                 </span>
                                 <span class="button-checkbox">
                                     <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Thursday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Thursday)
                                     </button>
                                     <span class="label label-info" id="checkThursday"></span>
-                                    @if (Model.agreedDays.Thursday == null) { Model.agreedDays.Thursday = false; }
-                                    @Html.CheckBoxFor(model => model.agreedDays.Thursday.Value, new { @class = "hidden" })
+                                    @Html.CheckBoxFor(model => model.agreedDays.Thursday, new { @class = "hidden", @value = "true" })
                                 </span>
                                 <span class="button-checkbox">
                                     <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Friday">
                                         @Html.DisplayNameFor(model => model.agreedDays.Friday)
                                     </button>
                                     <span class="label label-info" id="checkFriday"></span>
-                                    @if (Model.agreedDays.Friday == null) { Model.agreedDays.Friday = false; }
-                                    @Html.CheckBoxFor(model => model.agreedDays.Friday.Value, new { @class = "hidden" })
+                                    @Html.CheckBoxFor(model => model.agreedDays.Friday, new { @class = "hidden", @value = "true" })
                                 </span>
                             </div>
                         </div>
@@ -200,5 +195,36 @@
     </div>
     <div id="pickupsList">
         @Html.Partial("_ListPickups", Model.pickups)
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                @{ 
+                    string disabledNext;
+                    if (Model.agreedDaysList.Count() > 0)
+                    {
+                        disabledNext = "";
+                    }
+                    else
+                    {
+                        disabledNext = "disabled";
+                    }
+                }
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2">Vorige</a>
+                </div>
+
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-3">
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4" @disabledNext>Volgende</a>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
     </div>
 </div>

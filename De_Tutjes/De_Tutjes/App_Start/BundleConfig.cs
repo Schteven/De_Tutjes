@@ -17,6 +17,7 @@ namespace De_Tutjes
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js",
+                        "~/Scripts/moment.js",
                         "~/Scripts/angular-ui/ui-bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

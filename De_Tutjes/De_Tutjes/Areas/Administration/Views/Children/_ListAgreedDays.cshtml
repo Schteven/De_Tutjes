@@ -6,8 +6,7 @@
         models = Model.Count();
     }
     string completed = "fa-square-o";
-    if (models == 1) { completed = "fa-plus-square-o"; }
-    else if (models == 2) { completed = "fa-check-square-o"; }
+    if (models >= 1) { completed = "fa-check-square-o"; }
     int toddlerId = 0;
     if (HttpContext.Current.Session["NewChildWizardSession"] != null)
     {
@@ -71,16 +70,7 @@
             </div>
             <div class="row">
                 @{
-                    string disabledNext;
                     string disabledCreate;
-                    if (models > 0)
-                    {
-                        disabledNext = "";
-                    }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
                     if (models == 2)
                     {
                         disabledCreate = "disabled";

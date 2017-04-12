@@ -14,6 +14,9 @@ namespace De_Tutjes.Areas.Administration.Controllers
 {
     public class ChildrenController : Controller
     {
+        private DateTime CreateAgreedDays_StartDate;
+        private DateTime CreateAgreedDays_EndDate;
+
         private DeTutjesContext db = new DeTutjesContext();
 
         // GET: Administration/Children
@@ -104,7 +107,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 toddler.Person.Gender = model.toddler.Person.Gender;
                 toddler.Person.BirthDate = model.toddler.Person.BirthDate;
                 toddler.Person.RegistrationDate = DateTime.Now;
-                toddler.Person.Active = true;
+                toddler.Person.Active = false;
 
                 db.Toddlers.Add(toddler);
                 db.SaveChanges();
@@ -155,6 +158,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             string session = GetNewChildWizardSession();
             if (ModelState.IsValid)
             {
+                Toddler toddler = GetCurrentToddler();
                 Parent parent = new Parent();
 
                 parent.Person = new Person();
@@ -163,7 +167,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 parent.Person.Gender = model.parent.Person.Gender;
                 parent.Person.BirthDate = model.parent.Person.BirthDate;
                 parent.Person.RegistrationDate = DateTime.Now;
-                parent.Person.Active = true;
+                parent.Person.Active = false;
                 
                 parent.Person.Address = new Address();
                 parent.Person.Address.City = model.parent.Person.Address.City;
@@ -183,7 +187,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 RelationLink relationLink = new RelationLink();
                 relationLink.Person = db.Persons.Find(parent.PersonId);
-                relationLink.Toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).FirstOrDefault();
+                relationLink.Toddler = toddler;
                 relationLink.RelationToChild = "isParent";
 
                 db.RelationLinks.Add(relationLink);
@@ -252,11 +256,11 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 agreedDays.StartDate = model.agreedDays.StartDate;
                 agreedDays.EndDate = model.agreedDays.EndDate;
 
-                agreedDays.Monday = model.agreedDays.Monday;
-                agreedDays.Tuesday = model.agreedDays.Tuesday;
-                agreedDays.Wednesday = model.agreedDays.Wednesday;
-                agreedDays.Thursday = model.agreedDays.Thursday;
-                agreedDays.Friday = model.agreedDays.Friday;
+                agreedDays.Monday = (bool) model.agreedDays.Monday;
+                agreedDays.Tuesday = (bool) model.agreedDays.Tuesday;
+                agreedDays.Wednesday = (bool) model.agreedDays.Wednesday;
+                agreedDays.Thursday = (bool) model.agreedDays.Thursday;
+                agreedDays.Friday = (bool) model.agreedDays.Friday;
 
                 agreedDays.SpecialNotice = model.agreedDays.SpecialNotice;
 
@@ -271,7 +275,76 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreatePickup(CreateAgreedDaysAndPickup model)
         {
+            string session = GetNewChildWizardSession();
+            if (ModelState.IsValid)
+            {
+                Toddler toddler = GetCurrentToddler();
+
+                Pickup pickup = new Pickup();
+                pickup.Relation = model.pickup.Relation;
+
+                pickup.Person = new Person();
+                pickup.Person.FirstName = model.pickup.Person.FirstName;
+                pickup.Person.LastName = model.pickup.Person.LastName;
+                pickup.Person.BirthDate = DateTime.Now;
+                pickup.Person.RegistrationDate = DateTime.Now;
+                pickup.Person.Active = false;
+
+                pickup.Person.Address = new Address();
+                pickup.Person.Address.City = model.pickup.Person.Address.City;
+                pickup.Person.Address.PostalCode = model.pickup.Person.Address.PostalCode;
+
+                pickup.Person.ContactDetail = new ContactDetail();
+                pickup.Person.ContactDetail.CellPhone = model.pickup.Person.ContactDetail.CellPhone;
+
+                db.Pickups.Add(pickup);
+                db.SaveChanges();
+
+                RelationLink relationLink = new RelationLink();
+
+                relationLink.RelationToChild = "isPickup";
+                relationLink.Person = db.Persons.Find(pickup.PersonId);
+                relationLink.Toddler = toddler;
+
+                db.RelationLinks.Add(relationLink);
+                db.SaveChanges();
+                
+            }
             return PartialView("_ListPickups", GetPickupsOfCurrentToddler());
+        }
+        /**MEDICALINFORMATION***************/
+        // GET: Administration/Children/MedicalInformation
+        public PartialViewResult _AddMedicalInformation()
+        {
+            string session = GetNewChildWizardSession();
+
+            Toddler toddler = GetCurrentToddler();
+
+            CreateMedicalInformation cmi = new CreateMedicalInformation();
+            cmi.medicalInfo = db.Toddlers.Find(toddler.ToddlerId).Medical;
+            cmi.medical = new Medical();
+
+            return PartialView(cmi);
+
+        }
+        //POST: Administration/Children/AgreedDaysAndPickups
+        [HttpPost]
+        [ChildActionOnly]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult _AddMedicalInformation(CreateAgreedDaysAndPickup model)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("_AddMedicalInformation");
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateDoctor(CreateAgreedDaysAndPickup model)
+        {
+            Toddler toddler = GetCurrentToddler();
+            return PartialView("_ListDoctor", db.Toddlers.Find(toddler).Medical);
         }
 
         /** FUNCTIONS *******************************************/
@@ -296,7 +369,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 .Include(i => i.Person)
                 .Include(i => i.Person.Address)
                 .Include(i => i.Person.ContactDetail)
-                .Where(i => (i.ToddlerId.Equals(ToddlerId)) && (i.RelationToChild.Equals("isParent")))
+                .Where(i => (i.ToddlerId.Equals(ToddlerId)))
                 .ToList();
 
             return RelationLinks;
@@ -311,7 +384,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             {
                 foreach (Parent p in db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
                 {
-                    if (rl.PersonId.Equals(p.PersonId))
+                    if (rl.PersonId.Equals(p.PersonId) && rl.RelationToChild.Equals("isParent"))
                     {
                         Parents.Add(p);
                     }
@@ -340,14 +413,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public ICollection<AgreedDays> GetAgreedDaysOfCurrentToddler()
         {
             Toddler toddler = GetCurrentToddler();
-            ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>();
-            foreach (AgreedDays agreedDays in agreedDaysList)
-            {
-                if (agreedDays.Toddler == toddler)
-                {
-                    agreedDaysList.Add(agreedDays);
-                }
-            }
+            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.Where(t => t.ToddlerId == toddler.ToddlerId).ToList();
             return agreedDaysList;
         }
 
@@ -361,7 +427,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             {
                 foreach (Pickup p in db.Pickups.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
                 {
-                    if (rl.PersonId.Equals(p.PersonId))
+                    if (rl.PersonId.Equals(p.PersonId) && rl.RelationToChild.Equals("isPickup"))
                     {
                         pickups.Add(p);
                     }
@@ -392,6 +458,9 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return date;
         }
 
+
+        // JQUERY AJAX FUNCTIONS
+
         [HttpPost]
         public JsonResult CalculateFreePlacesOnDayAJAX(string day, string startdate, string enddate)
         {
@@ -409,7 +478,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
 
             int max = 17;
-            int freeplaces = 0;
+            //int freeplaces = 0;
             ICollection<FreePlace> freePlaces = new List<FreePlace>();
             ICollection<DateTime> newPeriod = new List<DateTime>();
 
@@ -472,53 +541,44 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public JsonResult CalculateReadyForDaycareAJAX(string birthdate)
+        public JsonResult CalculateReadyDateAJAX(string birthdate)
         {
             string format = "ddd MMM dd yyyy HH:mm:ss";
             if (string.IsNullOrEmpty(birthdate))
             {
                 birthdate = birthdate.Substring(0, 24);
 
-                DateTime birthdateDT;
-                DateTime readyForDaycare;
-                bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
-                Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
-
-                // SETTINGOPTION!!!
-                readyForDaycare = birthdateDT.AddMonths(2);
-
-                return Json(new { readyForDaycare = readyForDaycare.ToString("dd'/'MM'/'yyyy") });
-            }
-            else
-            {
-                string date = CalculateReadyForDaycare(GetCurrentToddler().Person.BirthDate);
-                return Json(new { readyForDaycare = date });
-            }
-        }
-
-        [HttpPost]
-        public JsonResult CalculateReadyForSchoolAJAX(string birthdate)
-        {
-            string format = "ddd MMM dd yyyy HH:mm:ss";
-            if (string.IsNullOrEmpty(birthdate))
-            {
-                birthdate = birthdate.Substring(0, 24);
                 DateTime birthdateDT;
                 DateTime readyForSchool;
+                DateTime readyForDaycare;
+
                 bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
                 Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
 
                 SchoolHolidays schoolHolidays = new SchoolHolidays(birthdateDT);
 
                 readyForSchool = schoolHolidays.CanGoToSchoolFrom();
-                return Json(new { readyForSchool = readyForSchool.ToString("dd'/'MM'/'yyyy") });
+
+                // SETTINGOPTION!!!
+                readyForDaycare = birthdateDT.AddMonths(2);
+
+                var result = new { readyForSchool = readyForSchool.ToString("dd'/'MM'/'yyyy"), readyForDaycare = readyForDaycare.ToString("dd'/'MM'/'yyyy") };
+
+                CreateAgreedDays_StartDate = readyForDaycare;
+                CreateAgreedDays_EndDate = readyForSchool;
+
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                string date = CalculateReadyForSchool(GetCurrentToddler().Person.BirthDate);
-                return Json(new { readyForSchool = date });
+                string dateDaycare = CalculateReadyForDaycare(GetCurrentToddler().Person.BirthDate);
+                string dateSchool = CalculateReadyForSchool(GetCurrentToddler().Person.BirthDate);
+                var result = new { readyForSchool = dateSchool, readyForDaycare = dateDaycare };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
+
+
 
     }
 }

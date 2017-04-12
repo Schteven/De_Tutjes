@@ -14,15 +14,15 @@ namespace De_Tutjes.Models
         public int AgreedDaysId { get; set; }
 
         [Display(Name = "maandag")]
-        public bool? Monday { get; set; }
+        public bool Monday { get; set; }
         [Display(Name = "dinsdag")]
-        public bool? Tuesday { get; set; }
+        public bool Tuesday { get; set; }
         [Display(Name = "woensdag")]
-        public bool? Wednesday { get; set; }
+        public bool Wednesday { get; set; }
         [Display(Name = "donderdag")]
-        public bool? Thursday { get; set; }
+        public bool Thursday { get; set; }
         [Display(Name = "vrijdag")]
-        public bool? Friday { get; set; }
+        public bool Friday { get; set; }
 
         public string SpecialNotice { get; set; }
 
