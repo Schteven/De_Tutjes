@@ -312,6 +312,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView("_ListPickups", GetPickupsOfCurrentToddler());
         }
+        
         /**MEDICALINFORMATION***************/
         // GET: Administration/Children/MedicalInformation
         public PartialViewResult _AddMedicalInformation()
@@ -321,7 +322,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
             Toddler toddler = GetCurrentToddler();
 
             CreateMedicalInformation cmi = new CreateMedicalInformation();
-            cmi.medicalInfo = db.Toddlers.Find(toddler.ToddlerId).Medical;
+            if (toddler != null)
+            {
+                cmi.medicalInfo = toddler.Medical;
+            }
             cmi.medical = new Medical();
 
             return PartialView(cmi);
@@ -331,7 +335,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         [ChildActionOnly]
         [ValidateAntiForgeryToken]
-        public PartialViewResult _AddMedicalInformation(CreateAgreedDaysAndPickup model)
+        public PartialViewResult _AddMedicalInformation(CreateMedicalInformation model)
         {
             if (ModelState.IsValid)
             {
@@ -341,10 +345,121 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult CreateDoctor(CreateAgreedDaysAndPickup model)
+        public PartialViewResult CreateMedicalInformation(string HasDoctor, string HasMedication, string HasAllergies, string HadChildDiseases, CreateMedicalInformation model)
         {
             Toddler toddler = GetCurrentToddler();
-            return PartialView("_ListDoctor", db.Toddlers.Find(toddler).Medical);
+            toddler.Medical = new Medical();
+
+            if (HasDoctor == "1")
+            {
+                toddler.Medical.Doctor = new Doctor();
+                toddler.Medical.Doctor.Person = new Person();
+                toddler.Medical.Doctor.Person.FirstName = model.medical.Doctor.Person.FirstName;
+                toddler.Medical.Doctor.Person.LastName = model.medical.Doctor.Person.LastName;
+                toddler.Medical.Doctor.Person.BirthDate = DateTime.Now;
+                toddler.Medical.Doctor.Person.RegistrationDate = DateTime.Now;
+                toddler.Medical.Doctor.Person.Active = false;
+
+                toddler.Medical.Doctor.Person.Address = new Address();
+                toddler.Medical.Doctor.Person.Address.City = model.medical.Doctor.Person.Address.City;
+                toddler.Medical.Doctor.Person.Address.PostalCode = model.medical.Doctor.Person.Address.PostalCode;
+                toddler.Medical.Doctor.Person.Address.Street = model.medical.Doctor.Person.Address.Street;
+                toddler.Medical.Doctor.Person.Address.Number = model.medical.Doctor.Person.Address.Number;
+                toddler.Medical.Doctor.Person.Address.Bus = model.medical.Doctor.Person.Address.Bus;
+
+                toddler.Medical.Doctor.Person.ContactDetail = new ContactDetail();
+                toddler.Medical.Doctor.Person.ContactDetail.CellPhone = model.medical.Doctor.Person.ContactDetail.CellPhone;
+            }
+            if (HasMedication == "1")
+            {
+                toddler.Medical.Medication = true;
+                toddler.Medical.MedicationName = model.medical.MedicationName;
+            }
+            if (HasAllergies == "1")
+            {
+                toddler.Medical.Allergies = model.medical.Allergies;
+            }
+            if (HadChildDiseases == "1")
+            {
+                toddler.Medical.ChildDisease = model.medical.ChildDisease;
+            }
+
+            toddler.Medical.HealthServiceNumber = model.medical.HealthServiceNumber;
+            toddler.Medical.SpecialNotice = model.medical.SpecialNotice;
+
+            db.Entry(toddler).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return PartialView("_ListMedicalInfo", toddler.Medical);
+        }
+
+        /**FOODINFORMATION***************/
+        // GET: Administration/Children/FoodInformation
+        public PartialViewResult _AddFoodAndSleep()
+        {
+            string session = GetNewChildWizardSession();
+
+            Toddler toddler = GetCurrentToddler();
+
+            CreateFoodAndSleepInformation cfsi = new CreateFoodAndSleepInformation();
+            if (toddler != null)
+            {
+                cfsi.foodInfo = toddler.Food;
+                cfsi.sleepInfo = toddler.Sleep;
+            }
+            cfsi.food = new Food();
+            cfsi.sleep = new Sleep();
+
+            return PartialView(cfsi);
+
+        }
+        //POST: Administration/Children/FoodInformation
+        [HttpPost]
+        [ChildActionOnly]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult _AddFoodAndSleep(CreateFoodAndSleepInformation model)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("_AddFoodAndSleep");
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateFoodInformation(CreateFoodAndSleepInformation model)
+        {
+            Toddler toddler = GetCurrentToddler();
+            toddler.Food = new Food();
+
+            toddler.Food.SpecialDiet = model.food.SpecialDiet;
+            toddler.Food.Allergies = model.food.Allergies;
+            toddler.Food.MayNotEat = model.food.MayNotEat;
+            toddler.Food.BottlePowder = model.food.BottlePowder;
+            toddler.Food.BottleDay = model.food.BottleDay;
+            toddler.Food.SpecialNotice = model.food.SpecialNotice;
+
+            db.Entry(toddler).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return PartialView("_ListFoodInfo", toddler.Food);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateSleepInformation(CreateFoodAndSleepInformation model)
+        {
+            Toddler toddler = GetCurrentToddler();
+            toddler.Sleep = new Sleep();
+
+            toddler.Sleep.SleepingPosition = model.sleep.SleepingPosition;
+            toddler.Sleep.Toy = model.sleep.Toy;
+            toddler.Sleep.Soother = model.sleep.Soother;
+            toddler.Sleep.SpecialNotice = model.sleep.SpecialNotice;
+
+            db.Entry(toddler).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return PartialView("_ListSleepInfo", toddler.Sleep);
         }
 
         /** FUNCTIONS *******************************************/
@@ -406,15 +521,25 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public Toddler GetCurrentToddler()
         {
             string session = GetNewChildWizardSession();
-            Toddler toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).Include(i => i.Person).FirstOrDefault();
+            Toddler toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session))
+
+                .Include(i => i.Person)
+                .Include(i => i.Medical)
+                .Include(i => i.Sleep)
+                .Include(i => i.Food)
+                
+                .FirstOrDefault();
             return toddler;
         }
 
         public ICollection<AgreedDays> GetAgreedDaysOfCurrentToddler()
         {
             Toddler toddler = GetCurrentToddler();
-            ICollection<AgreedDays> agreedDaysList = db.AgreedDays.Where(t => t.ToddlerId == toddler.ToddlerId).ToList();
+            
+            ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>(); 
+            if (toddler != null) { agreedDaysList = db.AgreedDays.Where(t => t.ToddlerId == toddler.ToddlerId).ToList(); }
             return agreedDaysList;
+
         }
 
         public ICollection<Pickup> GetPickupsOfCurrentToddler()

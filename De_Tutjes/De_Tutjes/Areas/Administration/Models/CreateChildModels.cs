@@ -42,4 +42,11 @@ namespace De_Tutjes.Areas.Administration.Models
         public Medical medicalInfo { get; set; }
     }
 
+    public class CreateFoodAndSleepInformation
+    {
+        public Food food { get; set; }
+        public Food foodInfo { get; set; }
+        public Sleep sleep { get; set; }
+        public Sleep sleepInfo { get; set; }
+    }
 }

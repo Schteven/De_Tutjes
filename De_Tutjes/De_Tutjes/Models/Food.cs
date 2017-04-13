@@ -15,7 +15,7 @@ namespace De_Tutjes.Models
         public string Allergies { get; set; }
         public string MayNotEat { get; set; }
         public string BottlePowder { get; set; }
-        public int BottleDay { get; set; }
+        public int? BottleDay { get; set; }
         public string SpecialNotice { get; set; }
 
         public virtual ICollection<Toddler> Toddlers { get; set; }

@@ -34,12 +34,14 @@
                                     {
                                         collapsed = "";
                                     }
+
                                 }
+                                string id = "ad" + agreedDays.AgreedDaysId;
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => agreedDays.AgreedDaysId)">@Html.DisplayFor(model => agreedDays.StartDate) - @Html.DisplayFor(model => agreedDays.EndDate)</a></h4>
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@id">@Html.DisplayFor(model => agreedDays.StartDate) - @Html.DisplayFor(model => agreedDays.EndDate)</a></h4>
                                     </div>
-                                    <div id="@Html.DisplayFor(model => agreedDays.AgreedDaysId)" class="panel-collapse collapse @collapsed">
+                                    <div id="@id" class="panel-collapse collapse @collapsed">
                                         <div class="panel-body">
                                             <fieldset>
                                                 <legend>Personal</legend>

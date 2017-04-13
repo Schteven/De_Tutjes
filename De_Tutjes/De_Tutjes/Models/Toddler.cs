@@ -28,7 +28,6 @@ namespace De_Tutjes.Models
         public int? SleepId { get; set; }
         public virtual Sleep Sleep { get; set; }
 
-
         [ForeignKey("Person")]
         public int PersonId { get; set; }
         public virtual Person Person { get; set; }

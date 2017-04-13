@@ -259,3 +259,44 @@ $(function () {
             init();
         });
     });
+
+//CREATE/CHILD/MEDICAL
+$(function () {
+
+    $("#DoctorForm").hide();
+    $("#HasDoctor").click(function () {
+        if ($(this).is(":checked")) {
+            $("#DoctorForm").show();
+        } else {
+            $("#DoctorForm").hide();
+        }
+    });
+
+    $("#MedicationForm").hide();
+    $("#HasMedication").click(function () {
+        if ($(this).is(":checked")) {
+            $("#MedicationForm").show();
+        } else {
+            $("#MedicationForm").hide();
+        }
+    });
+
+    $("#AllergiesForm").hide();
+    $("#HasAllergies").click(function () {
+        if ($(this).is(":checked")) {
+            $("#AllergiesForm").show();
+        } else {
+            $("#AllergiesForm").hide();
+        }
+    });
+
+    $("#ChildDiseasesForm").hide();
+    $("#HadChildDiseases").click(function () {
+        if ($(this).is(":checked")) {
+            $("#ChildDiseasesForm").show();
+        } else {
+            $("#ChildDiseasesForm").hide();
+        }
+    });
+
+});

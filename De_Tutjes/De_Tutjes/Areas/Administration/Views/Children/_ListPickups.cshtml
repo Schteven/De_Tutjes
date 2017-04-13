@@ -35,11 +35,12 @@
                                         collapsed = "";
                                     }
                                 }
+                                string id = "pu" + pickup.PickupId;
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => pickup.PickupId)">@Html.DisplayFor(model => pickup.Person.FirstName)</a></h4>
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@id">@Html.DisplayFor(model => pickup.Person.FirstName)</a></h4>
                                     </div>
-                                    <div id="@Html.DisplayFor(model => pickup.PickupId)" class="panel-collapse collapse @collapsed">
+                                    <div id="@id" class="panel-collapse collapse @collapsed">
                                         <div class="panel-body">
                                             <fieldset>
                                                 <legend>Personal</legend>
