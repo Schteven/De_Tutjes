@@ -8,13 +8,6 @@
 
 
     <div class="modal fade" id="addFoodInformationModal" tabindex="-1" role="dialog" aria-labelledby="addFoodInformationLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,7 +64,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="submit" class="btn btn-primary" id="saveFood">Save</button>
                 </div>
             </div>
         </div>
@@ -134,7 +127,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="submit" class="btn btn-primary" id="saveSleep">Save</button>
                 </div>
             </div>
         </div>
@@ -154,14 +147,14 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step4">Vorige</a>
+                    <a class="btn btn-info btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4">Vorige</a>
                 </div>
 
                 <div class="col-md-4">
                 </div>
 
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step6">Volgende</a>
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#f" data-toggle="tab" name="step6">Volgende</a>
                 </div>
                 <div class="col-md-1">
                 </div>

@@ -17,7 +17,7 @@ namespace De_Tutjes.Areas.Administration.Models
     public class CreateToddlerOverview
     {
         public Toddler toddler { get;  set;}
-        public ICollection<Toddler> toddlers { get; set; }
+        public Toddler currentToddler { get; set; }
     }
 
     public class CreateParentsOverview

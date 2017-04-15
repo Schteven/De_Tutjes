@@ -8,13 +8,6 @@
 
 
     <div class="modal fade" id="addAgreedDaysModal" tabindex="-1" role="dialog" aria-labelledby="addAgreedDaysLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,7 +110,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPickupLabel">
-                        AgreedDay @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Pickup @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -196,33 +189,31 @@
     <div id="pickupsList">
         @Html.Partial("_ListPickups", Model.pickups)
     </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="row">
-                @{ 
-                    string disabledNext;
-                    if (Model.agreedDaysList.Count() > 0)
-                    {
-                        disabledNext = "";
+    <div id="ButtonsToggler">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    @{ 
+                        string disabledNext = "disabled";
+                        if (Model.agreedDaysList.Count() > 0)
+                        {
+                            disabledNext = "";
+                        }
                     }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
-                }
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-3">
-                    <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2">Vorige</a>
-                </div>
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-info btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2">Vorige</a>
+                    </div>
 
-                <div class="col-md-4">
-                </div>
+                    <div class="col-md-4">
+                    </div>
 
-                <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4" @disabledNext>Volgende</a>
-                </div>
-                <div class="col-md-1">
+                    <div class="col-md-3">
+                        <a class="btn btn-success btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4" @disabledNext>Volgende</a>
+                    </div>
+                    <div class="col-md-1">
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,11 +7,6 @@
     }
     string completed = "fa-square-o";
     if (models > 0) { completed = "fa-check-square-o"; }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-    }
 
     <div class="panel panel-default">
         <div class="panel-heading">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace De_Tutjes.Functions
 {
@@ -35,7 +36,7 @@ namespace De_Tutjes.Functions
 
         private static DateTime FirstEaster()
         {
-            string[] lines = System.IO.File.ReadAllLines("easter.txt");
+            string[] lines = System.IO.File.ReadAllLines(HostingEnvironment.MapPath(@"~/App_Data/easter.txt"));
 
             foreach (string line in lines)
             {

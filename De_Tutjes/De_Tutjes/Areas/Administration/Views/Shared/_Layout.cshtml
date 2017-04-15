@@ -13,6 +13,7 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Admin/Children")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
     <nav class="navbar navbar-default navigation-clean">
@@ -35,7 +36,7 @@
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/bootstrap")
+    
     @RenderSection("scripts", required: false)
 
 </body>

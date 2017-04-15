@@ -16,6 +16,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
     {
         private DateTime CreateAgreedDays_StartDate;
         private DateTime CreateAgreedDays_EndDate;
+        private int ChildCreationStep = 1;
 
         private DeTutjesContext db = new DeTutjesContext();
 
@@ -74,9 +75,16 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public PartialViewResult _AddToddler()
         {
             string session = GetNewChildWizardSession();
+            Toddler toddler = GetCurrentToddler();
             CreateToddlerOverview cto = new CreateToddlerOverview();
-            cto.toddlers = GetToddlersOfCurrentSession();
-            cto.toddler = new Toddler();
+            if (toddler != null)
+            {
+                cto.toddler = toddler;
+            }
+            else
+            {
+                cto.toddler = new Toddler();
+            }
             return PartialView(cto);
         }
 
@@ -96,6 +104,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public PartialViewResult CreateToddler(CreateToddlerOverview model)
         {
             string session = GetNewChildWizardSession();
+            Toddler current = GetCurrentToddler();
             if (ModelState.IsValid)
             {
                 Toddler toddler = new Toddler();
@@ -120,8 +129,9 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 db.RelationLinks.Add(relationLink);
                 db.SaveChanges();
 
+                return PartialView("_ListToddler", toddler);
             }
-            return PartialView("_ListToddler", GetToddlersOfCurrentSession());
+            return PartialView("_ListToddler", current);
         }
 
         /**PARENTS****************************/
@@ -204,7 +214,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             string session = GetNewChildWizardSession();
             int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
 
-            Toddler toddler = db.Toddlers.Where(t => t.ToddlerId == ToddlerId).Include(p => p.Person).FirstOrDefault();
+            Toddler toddler = GetCurrentToddler();
             string readyForDaycare = "";
             string readyForSchool = "";
             if (toddler != null)
@@ -703,7 +713,24 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult ChildCreationStepAJAX(string method)
+        {
+            switch (method)
+            {
+                case "next":
+                    ChildCreationStep++;
+                    break;
+                case "previous":
+                    ChildCreationStep--;
+                    break;
+                case "get":
+                default:
+                    break;
+            }
 
+            return Json(new { step = ChildCreationStep });
+        }
 
     }
 }

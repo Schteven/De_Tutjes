@@ -8,11 +8,6 @@
     string completed = "fa-square-o";
     if (models == 1) { completed = "fa-plus-square-o"; }
     else if (models == 2) { completed = "fa-check-square-o";  }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-    }
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -57,23 +52,15 @@
                 }
                 <div class="row">
                     @{
-                        string disabledNext;
-                        string disabledCreate;
+                        string disabledNext = "disabled";
+                        string disabledCreate = "";
                         if (models > 0)
                         {
                             disabledNext = "";
                         }
-                        else
-                        {
-                            disabledNext = "disabled";
-                        }
                         if (models == 2)
                         {
                             disabledCreate = "disabled";
-                        }
-                        else
-                        {
-                            disabledCreate = "";
                         }
                     }
                     <div class="col-md-1">

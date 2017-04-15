@@ -1,16 +1,12 @@
-﻿@model IEnumerable<De_Tutjes.Models.Toddler>
+﻿@model De_Tutjes.Models.Toddler
 @{
-    int models = 0;
-    if (Model != null)
-    {
-        models = Model.Count();
-    }
+    string disabledNext = "disabled";
+    string disabledCreate = "";
     string completed = "fa-square-o";
-    if (models == 1) { completed = "fa-check-square-o"; }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
+    if (Model.ToddlerId != 0) {
+        completed = "fa-check-square-o";
+        disabledNext = "";
+        disabledCreate = "disabled";
     }
 
     <div class="panel panel-default">
@@ -18,74 +14,54 @@
             <h3 class="panel-title"><i class="fa @completed"></i> Kind</h3>
         </div>
         <div class="panel-body">
-        @{
-            foreach (var toddler in Model)
-            {
             <div class="row">
-                <div class="col-md-2">
-                    <blockquote class="blockquote">
-                        @{
-                            if (toddler.Person.Gender == "male")
-                            {
-                                <img class="d-flex" src="~/Images/baby-boy.png" alt="boy" height="64" width="64">
+            @{
+                if (Model.ToddlerId != 0)
+                {
+                    <div class="col-md-2">
+                        <blockquote class="blockquote">
+                            @{
+                                if (Model.Person.Gender == "male")
+                                {
+                                    <img class="d-flex" src="~/Images/baby-boy.png" alt="boy" height="64" width="64">
+                                }
+                                else if (Model.Person.Gender == "female")
+                                {
+                                    <img class="d-flex" src="~/Images/baby-girl.png" alt="girl" height="64" width="64">
+                                }
+                                else
+                                {
+                                    <img class="d-flex" src="~/Images/stork.png" alt="unknown" height="64" width="64">
+                                }
                             }
-                            else if (toddler.Person.Gender == "female")
-                            {
-                                <img class="d-flex" src="~/Images/baby-girl.png" alt="girl" height="64" width="64">
-                            }
-                            else
-                            {
-                                <img class="d-flex" src="~/Images/stork.png" alt="girl" height="64" width="64">
-                            }
-                        }
-                    </blockquote>
-                </div>
-                <div class="col-md-10">
-                    <h5 class="mt-0">@Html.DisplayFor(model => toddler.Person.FirstName)</h5>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="mt-0">@Html.DisplayFor(model => Model.Person.FirstName)</h5>
                         <div class="form-group row">
-                            @Html.LabelFor(model => toddler.Person.BirthDate, htmlAttributes: new { @class = "col-md-2" })
+                            @Html.LabelFor(model => Model.Person.BirthDate, htmlAttributes: new { @class = "col-md-2" })
                             <div class="col-sm-10">
-                                @Html.DisplayFor(model => toddler.Person.BirthDate)
+                                @Html.DisplayFor(model => Model.Person.BirthDate)
                             </div>
                         </div>
                         <div class="form-group row">
-                            @Html.LabelFor(model => toddler.Person.Gender, htmlAttributes: new { @class = "col-md-2" })
+                            @Html.LabelFor(model => Model.Person.Gender, htmlAttributes: new { @class = "col-md-2" })
                             <div class="col-sm-10">
-                                @Html.DisplayFor(model => toddler.Person.Gender)
+                                @Html.DisplayFor(model => Model.Person.Gender)
                             </div>
                         </div>
-                </div> 
-            </div>
-                }
+                    </div>
+                                }
             }
-            <div class="row">
-                @{
+            </div>
 
-                    string disabledNext = "disabled";
-                    string disabledCreate = "";
-                    if (models > 0)
-                    {
-                        disabledNext = "";
-                    }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
-                    if (models == 1)
-                    {
-                        disabledCreate = "disabled";
-                    }
-                    else
-                    {
-                        disabledCreate = "";
-                    }
-                }
+            <div class="row">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addToddlerModal" id="openToddlerForm" @disabledCreate><i class="fa fa-user-plus"></i> Kind toevoegen</a>
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addToddlerModal" id="openToddlerForm" @disabledCreate><i class='fa fa-user-plus'></i> Kind toevoegen</a>
                 </div>
 
                 <div class="col-md-3">

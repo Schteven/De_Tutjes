@@ -40,6 +40,8 @@ function submitAgreedDaysForm() {
     $(function () {
         $('#addAgreedDaysModal').modal('hide');
     });
+    var ButtonToggler = $("#ButtonToggler").html();
+    $("#ButtonToggler").html(ButtonToggler);
 }
 
 function submitPickupForm() {
@@ -48,10 +50,28 @@ function submitPickupForm() {
     });
 }
 
-$(function () {
-    $('#addToddlerModal').on('hidden.bs.modal', function () {
-        $(this).find("input,textarea,select").val('').end();
+function submitMedicalInformationForm() {
+    $(function () {
+        $('#addMedicalInformationModal').modal('hide');
     });
+}
+
+function submitFoodInformationForm() {
+    $(function () {
+        $('#addFoodInformationModal').modal('hide');
+    });
+}
+
+function submitSleepInformationForm() {
+    $(function () {
+        $('#addSleepInformationModal').modal('hide');
+    });
+}
+
+$(function () {
+    //$('#addToddlerModal').on('hidden.bs.modal', function () {
+    //    $(this).find("input,textarea,select").val('').end();
+    //});
 
     $('#addParentModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
@@ -64,38 +84,33 @@ $(function () {
     $('#addPickupModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
     });
+
+    //$('#addMedicalInformationModal').on('hidden.bs.modal', function () {
+    //    $(this).find("input,textarea,select").val('').end();
+    //});
+
+    //$('#addFoodInformationModal').on('hidden.bs.modal', function () {
+    //    $(this).find("input,textarea,select").val('').end();
+    //});
+
+    //$('#addSleepInformationModal').on('hidden.bs.modal', function () {
+    //    $(this).find("input,textarea,select").val('').end();
+    //});
 });
 
 $(function () {
     $('[name="step1"]').click(function (e) {
         e.preventDefault();
-
-        //var addToddlerModal = $("#addToddlerModal").html();
-        //$("#addToddlerModal").html(addToddlerModal);
-
         $('#steps a[href="#a"]').tab('show');
-
     });
     $('[name="step2"]').click(function (e) {
         e.preventDefault();
-
-        //var addParentModal = $("#addParentModal").html();
-        //$("#addParentModal").html(addParentModal);
-
         $('#steps a[href="#b"]').tab('show');
     });
     $('[name="step3"]').click(function (e) {
         e.preventDefault();
 
-        /*var addAgreedDaysModal = $("#addAgreedDaysModal").html();
-        $("#addAgreedDaysModal").html(addAgreedDaysModal);
-
-        var addPickupModal = $("#addPickupModal").html();
-        $("#addPickupModal").html(addPickupModal);
-        */
-
         setDatePickerAgreedDaysAndPickups();
-
         readyDatesAJAX();
 
         $('#steps a[href="#c"]').tab('show');
@@ -181,23 +196,6 @@ function setDatePickerAgreedDaysAndPickups() {
 
 
 $(function () {
-    /*
-    $("#Monday").click(function () {
-        CalculateFreePlacesOnDayAJAX(this.id);
-    });
-    $("#Tuesday").click(function () {
-        CalculateFreePlacesOnDayAJAX(this.id);
-    });
-    $("#Wednesday").click(function () {
-        CalculateFreePlacesOnDayAJAX(this.id);
-    });
-    $("#Thursday").click(function () {
-        CalculateFreePlacesOnDayAJAX(this.id);
-    });
-    $("#Friday").click(function () {
-        CalculateFreePlacesOnDayAJAX(this.id);
-    });
-    */
 
     $("#agreedDays_StartDate").change(function () {
         readyStart = $("#agreedDays_StartDate").datepicker('getDate');

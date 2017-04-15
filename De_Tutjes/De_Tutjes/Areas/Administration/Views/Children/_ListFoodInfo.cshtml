@@ -2,11 +2,6 @@
 @{
     string completed = "fa-square-o";
     if (Model != null) { completed = "fa-check-square-o"; }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-    }
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -17,7 +12,7 @@
 
                 <div class="col-md-12">
 
-                    @if (Model != null)
+                    @if (Model.FoodID != 0)
                     {
                         string id = "fi" + Model.FoodID;
                         <div class="panel-group" id="accordion">
@@ -47,12 +42,10 @@
             </div>
             <div class="row">
                 @{
-                    string disabledNext = "disabled";
                     string disabledCreate = "";
                     if (Model != null)
                     {
                         disabledCreate = "disabled";
-                        disabledNext = "";
                     }
 
                 }
@@ -61,7 +54,7 @@
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addMedicalInformationModal" id="openMedicalInformationForm" @disabledCreate><i class="fa fa-calendar-plus-o"></i> Medische fiche toevoegen</a>
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addFoodInformationModal" id="openFoodInformationForm" @disabledCreate><i class="fa fa-calendar-plus-o"></i> Eetinformatie toevoegen</a>
                 </div>
 
                 <div class="col-md-3">

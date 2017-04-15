@@ -5,16 +5,7 @@
 
     @Html.AntiForgeryToken();
 
-
-
     <div class="modal fade" id="addMedicalInformationModal" tabindex="-1" role="dialog" aria-labelledby="addMedicalInformationLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -140,7 +131,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="submit" class="btn btn-primary" id="saveMedical">Save</button>
                 </div>
             </div>
         </div>
