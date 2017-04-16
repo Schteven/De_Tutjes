@@ -1,11 +1,9 @@
 ﻿@model De_Tutjes.Models.Toddler
 @{
-    string disabledNext = "disabled";
     string disabledCreate = "";
     string completed = "fa-square-o";
     if (Model.ToddlerId != 0) {
         completed = "fa-check-square-o";
-        disabledNext = "";
         disabledCreate = "disabled";
     }
 
@@ -63,9 +61,7 @@
                 <div class="col-md-4">
                     <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addToddlerModal" id="openToddlerForm" @disabledCreate><i class='fa fa-user-plus'></i> Kind toevoegen</a>
                 </div>
-
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#b" data-toggle="tab" name="step2" @disabledNext>Volgende</a>
                 </div>
                 <div class="col-md-1">
                 </div>

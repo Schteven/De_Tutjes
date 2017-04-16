@@ -24,24 +24,31 @@ function submitToddlerForm() {
 
     readyDatesAJAX();
 
+    $('#buttonStep2').prop('disabled', false);
+
     $(function () {
         $('#addToddlerModal').modal('hide');
     });
-
 }
 
 function submitParentForm() {
+
+    $('#buttonStep3').prop('disabled', false);
+
     $(function () {
         $('#addParentModal').modal('hide');
     });
+
 }
 
 function submitAgreedDaysForm() {
+
+    $('#buttonStep4').prop('disabled', false);
+
     $(function () {
         $('#addAgreedDaysModal').modal('hide');
     });
-    var ButtonToggler = $("#ButtonToggler").html();
-    $("#ButtonToggler").html(ButtonToggler);
+
 }
 
 function submitPickupForm() {
@@ -68,13 +75,21 @@ function submitSleepInformationForm() {
     });
 }
 
-$(function () {
-    //$('#addToddlerModal').on('hidden.bs.modal', function () {
-    //    $(this).find("input,textarea,select").val('').end();
-    //});
+function submitDailyRoutineForm() {
+    $(function () {
+        $('#addDailyRoutineModal').modal('hide');
+    });
+}
 
+function submitImportantNoticeForm() {
+    $(function () {
+        $('#addImportantNoticeModal').modal('hide');
+    });
+}
+
+$(function () {
     $('#addParentModal').on('hidden.bs.modal', function () {
-        $(this).find("input,textarea,select").val('').end();
+        $(this).find("input,textarea,select,radio").val('').end();
     });
 
     $('#addAgreedDaysModal').on('hidden.bs.modal', function () {
@@ -84,28 +99,17 @@ $(function () {
     $('#addPickupModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
     });
-
-    //$('#addMedicalInformationModal').on('hidden.bs.modal', function () {
-    //    $(this).find("input,textarea,select").val('').end();
-    //});
-
-    //$('#addFoodInformationModal').on('hidden.bs.modal', function () {
-    //    $(this).find("input,textarea,select").val('').end();
-    //});
-
-    //$('#addSleepInformationModal').on('hidden.bs.modal', function () {
-    //    $(this).find("input,textarea,select").val('').end();
-    //});
 });
 
 $(function () {
+    
     $('[name="step1"]').click(function (e) {
         e.preventDefault();
-        $('#steps a[href="#a"]').tab('show');
+        $('#steps a[href="#step1"]').tab('show');
     });
     $('[name="step2"]').click(function (e) {
         e.preventDefault();
-        $('#steps a[href="#b"]').tab('show');
+        $('#steps a[href="#step2"]').tab('show');
     });
     $('[name="step3"]').click(function (e) {
         e.preventDefault();
@@ -113,20 +117,21 @@ $(function () {
         setDatePickerAgreedDaysAndPickups();
         readyDatesAJAX();
 
-        $('#steps a[href="#c"]').tab('show');
+        $('#steps a[href="#step3"]').tab('show');
     });
     $('[name="step4"]').click(function (e) {
         e.preventDefault();
-        $('#steps a[href="#d"]').tab('show');
+        $('#steps a[href="#step4"]').tab('show');
     });
     $('[name="step5"]').click(function (e) {
         e.preventDefault();
-        $('#steps a[href="#e"]').tab('show');
+        $('#steps a[href="#step5"]').tab('show');
     });
     $('[name="step6"]').click(function (e) {
         e.preventDefault();
-        $('#steps a[href="#f"]').tab('show');
+        $('#steps a[href="#step6"]').tab('show');
     });
+    
 });
 
 // CREATE/CHILD/TODDLER

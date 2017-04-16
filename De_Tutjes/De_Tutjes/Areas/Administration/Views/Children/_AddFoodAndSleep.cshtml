@@ -5,8 +5,6 @@
 
     @Html.AntiForgeryToken();
 
-
-
     <div class="modal fade" id="addFoodInformationModal" tabindex="-1" role="dialog" aria-labelledby="addFoodInformationLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -69,22 +67,14 @@
             </div>
         </div>
     </div>
-            }
+}
+
 @using (Ajax.BeginForm("CreateSleepInformation", null, new AjaxOptions { UpdateTargetId = "sleepList", OnSuccess = "submitSleepInformationForm()" }, new { id = "AddSleepInformationForm" }))
 {
 
     @Html.AntiForgeryToken();
 
-
-
     <div class="modal fade" id="addSleepInformationModal" tabindex="-1" role="dialog" aria-labelledby="addSleepInformationLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,7 +124,7 @@
     </div>
             }
 
-<div class="tab-pane" id="e">
+<div class="tab-pane" id="step5">
     <div id="foodList">
         @Html.Partial("_ListFoodInfo", Model.food)
     </div>
@@ -147,14 +137,14 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
-                    <a class="btn btn-info btn-block btn-sm" role="button" href="#d" data-toggle="tab" name="step4">Vorige</a>
+                    <a class="btn btn-info btn-block btn-sm" role="button" href="#step4" data-toggle="tab" name="step4">Vorige</a>
                 </div>
 
                 <div class="col-md-4">
                 </div>
 
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#f" data-toggle="tab" name="step6">Volgende</a>
+                    <a class="btn btn-success btn-block btn-sm" role="button" href="#step6" data-toggle="tab" name="step6">Volgende</a>
                 </div>
                 <div class="col-md-1">
                 </div>

@@ -62,8 +62,29 @@
         </div>
     </div>
 }
-<div class="tab-pane active" id="a">
+<div class="tab-pane active" id="step1">
     <div id="toddlerList">
         @Html.Partial("_ListToddler", Model.toddler)
+    </div>
+    <div id="ButtonsTogglerStep1">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="button" id="buttonStep2" name="step2" class="btn btn-success btn-block btn-sm" disabled>Volgende</button>
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <img class="center-block" src="http://placehold.it/185x185" />
+        <img class="center-block" src="http://placehold.it/185x185" alt="pic"/>
         <a class="btn btn-link btn-xs center-block" role="button" href="#">Klik hier om een foto toe te voegen</a>
     </div>
     <div class="col-lg-9 col-md-9">
@@ -26,32 +26,32 @@
         <div class="tabbable tabs-left">
             <ul class="nav nav-pills nav-stacked col-md-3" id="steps">
                 <li class="active">
-                    <a href="#a" disabled>
+                    <a href="#step1" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 1<br /><h6>Kind</h6>
                     </a>
                 </li>
                 <li>
-                    <a href="#b" disabled>
+                    <a href="#step2" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 2<br /><h6>Ouders</h6>
                     </a>
                 </li>
                 <li>
-                    <a href="#c" disabled>
+                    <a href="#step3" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 3<br /><h6>Opvangdagen</h6>
                     </a>
                 </li>
                 <li>
-                    <a href="#d" disabled>
+                    <a href="#step4" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 4<br /><h6>Medische gegevens</h6>
                     </a>
                 </li>
                 <li>
-                    <a href="#e" disabled>
+                    <a href="#step5" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 5<br /><h6>Voeding en slapen</h6>
                     </a>
                 </li>
                 <li>
-                    <a href="#f" disabled>
+                    <a href="#step6" disabled>
                         <span class="fa fa-square-o fa-1x pull-right"></span>Stap 6<br /><h6>Opmerkingen dagverloop</h6>
                     </a>
                 </li>
@@ -68,16 +68,43 @@
                     }
                 }
 
-                    @Html.Action("_AddToddler", "Children")
+                @Html.Action("_AddToddler", "Children")
 
-                    @Html.Action("_AddParents", "Children")
+                @Html.Action("_AddParents", "Children")
 
-                    @Html.Action("_AddAgreedDaysAndPickups", "Children")
+                @Html.Action("_AddAgreedDaysAndPickups", "Children")
 
-                    @Html.Action("_AddMedicalInformation", "Children")
+                @Html.Action("_AddMedicalInformation", "Children")
 
-                    @Html.Action("_AddFoodAndSleep", "Children")
+                @Html.Action("_AddFoodAndSleep", "Children")
 
-        </div>
+                @Html.Action("_AddDailyRoutine", "Children")
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+                <div class="modal fade" id="finishWizardModal" tabindex="-1" role="dialog" aria-labelledby="finishWizardLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="finishWizardLabel">
+                                    @HttpContext.Current.Session["NewChildWizardSession"] opslaan
+                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </h5>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>
+                                    opslaantext.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success" id="finishWizard">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+}
+            </div>
     </div>
 </div>

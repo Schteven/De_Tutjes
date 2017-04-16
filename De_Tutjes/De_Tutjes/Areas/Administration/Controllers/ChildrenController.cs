@@ -9,6 +9,10 @@ using De_Tutjes.Areas.Administration.Models;
 using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
+using System.Net.Mail;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -16,7 +20,9 @@ namespace De_Tutjes.Areas.Administration.Controllers
     {
         private DateTime CreateAgreedDays_StartDate;
         private DateTime CreateAgreedDays_EndDate;
-        private int ChildCreationStep = 1;
+        NewChildWizardSession ncws;
+
+        // STEP VALIDATOR
 
         private DeTutjesContext db = new DeTutjesContext();
 
@@ -30,34 +36,31 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public ActionResult Create()
         {
             string username = "demo";
-            NewChildWizardSession ncws = db.NewChildWizardSessions.Where(u => u.Username.Equals(username)).Where(s => s.Stop == null).FirstOrDefault();
-            if (ncws == null)
-            {
+            //ncws = db.NewChildWizardSessions.Where(u => u.Username.Equals(username)).Where(s => s.Stop == null).FirstOrDefault();
+            //if (ncws == null)
+            //{
 
-                int sessionKey = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
+                Guid sessionKey = Guid.NewGuid();
                 string key = sessionKey.ToString();
 
                 ncws = new NewChildWizardSession();
 
-                ncws.Username = "demo";
+                ncws.Username = username;
                 ncws.ToddlerSession = key;
                 ncws.Start = DateTime.Now;
                 ncws.Complete = false;
 
-                db.NewChildWizardSessions.Add(ncws);
-                db.SaveChanges();
-
                 Session["NewChildWizardSession"] = key;
                 ViewBag.Session = key;
 
-            }
+            /*}
             else
             {
                 Session["NewChildWizardSession"] = ncws.ToddlerSession;
                 ViewBag.NotFinished = ncws.ToddlerSession;
                 ViewBag.SessionStarted = ncws.Start;
                 ViewBag.Session = ncws.ToddlerSession;
-            }
+            }*/
 
             return View();
         }
@@ -67,14 +70,52 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int? id)
         {
-            return View(id);
+            Toddler toddler = GetCurrentToddler();
+            ICollection<Parent> parents = GetParentsOfCurrentToddler();
+
+            toddler.Person.Active = true;
+
+            db.Entry(toddler).State = EntityState.Modified;
+
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string emailIsDouble = "";
+
+            foreach (Parent parent in parents)
+            {
+                string email = parent.Person.ContactDetail.Email;
+                parent.Person.Active = true;
+                db.Entry(parent).State = EntityState.Modified;
+
+                if (email != emailIsDouble)
+                {
+                    var user = new ApplicationUser();
+                    user.UserName = email;
+                    user.Email = email;
+
+                    string userPWD = Membership.GeneratePassword(12, 1);
+
+                    var chkUser = UserManager.Create(user, userPWD);
+
+                    SendFirstMail(email, userPWD);
+                }
+
+                emailIsDouble = email;
+            }
+
+            //NewChildWizardSession ncws = db.NewChildWizardSessions.Where(s => s.ToddlerSession == toddler.ToddlerSession).FirstOrDefault();
+
+            //ncws.Stop = DateTime.Now;
+            //ncws.Complete = true;
+            //db.Entry(ncws).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return RedirectToAction("Overview", "Children");
         }
 
         /**TODDLER********************************/
         // GET: Administration/Children/_AddToddler
         public PartialViewResult _AddToddler()
         {
-            string session = GetNewChildWizardSession();
             Toddler toddler = GetCurrentToddler();
             CreateToddlerOverview cto = new CreateToddlerOverview();
             if (toddler != null)
@@ -103,8 +144,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreateToddler(CreateToddlerOverview model)
         {
-            string session = GetNewChildWizardSession();
-            Toddler current = GetCurrentToddler();
             if (ModelState.IsValid)
             {
                 Toddler toddler = new Toddler();
@@ -129,18 +168,22 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 db.RelationLinks.Add(relationLink);
                 db.SaveChanges();
 
+                //db.NewChildWizardSessions.Add(ncws);
+                //db.SaveChanges();
+
                 return PartialView("_ListToddler", toddler);
             }
-            return PartialView("_ListToddler", current);
+            else
+            {
+                Toddler current = GetCurrentToddler();
+                return PartialView("_ListToddler", current);
+            }
         }
 
         /**PARENTS****************************/
         // GET: Administration/Children/Parents
         public PartialViewResult _AddParents()
         {
-            string session = GetNewChildWizardSession();
-            int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
-
             CreateParentsOverview cvo = new CreateParentsOverview();
             cvo.relationLinks = GetRelationLinksOfCurrentToddler(); 
             cvo.parents = GetParentsOfCurrentToddler();
@@ -165,7 +208,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult CreateParent(CreateParentsOverview model)
         {
-            string session = GetNewChildWizardSession();
             if (ModelState.IsValid)
             {
                 Toddler toddler = GetCurrentToddler();
@@ -211,9 +253,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children/AgreedDaysAndPickups
         public PartialViewResult _AddAgreedDaysAndPickups()
         {
-            string session = GetNewChildWizardSession();
-            int ToddlerId = int.Parse(db.Toddlers.Where(ts => ts.ToddlerSession.Equals(session)).Select(i => i.ToddlerId).FirstOrDefault().ToString());
-
             Toddler toddler = GetCurrentToddler();
             string readyForDaycare = "";
             string readyForSchool = "";
@@ -277,8 +316,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 db.AgreedDays.Add(agreedDays);
                 db.SaveChanges();
 
-
             }
+
             return PartialView("_ListAgreedDays", GetAgreedDaysOfCurrentToddler());
         }
 
@@ -327,7 +366,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children/MedicalInformation
         public PartialViewResult _AddMedicalInformation()
         {
-            string session = GetNewChildWizardSession();
 
             Toddler toddler = GetCurrentToddler();
 
@@ -407,7 +445,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children/FoodInformation
         public PartialViewResult _AddFoodAndSleep()
         {
-            string session = GetNewChildWizardSession();
 
             Toddler toddler = GetCurrentToddler();
 
@@ -470,6 +507,71 @@ namespace De_Tutjes.Areas.Administration.Controllers
             db.SaveChanges();
 
             return PartialView("_ListSleepInfo", toddler.Sleep);
+        }
+
+        /**DAILYROUTINE / IMPORTANT NOTICE***************/
+        // GET: Administration/Children/MedicalInformation
+        public PartialViewResult _AddDailyRoutine()
+        {
+
+            Toddler toddler = GetCurrentToddler();
+
+            CreateDailyRoutineAndImportantNotice cdrin = new CreateDailyRoutineAndImportantNotice();
+            if (toddler != null)
+            {
+                cdrin.toddler = toddler;
+            } else
+            {
+                cdrin.toddler = new Toddler();
+            }
+
+            return PartialView(cdrin);
+
+        }
+
+        //POST: Administration/Children/AgreedDaysAndPickups
+        [HttpPost]
+        [ChildActionOnly]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult _AddDailyRoutine(CreateDailyRoutineAndImportantNotice model)
+        {
+            if (ModelState.IsValid)
+            {
+                return PartialView("_AddDailyRoutine");
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateDailyRoutine(CreateDailyRoutineAndImportantNotice model)
+        {
+            Toddler toddler = model.toddler;
+            if (ModelState.IsValid)
+            {
+
+                toddler.DailyRoutine = model.toddler.DailyRoutine;
+
+                db.Entry(toddler).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+            return PartialView("_ListDailyRoutine", toddler);
+        }
+
+        [HttpPost]
+        public PartialViewResult CreateImportantNotice(CreateDailyRoutineAndImportantNotice model)
+        {
+            Toddler toddler = model.toddler;
+            if (ModelState.IsValid)
+            {
+
+                toddler.ImportantNotice = model.toddler.ImportantNotice;
+
+                db.Entry(toddler).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return PartialView("_ListImportantNotice", toddler);
         }
 
         /** FUNCTIONS *******************************************/
@@ -593,6 +695,18 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return date;
         }
 
+        public void SendFirstMail(string email, string password)
+        {
+            MailMessage mail = new MailMessage("noreply@detutjes.be", email);
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Host = "relay.proximus.be";
+            mail.Subject = "Je account bij De Tutjes";
+            mail.Body = "Welkom bij de tutjes, je wachtwoord is " + password;
+            client.Send(mail);
+        }
 
         // JQUERY AJAX FUNCTIONS
 
@@ -711,25 +825,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 var result = new { readyForSchool = dateSchool, readyForDaycare = dateDaycare };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        [HttpPost]
-        public JsonResult ChildCreationStepAJAX(string method)
-        {
-            switch (method)
-            {
-                case "next":
-                    ChildCreationStep++;
-                    break;
-                case "previous":
-                    ChildCreationStep--;
-                    break;
-                case "get":
-                default:
-                    break;
-            }
-
-            return Json(new { step = ChildCreationStep });
         }
 
     }

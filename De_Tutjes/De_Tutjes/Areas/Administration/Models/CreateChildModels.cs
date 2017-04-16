@@ -49,4 +49,10 @@ namespace De_Tutjes.Areas.Administration.Models
         public Sleep sleep { get; set; }
         public Sleep sleepInfo { get; set; }
     }
+
+    public class CreateDailyRoutineAndImportantNotice
+    {
+        public Toddler toddler { get; set; }
+    }
+
 }

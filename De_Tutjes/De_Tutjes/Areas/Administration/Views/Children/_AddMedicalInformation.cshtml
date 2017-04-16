@@ -136,11 +136,33 @@
             </div>
         </div>
     </div>
-            }
 
+}
 
-<div class="tab-pane" id="d">
+<div class="tab-pane" id="step4">
     <div id="medicalList">
         @Html.Partial("_ListMedicalInfo", Model.medical)
+    </div>
+    <div id="ButtonsTogglerStep4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-info btn-block btn-sm" role="button" href="#step3" data-toggle="tab" name="step3">Vorige</a>
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="btn btn-success btn-block btn-sm" role="button" href="#step5" data-toggle="tab" name="step5">Volgende</a>
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
