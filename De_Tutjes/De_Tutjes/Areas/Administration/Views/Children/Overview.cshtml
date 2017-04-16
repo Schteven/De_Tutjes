@@ -1,11 +1,11 @@
-﻿
+﻿@model De_Tutjes.Areas.Administration.Models.ToddlersOverview
 @{
     ViewBag.Title = "Overview";
 }
 
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <img class="center-block" src="http://placehold.it/170x170" />
+        <img class="center-block" src="http://placehold.it/185x185" alt="pic" />
     </div>
     <div class="col-lg-9 col-md-9">
 
@@ -22,129 +22,27 @@
 </div>
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
-                    <h4 class="panel-title">
-                            Kind Naam
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo">
-                        Eten
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseThree">
-                        Slaap
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFour">
-                        Medisch
-                    </h4>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">
-                        Bezoekdagen
-                    </h4>
-                </div>
-                <div id="collapseFive" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
+        <div id="ShowToddler">
+            @Html.Partial("_OverviewShowToddler", Model.toddler)
         </div>
     </div>
     <div class="col-lg-9 col-md-12">
-        <div class="row">
+
+@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddler", OnSuccess = "" }, new { id = "ShowToddlerList" }))
+{
+        foreach (var toddler in Model.toddlerList)
+        {
+            int col = 6;
+            int i = 1;
+            // btn-link
             <div class="col-lg-2 col-md-2">
-                <a class="btn btn-primary btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
+                <a class="btn btn-primary btn-lg" role="button" href="#">
+                    <img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>
+                    @toddler.Person.FirstName
+                </a>
             </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-link btn-lg" role="button" href="#"><img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>Kind</a>
-            </div>
-        </div>
+                    
+        }
+}
     </div>
 </div>

@@ -214,6 +214,7 @@
     <Compile Include="Areas\Administration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
     <Compile Include="Areas\Administration\Models\FreePlace.cs" />
+    <Compile Include="Areas\Administration\Models\ToddlersOverview.cs" />
     <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
     <Compile Include="Areas\Diary\Models\DiaryModel.cs" />
@@ -366,6 +367,7 @@
     <Content Include="Areas\Administration\Views\Children\_AddDailyRoutine.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListDailyRoutine.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListImportantNotice.cshtml" />
+    <Content Include="Areas\Administration\Views\Children\_OverviewShowToddler.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

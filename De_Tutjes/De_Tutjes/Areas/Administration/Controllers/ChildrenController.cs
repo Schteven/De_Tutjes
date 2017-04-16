@@ -29,7 +29,29 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // GET: Administration/Children
         public ActionResult Overview()
         {
-            return View();
+            ToddlersOverview to = new ToddlersOverview();
+            to.toddler = db.Toddlers
+                .Where(a => a.Person.Active == true)
+                .Include(p => p.Person)
+                .Include(f => f.Food)
+                .Include(s => s.Sleep)
+                .Include(m => m.Medical)
+                .FirstOrDefault();
+
+            to.toddlerList = db.Toddlers
+                .Where(a => a.Person.Active == true)
+                .Include(p => p.Person)
+                .Include(f => f.Food)
+                .Include(s => s.Sleep)
+                .Include(m => m.Medical)
+                .ToList();
+            return View(to);
+        }
+
+        [HttpPost]
+        public PartialViewResult ShowToddler(CreateToddlerOverview model)
+        {
+            return PartialView("_OverviewShowToddler", model.toddler);
         }
 
         // GET: Administration/Children/Create
@@ -64,7 +86,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return View();
         }
-
         //POST: Administration/Children/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -84,20 +105,26 @@ namespace De_Tutjes.Areas.Administration.Controllers
             {
                 string email = parent.Person.ContactDetail.Email;
                 parent.Person.Active = true;
-                db.Entry(parent).State = EntityState.Modified;
 
                 if (email != emailIsDouble)
                 {
-                    var user = new ApplicationUser();
-                    user.UserName = email;
-                    user.Email = email;
 
-                    string userPWD = Membership.GeneratePassword(12, 1);
+                    parent.Person.UserAccount = new ApplicationUser();
+                    parent.Person.UserAccount.UserName = email;
+                    parent.Person.UserAccount.Email = email;
 
-                    var chkUser = UserManager.Create(user, userPWD);
+                    string userPWD = Membership.GeneratePassword(5, 1);
+
+                    var chkUser = UserManager.Create(parent.Person.UserAccount, userPWD);
 
                     SendFirstMail(email, userPWD);
                 }
+                else
+                {
+                    parent.Person.UserAccountId = db.Users.Where(e => e.Email == emailIsDouble).FirstOrDefault().Id;
+                }
+
+                db.Entry(parent).State = EntityState.Modified;
 
                 emailIsDouble = email;
             }
@@ -128,7 +155,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView(cto);
         }
-
         //POST: Administration/Children/_AddToddler
         [HttpPost]
         [ChildActionOnly]
@@ -191,7 +217,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return PartialView(cvo);
         }
-
         //POST: Administration/Children/Parents
         [HttpPost]
         [ChildActionOnly]
@@ -203,8 +228,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 return PartialView("_AddChild");
             }
             return PartialView(model);
-        }
-        
+        }       
         [HttpPost]
         public PartialViewResult CreateParent(CreateParentsOverview model)
         {
@@ -277,7 +301,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             ViewBag.ReadyForSchool = readyForSchool;
             return PartialView(caap);
         }
-
         //POST: Administration/Children/AgreedDaysAndPickups
         [HttpPost]
         [ChildActionOnly]
@@ -290,7 +313,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView(model);
         }
-
         [HttpPost]
         public PartialViewResult CreateAgreedDays(CreateAgreedDaysAndPickup model)
         {
@@ -320,7 +342,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return PartialView("_ListAgreedDays", GetAgreedDaysOfCurrentToddler());
         }
-
         [HttpPost]
         public PartialViewResult CreatePickup(CreateAgreedDaysAndPickup model)
         {
@@ -391,7 +412,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView(model);
         }
-
         [HttpPost]
         public PartialViewResult CreateMedicalInformation(string HasDoctor, string HasMedication, string HasAllergies, string HadChildDiseases, CreateMedicalInformation model)
         {
@@ -441,6 +461,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return PartialView("_ListMedicalInfo", toddler.Medical);
         }
 
+
         /**FOODINFORMATION***************/
         // GET: Administration/Children/FoodInformation
         public PartialViewResult _AddFoodAndSleep()
@@ -472,7 +493,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView(model);
         }
-
         [HttpPost]
         public PartialViewResult CreateFoodInformation(CreateFoodAndSleepInformation model)
         {
@@ -491,7 +511,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return PartialView("_ListFoodInfo", toddler.Food);
         }
-
         [HttpPost]
         public PartialViewResult CreateSleepInformation(CreateFoodAndSleepInformation model)
         {
@@ -510,7 +529,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         /**DAILYROUTINE / IMPORTANT NOTICE***************/
-        // GET: Administration/Children/MedicalInformation
+        // GET: Administration/Children/DailyRoutine
         public PartialViewResult _AddDailyRoutine()
         {
 
@@ -528,8 +547,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return PartialView(cdrin);
 
         }
-
-        //POST: Administration/Children/AgreedDaysAndPickups
+        //POST: Administration/Children/DailyRoutine
         [HttpPost]
         [ChildActionOnly]
         [ValidateAntiForgeryToken]
@@ -541,11 +559,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView(model);
         }
-
         [HttpPost]
         public PartialViewResult CreateDailyRoutine(CreateDailyRoutineAndImportantNotice model)
         {
-            Toddler toddler = model.toddler;
+            Toddler toddler = GetCurrentToddler();
             if (ModelState.IsValid)
             {
 
@@ -558,11 +575,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return PartialView("_ListDailyRoutine", toddler);
         }
-
         [HttpPost]
         public PartialViewResult CreateImportantNotice(CreateDailyRoutineAndImportantNotice model)
         {
-            Toddler toddler = model.toddler;
+            Toddler toddler = GetCurrentToddler();
             if (ModelState.IsValid)
             {
 
@@ -788,7 +804,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return Json(new { freeplace = max });
         }
-
         [HttpPost]
         public JsonResult CalculateReadyDateAJAX(string birthdate)
         {
