@@ -303,3 +303,19 @@ $(function () {
     });
 
 });
+
+
+// OVERVIEW
+
+
+$(function () {
+
+    $("#toddlerList").imagepicker({
+        show_label: true
+    });
+
+    $('#toddlerList').change(function () {
+        $(this).closest('form').trigger('submit');
+    });
+
+});

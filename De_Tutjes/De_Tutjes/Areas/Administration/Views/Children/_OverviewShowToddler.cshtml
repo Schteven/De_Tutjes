@@ -1,5 +1,7 @@
 ﻿@model De_Tutjes.Models.Toddler
 
+@if ((Model != null) && (Model.Person != null))
+{
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
@@ -9,7 +11,29 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse in">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                <p>
+                @if (Model.Person.BirthDate > DateTime.Now)
+                {
+                    @Html.Raw("Wordt verwacht op: ") @Model.Person.BirthDate <br/>
+                } else
+                {
+                    @Html.Raw("Geboren op: ") @Model.Person.BirthDate <br/>
+                }
+                Geslacht: @Model.Person.Gender
+                </p>
+                @if (Enumerable.Count(ViewBag.Parents) > 1)
+                {
+                    <h6>Ouders</h6>
+                } else
+                {
+                    <h6>Ouder</h6>
+                }
+                <p>
+                @foreach (var parent in ViewBag.Parents)
+                {
+                    @parent.Person.FirstName @Html.Raw(" ") @parent.Person.LastName <br/>
+                }
+                </p>
             </div>
         </div>
     </div>
@@ -21,7 +45,37 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                @if (Model.Food == null)
+                {
+                    <p>@Model.Person.FirstName heeft nog geen eetgegevens.</p>
+                } else
+                {
+                    if (Model.Food.SpecialDiet != null)
+                    {
+                        <h6>Speciaal diëet</h6>
+                        <p>@Model.Food.SpecialDiet</p>
+                    }
+                    if (Model.Food.Allergies != null)
+                    {
+                        <h6>Allergieën</h6>
+                        <p>@Model.Food.Allergies</p>
+                    }
+                    if (Model.Food.MayNotEat != null)
+                    {
+                        <h6>Mag niet eten</h6>
+                        <p>@Model.Food.MayNotEat</p>
+                    }
+                    if (Model.Food.BottlePowder != null)
+                    {
+                        <h6>Flesvoeding</h6>
+                        <p>@Model.Food.BottlePowder (@Model.Food.BottleDay / dag)</p>
+                    }
+                    if (Model.Food.SpecialNotice != null)
+                    {
+                        <h6>Belangrijke informatie</h6>
+                        <p>@Model.Food.SpecialNotice</p>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -62,3 +116,6 @@
         </div>
     </div>
 </div>
+} else {
+
+}

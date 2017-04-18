@@ -15,6 +15,19 @@ namespace De_Tutjes
                         "~/Scripts/jquery-ui-1.12.1.js"
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/apps").Include(
+                "~/Scripts/image-picker.js",
+                "~/Scripts/underscore.js",
+                "~/Scripts/calendar.js",
+                "~/Scripts/calendar-nl.js"
+                
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/apps/css").Include(
+                "~/Content/image-picker.css",
+                "~/Content/calendar.css"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js",
                         "~/Scripts/moment.js",

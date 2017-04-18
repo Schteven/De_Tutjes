@@ -30,14 +30,15 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public ActionResult Overview()
         {
             ToddlersOverview to = new ToddlersOverview();
-            to.toddler = db.Toddlers
+            /*to.toddler = db.Toddlers
                 .Where(a => a.Person.Active == true)
                 .Include(p => p.Person)
                 .Include(f => f.Food)
                 .Include(s => s.Sleep)
                 .Include(m => m.Medical)
                 .FirstOrDefault();
-
+            */
+            to.toddler = new Toddler();
             to.toddlerList = db.Toddlers
                 .Where(a => a.Person.Active == true)
                 .Include(p => p.Person)
@@ -49,9 +50,26 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult ShowToddler(CreateToddlerOverview model)
+        public PartialViewResult ShowToddler(string toddlerList)
         {
-            return PartialView("_OverviewShowToddler", model.toddler);
+            int id = 0;
+            if (int.TryParse(toddlerList, out id))
+            {
+                id = Int32.Parse(toddlerList);
+            }
+            Toddler toddler = db.Toddlers
+                .Where(i => i.ToddlerId.Equals(id))
+                .Include(p => p.Person)
+                .Include(f => f.Food)
+                .Include(s => s.Sleep)
+                .Include(m => m.Medical)
+                .FirstOrDefault();
+
+            ViewBag.Parents = GetParentsOfToddler(toddler);
+            ViewBag.Pickups = GetPickupsOfToddler(toddler);
+            ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
+
+            return PartialView("_OverviewShowToddler", toddler);
         }
 
         // GET: Administration/Children/Create
@@ -618,12 +636,44 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return RelationLinks;
         }
 
+        public ICollection<RelationLink> GetRelationLinksOfToddler(Toddler toddler)
+        {
+            ICollection<RelationLink> RelationLinks = new List<RelationLink>();
+
+            RelationLinks = db.RelationLinks
+                .Include(i => i.Person)
+                .Include(i => i.Person.Address)
+                .Include(i => i.Person.ContactDetail)
+                .Where(i => (i.ToddlerId.Equals(toddler.ToddlerId)))
+                .ToList();
+
+            return RelationLinks;
+        }
+
         public ICollection<Parent> GetParentsOfCurrentToddler()
         {
 
             ICollection<Parent> Parents = new List<Parent>();
             
             foreach (RelationLink rl in GetRelationLinksOfCurrentToddler())
+            {
+                foreach (Parent p in db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
+                {
+                    if (rl.PersonId.Equals(p.PersonId) && rl.RelationToChild.Equals("isParent"))
+                    {
+                        Parents.Add(p);
+                    }
+                }
+            }
+
+            return Parents;
+        }
+
+        public ICollection<Parent> GetParentsOfToddler(Toddler toddler)
+        {
+            ICollection<Parent> Parents = new List<Parent>();
+
+            foreach (RelationLink rl in GetRelationLinksOfToddler(toddler))
             {
                 foreach (Parent p in db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
                 {
@@ -667,7 +717,13 @@ namespace De_Tutjes.Areas.Administration.Controllers
             ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>(); 
             if (toddler != null) { agreedDaysList = db.AgreedDays.Where(t => t.ToddlerId == toddler.ToddlerId).ToList(); }
             return agreedDaysList;
+        }
 
+        public ICollection<AgreedDays> GetAgreedDaysOfToddler(Toddler toddler)
+        {
+            ICollection<AgreedDays> agreedDaysList = new List<AgreedDays>();
+            if (toddler != null) { agreedDaysList = db.AgreedDays.Where(t => t.ToddlerId == toddler.ToddlerId).ToList(); }
+            return agreedDaysList;
         }
 
         public ICollection<Pickup> GetPickupsOfCurrentToddler()
@@ -689,6 +745,24 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return pickups;
 
+        }
+
+        public ICollection<Pickup> GetPickupsOfToddler(Toddler toddler)
+        {
+            ICollection<Pickup> Pickups = new List<Pickup>();
+
+            foreach (RelationLink rl in GetRelationLinksOfToddler(toddler))
+            {
+                foreach (Pickup p in db.Pickups.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
+                {
+                    if (rl.PersonId.Equals(p.PersonId) && rl.RelationToChild.Equals("isPickup"))
+                    {
+                        Pickups.Add(p);
+                    }
+                }
+            }
+
+            return Pickups;
         }
 
         public string CalculateReadyForDaycare(DateTime birthdate)

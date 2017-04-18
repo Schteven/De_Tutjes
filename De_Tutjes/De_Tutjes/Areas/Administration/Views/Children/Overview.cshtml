@@ -22,27 +22,26 @@
 </div>
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <div id="ShowToddler">
+        <div id="ShowToddlerDiv">
             @Html.Partial("_OverviewShowToddler", Model.toddler)
         </div>
     </div>
     <div class="col-lg-9 col-md-12">
-
-@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddler", OnSuccess = "" }, new { id = "ShowToddlerList" }))
+        <div class="picker">
+@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "" }, new { id = "ShowToddlerSelection" }))
 {
-        foreach (var toddler in Model.toddlerList)
-        {
-            int col = 6;
-            int i = 1;
-            // btn-link
-            <div class="col-lg-2 col-md-2">
-                <a class="btn btn-primary btn-lg" role="button" href="#">
-                    <img src="http://placehold.it/100x100" width="100" class="img-rounded" height="100" /><br>
-                    @toddler.Person.FirstName
-                </a>
-            </div>
-                    
-        }
+            <select id="toddlerList" name="toddlerList" class="image-picker">
+                <option value=""></option>
+
+                @foreach (var toddler in Model.toddlerList)
+                {
+
+                    <option data-img-label="@toddler.Person.FirstName" data-img-src="http://placehold.it/100x100" value="@toddler.ToddlerId">@toddler.Person.FirstName</option>
+
+                }
+
+            </select>
 }
+        </div>
     </div>
 </div>

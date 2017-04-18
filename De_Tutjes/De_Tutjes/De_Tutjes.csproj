@@ -264,6 +264,17 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.paper.css" />
     <Content Include="Content\bootstrap.paper.min.css" />
+    <Content Include="Content\calendar-tmpls\day.html" />
+    <Content Include="Content\calendar-tmpls\events-list.html" />
+    <Content Include="Content\calendar-tmpls\modal.html" />
+    <Content Include="Content\calendar-tmpls\month-day.html" />
+    <Content Include="Content\calendar-tmpls\month.html" />
+    <Content Include="Content\calendar-tmpls\week-days.html" />
+    <Content Include="Content\calendar-tmpls\week.html" />
+    <Content Include="Content\calendar-tmpls\year-month.html" />
+    <Content Include="Content\calendar-tmpls\year.html" />
+    <Content Include="Content\calendar.css" />
+    <Content Include="Content\image-picker.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -349,6 +360,8 @@
     <Content Include="Scripts\bootstrap-datepicker.nl.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\calendar-nl.js" />
+    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\datepicker-nl.js" />
     <Content Include="Areas\Administration\Views\Children\_AddMedicalInformation.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListMedicalInfo.cshtml" />
@@ -368,7 +381,10 @@
     <Content Include="Areas\Administration\Views\Children\_ListDailyRoutine.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListImportantNotice.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_OverviewShowToddler.cshtml" />
+    <Content Include=".bin\git.cmd" />
+    <Content Include=".bin\node.cmd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\image-picker.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -397,6 +413,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

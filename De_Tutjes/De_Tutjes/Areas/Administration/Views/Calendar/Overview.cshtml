@@ -2,6 +2,39 @@
 @{
     ViewBag.Title = "Overview";
 }
+<script type="text/javascript">
+		var calendar = $("#calendar").calendar(
+			{
+			    tmpl_path: 'Content/calendar-tmpls',
+			    language: 'nl-NL',
+				events_source: function () {
+				    return [];
+				}
+			});
+		alert('test');
+</script>
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        <img class="center-block" src="http://placehold.it/185x185" alt="pic" />
+    </div>
+    <div class="col-lg-9 col-md-9">
 
-<h2>Overview</h2>
+        @Html.Partial("_MenuPartial")
 
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a class="btn btn-link btn-md" role="button" href=""><span class="fa fa-plus fa-3x"></span><br>knop</a>
+                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-remove fa-3x"></span><br>Verwijderen</a>
+                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-pencil fa-3x"></span><br>Bewerken</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        left
+    </div>
+    <div class="col-lg-9 col-md-12">
+        <div id="calendar"></div>
+    </div>
+</div>
