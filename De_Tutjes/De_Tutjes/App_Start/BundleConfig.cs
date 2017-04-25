@@ -10,17 +10,17 @@ namespace De_Tutjes
         {
             // MAIN bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/moment.js",
                         "~/Scripts/jquery-3.1.1.js",
                         "~/Scripts/jquery.unobtrusive-ajax.js",
                         "~/Scripts/jquery-ui-1.12.1.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/apps").Include(
-                "~/Scripts/image-picker.js",
-                "~/Scripts/underscore.js",
                 "~/Scripts/calendar.js",
-                "~/Scripts/calendar-nl.js"
-                
+                "~/Scripts/image-picker.js",
+                "~/Scripts/underscore.js"
+
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/apps/css").Include(
@@ -30,7 +30,6 @@ namespace De_Tutjes
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js",
-                        "~/Scripts/moment.js",
                         "~/Scripts/angular-ui/ui-bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

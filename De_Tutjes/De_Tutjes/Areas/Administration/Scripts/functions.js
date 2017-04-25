@@ -1,7 +1,9 @@
 ﻿// MAIN CREATE/CHILD
 var readyStart = "test";
 var readyEnd = "test";
-
+$(document).ready(function () {
+    alert("ok");
+});
 function readyDatesAJAX() {
     $(function () {
         $.ajax({
@@ -319,3 +321,5 @@ $(function () {
     });
 
 });
+
+
