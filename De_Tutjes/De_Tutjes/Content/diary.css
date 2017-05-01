@@ -1,0 +1,242 @@
+﻿body {
+    margin:0;
+    padding:0;
+    
+    background:lightgrey;
+    
+}
+.main-container{
+    width:100%;
+    height:100%;
+}
+/* ***********************************MAIN HEADER ********************** */
+.main-header {
+    text-align: center;
+    height:150px;
+    min-width: 1200px;
+    background: darkgrey;
+}
+/* ***********************************MAIN HEADER EMPLOYEE PICTURE********************** */
+.main-header-worker {
+    height: 150px;
+    width: 10%;
+    min-width:250px;
+    float:left;
+    overflow: hidden;
+    padding:10px;
+    border-right: 2px solid lightgrey;
+}
+.main-header-worker a {
+    height: 130px;
+    width: 130px;
+    padding: 10px;
+    overflow: hidden;
+    object-fit: cover;
+}
+.main-header-worker a img {
+    height: 110px;
+    width: 110px;
+    object-fit: cover;
+}
+/* ***********************************MAIN HEADER CHILD STATUS BUTTONS ********************** */
+.main-header-buttons {
+    height:150px;
+    width:90%;
+}
+.main-header-buttons button {
+    width:100px;
+    height:100px;
+    margin: 25px 5px;
+    text-align: center;
+}
+.main-header-buttons button:hover {
+    margin: 25px 5px;
+    background:white;
+}
+.main-header-buttons button span {
+    display:block;
+    text-align:center;
+    font-size:3em;
+    margin-top:10px;
+}
+/* ***********************************MAIN HEADER EXIT BUTTON ********************** */
+.main-header-exit {
+    height: 150px;
+    width:10%;
+    min-width: 150px;
+    padding: 25px;
+    float:right;
+        
+}
+.main-header-exit a {
+    width:100px;
+    height:100px;
+}
+.main-header-exit a span {
+    margin-top:10px;
+    font-size:3em;
+}
+
+/* ***********************************MAIN BODY ********************** */
+.main-body {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    border-top: 2px solid grey;
+}
+
+/* ***********************************MAIN CONTENT ********************** */
+.main-content {
+    padding-top:41px;
+    float:left;
+    width:90%;
+    background-image:url("http://kingofwallpapers.com/child/child-012.jpg");
+    background:lightgrey;
+        
+}
+/* ***********************************MAIN CONTENT CHILDREN CARDS ********************** */
+.main-content a{
+    margin:15px;
+    padding:5px;
+    width:100px;
+    height:125px;
+    overflow:hidden;
+    color:white;
+    background: #555;
+}
+.main-content a:hover {
+    margin:15px;
+    padding:5px;
+}
+.main-content a img{
+    margin:0; padding:0;
+    width:90px;
+    height:90px;
+    object-fit: cover;
+}
+.main-content a span{
+    margin:0; padding:0;
+    width:90px;
+}
+/* ***********************************MAIN CONTENT CHILDREN CARDS NEW********************** */
+input[type="checkbox"] {
+    display:none;
+    padding:0;margin:0;
+}
+input[type="checkbox"]:checked + label{
+    background:red;
+}
+.main-content .checkbox {
+    padding:0;margin:0;
+    float:left;
+}
+.main-content .checkbox label{
+    margin:15px;
+    padding:5px;
+    width:100px;
+    height:125px;
+    overflow:hidden;
+    color:white;
+    background: #555;
+    text-align: center;
+    border-radius: 10px;
+}
+.main-content .checkbox img{
+    margin:0; padding:0;
+    width:90px;
+    height:90px;
+    object-fit: cover;
+}
+.main-content .checkbox span{
+    margin:0; padding:0;
+    width:90px;
+    font-size:1.4em;
+}
+/* ***********************************MAIN CONTENT CHILDREN CARD HAS STATUS SO IT GETS A BIGGER CARD (At home or sleeping) ********************** */
+.has-status{
+    margin: -30px;
+    height: 150px;
+}
+.status-child{
+    font-size: 1em;
+}
+/* ***********************************INFOBOX SIDEBAR ********************** */
+.main-sidebar {
+    float:left;
+    width:10%;
+    min-width:250px;
+    border-right: 2px solid white;
+    padding:5px;
+}
+.infobox{
+    visibility: visible;
+}
+.infobox-childtag{
+    background:white;
+    margin-bottom: 1px;
+}
+/* ***********************************INFOBOX SIDEBAR CHILD PICTURE ********************** */
+.infobox-childphoto{
+    margin:0;
+    padding:4px 4px 0 4px;
+    width:240px;
+}
+.infobox-childphoto img{
+    width:230px;
+    height:150px;
+    margin-bottom: 0;
+}
+/* ***********************************INFOBOX SIDEBAR CHILD SMALL INFO ********************** */
+.infobox-childname{
+    font-size: 1.5em;
+    width:240px;
+}
+/* ***********************************INFOBOX SIDEBAR CHILD BUTTON GROUP ********************** */
+.infobox-childbuttongroup{
+    width:240px;
+}
+.infobox-childbuttongroup a{
+    margin:5px;
+}
+/* ***********************************INFOBOX SIDEBAR MORE INFO EXPANDER ********************** */
+.infobox-moreinfo{
+        
+}
+/* ***********************************INFOBOX SIDEBAR MORE INFO BUTTON TOGGLERS ********************** */
+.infobox-panel-button{
+        
+}
+.infobox-panel-button a{
+    width:240px;
+}
+/* ***********************************INFOBOX SIDEBAR MORE INFO TOGGLED PANNELS ********************** */
+.infobox-hiddenpanel{ 
+    visibility:hidden;
+    height:0;
+}   
+.infobox-moreinfopanel{ 
+    visibility:hidden;
+    background:#BBB;
+    padding:5px;
+    width:240px;
+    margin-top: -5px;
+}
+/* ***********************************INFOBOX SIDEBAR ALLERGIES ********************** */
+.infobox-allergies{
+    margin-left: 20px;
+}
+.infobox-allergie-item{
+    padding:0;
+    margin:1px;
+    width:46px;
+    height:46px;
+    float:left;
+}
+.infobox-allergie-item img{
+    padding:0;
+        
+    width:20px;
+    height:20px;
+    float:left;
+}
