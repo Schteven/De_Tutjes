@@ -265,9 +265,6 @@
     <Content Include="Content\bootstrap.paper.css" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\image-picker.css" />
-    <Content Include="Content\bootstrap.lumen.css" />
-    <Content Include="Content\bootstrap.lumen.min.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\diary.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -337,6 +334,7 @@
     <Content Include="Images\baby-girl.png" />
     <Content Include="Images\female.png" />
     <Content Include="Images\male.png" />
+    <Content Include="Images\Photos\seppe.jpg" />
     <Content Include="Images\stork.png" />
     <Content Include="Areas\Administration\Views\Children\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_AddParents.cshtml" />

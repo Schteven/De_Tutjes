@@ -28,7 +28,7 @@
     </div>
     <div class="col-lg-9 col-md-12">
         <div class="picker">
-@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "" }, new { id = "ShowToddlerSelection" }))
+@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "updatePhoto();" }, new { id = "ShowToddlerSelection" }))
 {
             <select id="toddlerOverview" name="toddlerOverview" class="image-picker">
                 <option value=""></option>
@@ -36,7 +36,7 @@
                 @foreach (var toddler in Model.toddlerList)
                 {
 
-                    <option data-img-label="@toddler.Person.FirstName" data-img-src="http://placehold.it/100x100" value="@toddler.ToddlerId">@toddler.Person.FirstName</option>
+                    <option data-img-label="@toddler.Person.FirstName" data-img-src="@Url.Content("~/Images/Photos/" + toddler.Person.Photo)" value="@toddler.ToddlerId">@toddler.Person.FirstName</option>
 
                 }
 
@@ -44,4 +44,10 @@
 }
         </div>
     </div>
+    <style type="text/css">
+        .thumbnails li img {
+            width: 100px;
+        }
+    </style>
+
 </div>

@@ -22,7 +22,7 @@ namespace De_Tutjes
                 "~/Scripts/underscore.js"
 
                 ));
-
+            
             bundles.Add(new StyleBundle("~/bundles/apps/css").Include(
                 "~/Content/image-picker.css",
                 "~/Content/fullcalendar.css"

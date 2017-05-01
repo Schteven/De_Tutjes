@@ -320,35 +320,39 @@ $(function () {
 
 });
 
-/**********************************************************/
+function updatePhoto() {
 
-// CALENDAR OVERVIEW
+}
 
-// <![CDATA[
-$(document).ready(function () {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    /**********************************************************/
 
-    $('#calendar').fullCalendar({
-        hiddenDays: [ 6, 0 ],
-        locale: 'nl-be',
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek'
-        },
-        editable: false,
-        events: '/calendar/GetToddlersOfPeriod',
-        eventClick: function (calEvent, jsEvent, view) {
+    // CALENDAR OVERVIEW
 
-            alert('Event: ' + calEvent.title);
+    // <![CDATA[
+    $(document).ready(function () {
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
 
-            // change the border color just for fun
-            $(this).css('border-color', 'red');
+        $('#calendar').fullCalendar({
+            hiddenDays: [ 6, 0 ],
+            locale: 'nl-be',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek'
+            },
+            editable: false,
+            events: '/calendar/GetToddlersOfPeriod',
+            eventClick: function (calEvent, jsEvent, view) {
 
-        }
+                alert('Event: ' + calEvent.title);
+
+                // change the border color just for fun
+                $(this).css('border-color', 'red');
+
+            }
+        });
     });
-});
-// ]]>
+    // ]]>
