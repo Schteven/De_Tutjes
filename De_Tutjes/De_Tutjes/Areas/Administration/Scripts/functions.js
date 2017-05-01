@@ -332,7 +332,7 @@ $(document).ready(function () {
     var y = date.getFullYear();
 
     $('#calendar').fullCalendar({
-        //hiddenDays: [ 6, 0 ],
+        hiddenDays: [ 6, 0 ],
         locale: 'nl-be',
         header: {
             left: 'prev,next today',
@@ -340,48 +340,7 @@ $(document).ready(function () {
             right: 'month,agendaWeek'
         },
         editable: false,
-        /*
-        events: [
-          {
-              id: 999,
-              title: '15',
-              start: new Date(y, m, 3, 7, 0),
-              end: new Date(y,m, 3, 17, 0),
-              allDay: false
-          },
-          {
-              title: 'Click for Google',
-              start: new Date(y, m, 28),
-              end: new Date(y, m, 29),
-              url: 'http://google.com/'
-          }
-        ],
-        */
-        /*
-        events: function(start, end, timezone, callback) {
-            $.ajax({
-                type: "POST",
-                url: "/Calendar/GetPlacesFromPeriodAJAX",
-                data: {
-                    start: start,
-                    end: end
-                },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(doc) {
-                    var events = [];
-                    $(doc).find('event').each(function() {
-                        events.push({
-                            title: $(this).attr('title'),
-                            start: $(this).attr('start') // will be parsed
-                        });
-                    });
-                    callback(events);
-                }
-            });
-        },
-        */
-        events: '/calendar/getevents',
+        events: '/calendar/GetToddlersOfPeriod',
         eventClick: function (calEvent, jsEvent, view) {
 
             alert('Event: ' + calEvent.title);

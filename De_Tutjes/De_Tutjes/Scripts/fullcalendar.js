@@ -7424,7 +7424,7 @@ DayGrid.mixin({
 			timeText = this.getEventTimeText(event);
 			if (timeText) {
 			    //timeHtml = '<span class="fc-time">' + htmlEscape(timeText) + '</span>';
-			    timeHtml = '<span class="fc-time">Aantal kinderen:</span>';
+			    //timeHtml = '<span class="fc-time">Aantal kinderen:</span>';
 			}
 		}
 
@@ -11172,7 +11172,7 @@ function Toolbar(calendar, toolbarOptions) {
 										}
 									}
 								})
-								.mousedown(function() {
+								/*.mousedown(function() {
 									// the *down* effect (mouse pressed in).
 									// only on buttons that are not the "active" tab, or disabled
 									button
@@ -11199,7 +11199,7 @@ function Toolbar(calendar, toolbarOptions) {
 											.removeClass(tm + '-state-hover')
 											.removeClass(tm + '-state-down'); // if mouseleave happens before mouseup
 									}
-								);
+								)*/;
 
 							groupChildren = groupChildren.add(button);
 						}

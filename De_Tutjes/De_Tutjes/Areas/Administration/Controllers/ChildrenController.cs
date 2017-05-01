@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using De_Tutjes.Models;
-using De_Tutjes.Functions;
-using De_Tutjes.Areas.Administration.Models;
 using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Globalization;
@@ -13,6 +10,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Security;
 using System.Net.Mail;
+
+using De_Tutjes.Models;
+using De_Tutjes.Functions;
+using De_Tutjes.Areas.Administration.Models;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -22,22 +23,12 @@ namespace De_Tutjes.Areas.Administration.Controllers
         private DateTime CreateAgreedDays_EndDate;
         NewChildWizardSession ncws;
 
-        // STEP VALIDATOR
-
         private DeTutjesContext db = new DeTutjesContext();
 
         // GET: Administration/Children
         public ActionResult Overview()
         {
             ToddlersOverview to = new ToddlersOverview();
-            /*to.toddler = db.Toddlers
-                .Where(a => a.Person.Active == true)
-                .Include(p => p.Person)
-                .Include(f => f.Food)
-                .Include(s => s.Sleep)
-                .Include(m => m.Medical)
-                .FirstOrDefault();
-            */
             to.toddler = new Toddler();
             to.toddlerList = db.Toddlers
                 .Where(a => a.Person.Active == true)
