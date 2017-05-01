@@ -1,4 +1,5 @@
-﻿using System;
+﻿using De_Tutjes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,20 +16,22 @@ namespace De_Tutjes.Areas.Diary.Models
     public class Child
     {
         public ChildStatus Status { get; set; }
+        public Toddler Toddler { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Picture { get; set; }
+        public string Photo { get; set; }
 
         public Child()
         {
 
         }
-        public Child(string id, string name, ChildStatus status, string link )
+        public Child(Toddler toddler, ChildStatus status)
         {
-            this.Id = id;
-            this.Name = name;
             this.Status = status;
-            this.Picture = link;
+            this.Toddler = toddler;
+            this.Id = toddler.ToddlerId.ToString();
+            this.Name = toddler.Person.FirstName;
+            this.Photo = toddler.Person.Photo;
         }
 
 
