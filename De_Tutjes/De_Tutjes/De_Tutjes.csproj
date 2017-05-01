@@ -261,16 +261,7 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.paper.css" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\day.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\events-list.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\modal.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\month-day.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\month.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\week-days.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\week.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\year-month.html" />
-    <Content Include="Areas\Administration\Views\Calendar\calendar-tmpls\year.html" />
-    <Content Include="Content\calendar.css" />
+    <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\image-picker.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -355,7 +346,6 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.nl.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\datepicker-nl.js" />
     <Content Include="Areas\Administration\Views\Children\_AddMedicalInformation.cshtml" />
     <Content Include="Areas\Administration\Views\Children\_ListMedicalInfo.cshtml" />
@@ -374,7 +364,9 @@
     <Content Include="Areas\Administration\Views\Children\_OverviewShowToddler.cshtml" />
     <Content Include=".bin\git.cmd" />
     <Content Include=".bin\node.cmd" />
+    <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\image-picker.js" />
+    <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

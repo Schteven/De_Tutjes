@@ -17,7 +17,7 @@ namespace De_Tutjes
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/apps").Include(
-                "~/Scripts/calendar.js",
+                "~/Scripts/fullcalendar.js",
                 "~/Scripts/image-picker.js",
                 "~/Scripts/underscore.js"
 
@@ -25,7 +25,7 @@ namespace De_Tutjes
 
             bundles.Add(new StyleBundle("~/bundles/apps/css").Include(
                 "~/Content/image-picker.css",
-                "~/Content/calendar.css"
+                "~/Content/fullcalendar.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(

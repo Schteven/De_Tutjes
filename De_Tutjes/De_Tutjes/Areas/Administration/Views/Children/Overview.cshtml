@@ -30,7 +30,7 @@
         <div class="picker">
 @using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "" }, new { id = "ShowToddlerSelection" }))
 {
-            <select id="toddlerList" name="toddlerList" class="image-picker">
+            <select id="toddlerOverview" name="toddlerOverview" class="image-picker">
                 <option value=""></option>
 
                 @foreach (var toddler in Model.toddlerList)

@@ -50,25 +50,31 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult ShowToddler(string toddlerList)
+        public PartialViewResult ShowToddler(string toddlerOverview)
         {
+            Toddler toddler;
             int id = 0;
-            if (int.TryParse(toddlerList, out id))
+            if (int.TryParse(toddlerOverview, out id))
             {
-                id = Int32.Parse(toddlerList);
+                id = Int32.Parse(toddlerOverview);
             }
-            Toddler toddler = db.Toddlers
-                .Where(i => i.ToddlerId.Equals(id))
-                .Include(p => p.Person)
-                .Include(f => f.Food)
-                .Include(s => s.Sleep)
-                .Include(m => m.Medical)
-                .FirstOrDefault();
+            if (id != 0)
+            {
+                toddler = db.Toddlers
+                    .Where(i => i.ToddlerId.Equals(id))
+                    .Include(p => p.Person)
+                    .Include(f => f.Food)
+                    .Include(s => s.Sleep)
+                    .Include(m => m.Medical)
+                    .FirstOrDefault();
 
-            ViewBag.Parents = GetParentsOfToddler(toddler);
-            ViewBag.Pickups = GetPickupsOfToddler(toddler);
-            ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
-
+                ViewBag.Parents = GetParentsOfToddler(toddler);
+                ViewBag.Pickups = GetPickupsOfToddler(toddler);
+                ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
+            } else
+            {
+                toddler = new Toddler();
+            }
             return PartialView("_OverviewShowToddler", toddler);
         }
 
