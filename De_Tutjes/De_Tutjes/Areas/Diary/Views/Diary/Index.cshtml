@@ -178,10 +178,10 @@
                             <input type="checkbox" id="@child.Id" name="@child.Id" />
                             <label for="@child.Id" class="img-rounded">
                                 @{
-                                    if (child.Picture == "")
+                                    if (child.Photo == "")
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@child.Picture" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
                                 <span>@child.Name</span>
                             </label>
