@@ -6,13 +6,7 @@
         models = Model.Count();
     }
     string completed = "fa-square-o";
-    if (models == 1) { completed = "fa-plus-square-o"; }
-    else if (models == 2) { completed = "fa-check-square-o"; }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-    }
+    if (models >= 1) { completed = "fa-check-square-o"; }
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -23,7 +17,7 @@
 
                 <div class="col-md-12">
 
-                    <div class="panel-group" id="accordion">
+                    <div class="panel-group" id="accordionAgreedDays">
                         @{
                             int i = 1;
                             foreach (var agreedDays in Model)
@@ -35,12 +29,14 @@
                                     {
                                         collapsed = "";
                                     }
+
                                 }
+                                string id = "ad" + agreedDays.AgreedDaysId;
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => agreedDays.AgreedDaysId)">@Html.DisplayFor(model => agreedDays.StartDate) - @Html.DisplayFor(model => agreedDays.EndDate)</a></h4>
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@id">@Html.DisplayFor(model => agreedDays.StartDate) - @Html.DisplayFor(model => agreedDays.EndDate)</a></h4>
                                     </div>
-                                    <div id="@Html.DisplayFor(model => agreedDays.AgreedDaysId)" class="panel-collapse collapse @collapsed">
+                                    <div id="@id" class="panel-collapse collapse @collapsed">
                                         <div class="panel-body">
                                             <fieldset>
                                                 <legend>Personal</legend>
@@ -71,23 +67,10 @@
             </div>
             <div class="row">
                 @{
-                    string disabledNext;
-                    string disabledCreate;
-                    if (models > 0)
-                    {
-                        disabledNext = "";
-                    }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
+                    string disabledCreate = "";
                     if (models == 2)
                     {
                         disabledCreate = "disabled";
-                    }
-                    else
-                    {
-                        disabledCreate = "";
                     }
                 }
                 <div class="col-md-1">

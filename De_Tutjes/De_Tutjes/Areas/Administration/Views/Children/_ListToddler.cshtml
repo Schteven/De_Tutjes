@@ -1,16 +1,10 @@
-﻿@model IEnumerable<De_Tutjes.Models.Toddler>
+﻿@model De_Tutjes.Models.Toddler
 @{
-    int models = 0;
-    if (Model != null)
-    {
-        models = Model.Count();
-    }
+    string disabledCreate = "";
     string completed = "fa-square-o";
-    if (models == 1) { completed = "fa-check-square-o"; }
-    int toddlerId = 0;
-    if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-    {
-        toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
+    if (Model.ToddlerId != 0) {
+        completed = "fa-check-square-o";
+        disabledCreate = "disabled";
     }
 
     <div class="panel panel-default">
@@ -19,70 +13,55 @@
         </div>
         <div class="panel-body">
             <div class="row">
-
-                <div class="col-md-12">
-
-                    <div class="panel-group" id="accordion">
-                        @{
-                            foreach (var toddler in Model)
-                            {
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => toddler.ToddlerId)">@Html.DisplayFor(model => toddler.Person.FirstName)</a></h4>
-                                    </div>
-                                    <div id="@Html.DisplayFor(model => toddler.ToddlerId)" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <fieldset>
-                                                <legend>Personal</legend>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 col-form-label">Firstname</label>
-                                                    <div class="col-sm-10">
-                                                        @Html.DisplayFor(model => toddler.Person.FirstName)
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
+            @{
+                if (Model.ToddlerId != 0)
+                {
+                    <div class="col-md-2">
+                        <blockquote class="blockquote">
+                            @{
+                                if (Model.Person.Gender == "male")
+                                {
+                                    <img class="d-flex" src="~/Images/baby-boy.png" alt="boy" height="64" width="64">
+                                }
+                                else if (Model.Person.Gender == "female")
+                                {
+                                    <img class="d-flex" src="~/Images/baby-girl.png" alt="girl" height="64" width="64">
+                                }
+                                else
+                                {
+                                    <img class="d-flex" src="~/Images/stork.png" alt="unknown" height="64" width="64">
                                 }
                             }
+                        </blockquote>
                     </div>
-
-                </div>
-
+                    <div class="col-md-10">
+                        <h5 class="mt-0">@Html.DisplayFor(model => Model.Person.FirstName)</h5>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => Model.Person.BirthDate, htmlAttributes: new { @class = "col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => Model.Person.BirthDate)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => Model.Person.Gender, htmlAttributes: new { @class = "col-md-2" })
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => Model.Person.Gender)
+                            </div>
+                        </div>
+                    </div>
+                                }
+            }
             </div>
-            <div class="row">
-                @{
 
-                    string disabledNext = "disabled";
-                    string disabledCreate = "";
-                    if (models > 0)
-                    {
-                        disabledNext = "";
-                    }
-                    else
-                    {
-                        disabledNext = "disabled";
-                    }
-                    if (models == 1)
-                    {
-                        disabledCreate = "disabled";
-                    }
-                    else
-                    {
-                        disabledCreate = "";
-                    }
-                }
+            <div class="row">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addToddlerModal" id="openToddlerForm" @disabledCreate><i class="fa fa-user-plus"></i> Kind toevoegen</a>
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addToddlerModal" id="openToddlerForm" @disabledCreate><i class='fa fa-user-plus'></i> Kind toevoegen</a>
                 </div>
-
                 <div class="col-md-3">
-                    <a class="btn btn-success btn-block btn-sm" role="button" href="#b" data-toggle="tab" id="step2" @disabledNext>Volgende</a>
                 </div>
                 <div class="col-md-1">
                 </div>

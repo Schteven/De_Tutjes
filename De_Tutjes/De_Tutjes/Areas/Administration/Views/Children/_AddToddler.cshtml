@@ -2,19 +2,9 @@
 
 @using (Ajax.BeginForm("CreateToddler", null, new AjaxOptions { UpdateTargetId = "toddlerList", OnSuccess = "submitToddlerForm()" }, new { id = "AddToddlerForm" }))
 {
-
     @Html.AntiForgeryToken();
 
-
     <div class="modal fade" id="addToddlerModal" tabindex="-1" role="dialog" aria-labelledby="addToddlerLabel" aria-hidden="true">
-        @{ 
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -40,14 +30,24 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.toddler.Person.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-10">
-                                @Html.EditorFor(model => model.toddler.Person.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                                <input type="text" class="form-control" name="toddler.Person.BirthDate" id="toddler_Person_BirthDate" value="">
                                 @Html.ValidationMessageFor(model => model.toddler.Person.BirthDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.toddler.Person.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-10">
-                                @Html.EditorFor(model => model.toddler.Person.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="btn-group-sm" data-toggle="buttons">
+                                    <label class="btn btn-primary">
+                                        @Html.RadioButtonFor(model => model.toddler.Person.Gender, "male")jongen
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        @Html.RadioButtonFor(model => model.toddler.Person.Gender, "female")meisje
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        @Html.RadioButtonFor(model => model.toddler.Person.Gender, "unknown")nog niet gekend
+                                    </label>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.toddler.Person.Gender, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -62,8 +62,29 @@
         </div>
     </div>
 }
-<div class="tab-pane active" id="a">
+<div class="tab-pane active" id="step1">
     <div id="toddlerList">
-        @Html.Partial("_ListToddler", Model.toddlers)
+        @Html.Partial("_ListToddler", Model.toddler)
+    </div>
+    <div id="ButtonsTogglerStep1">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="button" id="buttonStep2" name="step2" class="btn btn-success btn-block btn-sm" disabled>Volgende</button>
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

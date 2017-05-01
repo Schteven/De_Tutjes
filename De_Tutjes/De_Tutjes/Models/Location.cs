@@ -15,9 +15,15 @@ namespace De_Tutjes.Models
 
         public string Name { get; set; }
 
+        [ForeignKey("Manager")]
+        public int ManagerId { get; set; }
+        public virtual Employee Manager { get; set; }
+
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public virtual Address Address { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
 
     }
 }

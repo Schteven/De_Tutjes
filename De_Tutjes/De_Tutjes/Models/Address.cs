@@ -13,10 +13,10 @@ namespace De_Tutjes.Models
         [Key]
         public int AddressId { get; set; }
         public string Street { get; set; }
-        public int Number { get; set; }
+        public int? Number { get; set; }
         public string Bus { get; set; }
         public string City { get; set; }
-        public int PostalCode { get; set; }
+        public int? PostalCode { get; set; }
 
         public virtual ICollection<Person> Persons { get; set; }
     }

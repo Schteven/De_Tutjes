@@ -1,0 +1,68 @@
+﻿@model De_Tutjes.Models.Food
+@{
+    string completed = "fa-square-o";
+    if (Model != null) { completed = "fa-check-square-o"; }
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa @completed"></i> Food informatie</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    @if (Model.FoodID != 0)
+                    {
+                        string id = "fi" + Model.FoodID;
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@id">Eten</a></h4>
+                                </div>
+                                <div id="@id" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <legend>Huisarts</legend>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Naam</label>
+                                                <div class="col-sm-10">
+                                                    @Html.DisplayFor(model => model.SpecialDiet)
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+            <div class="row">
+                @{
+                    string disabledCreate = "";
+                    if (Model.FoodID != 0)
+                    {
+                        disabledCreate = "disabled";
+                    }
+
+                }
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addFoodInformationModal" id="openFoodInformationForm" @disabledCreate><i class="fa fa-calendar-plus-o"></i> Eetinformatie toevoegen</a>
+                </div>
+
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

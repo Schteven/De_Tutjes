@@ -5,47 +5,80 @@
 
     @Html.AntiForgeryToken();
 
-
-
     <div class="modal fade" id="addAgreedDaysModal" tabindex="-1" role="dialog" aria-labelledby="addAgreedDaysLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addAgreedDaysLabel">
                         AgreedDay @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h5>
-
                 </div>
+
                 <div class="modal-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                                <div class="col-sm-6" id="startdate">
+                                    @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <input type="text" class="form-control" name="agreedDays.StartDate" id="agreedDays_StartDate" value="">
+                                    @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6" id="enddate">
+                                    @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <input type="text" class="form-control" name="agreedDays.EndDate" id="agreedDays_EndDate" value="">
+                                    @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
+                                </div>
+                        </div>
+                        <hr />
 
-                    <fieldset>
-                        <legend>Period for AgreedDays @toddlerId</legend>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.agreedDays.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
-                                @Html.EditorFor(model => model.agreedDays.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.agreedDays.StartDate, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Monday">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Monday)
+                                    </button>
+                                    <span class="label label-info" id="checkMonday"></span>
+                                    @Html.CheckBoxFor(model => model.agreedDays.Monday, new { @class = "hidden", @value = "true" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Tuesday">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Tuesday)
+                                    </button>
+                                    <span class="label label-info" id="checkTuesday"></span>
+                                    @Html.CheckBoxFor(model => model.agreedDays.Tuesday, new { @class = "hidden", @value = "true" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Wednesday">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Wednesday)
+                                    </button>
+                                    <span class="label label-info" id="checkWednesday"></span>
+                                    @Html.CheckBoxFor(model => model.agreedDays.Wednesday, new { @class = "hidden", @value = "true" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Thursday">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Thursday)
+                                    </button>
+                                    <span class="label label-info" id="checkThursday"></span>
+                                    @Html.CheckBoxFor(model => model.agreedDays.Thursday, new { @class = "hidden", @value = "true" })
+                                </span>
+                                <span class="button-checkbox">
+                                    <button type="button" class="btn btn-sm btn-block" data-color="primary" id="Friday">
+                                        @Html.DisplayNameFor(model => model.agreedDays.Friday)
+                                    </button>
+                                    <span class="label label-info" id="checkFriday"></span>
+                                    @Html.CheckBoxFor(model => model.agreedDays.Friday, new { @class = "hidden", @value = "true" })
+                                </span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.agreedDays.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
-                                @Html.EditorFor(model => model.agreedDays.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.agreedDays.EndDate, "", new { @class = "text-danger" })
-                            </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @Html.LabelFor(model => model.agreedDays.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.TextAreaFor(model => model.agreedDays.SpecialNotice, new { @class = "form-control", @rows = "4" })
+                                @Html.ValidationMessageFor(model => model.agreedDays.SpecialNotice, "", new { @class = "text-danger" })
+                            </div>                        
                         </div>
-                    </fieldset>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -61,21 +94,12 @@
 
     @Html.AntiForgeryToken();
 
-
-
-    <div class="modal fade" id="addAgreedDaysModal" tabindex="-1" role="dialog" aria-labelledby="addAgreedDaysLabel" aria-hidden="true">
-        @{
-            int toddlerId = 0;
-            if (HttpContext.Current.Session["NewChildWizardSession"] != null)
-            {
-                toddlerId = int.Parse(HttpContext.Current.Session["NewChildWizardSession"].ToString());
-            }
-        }
+    <div class="modal fade" id="addPickupModal" tabindex="-1" role="dialog" aria-labelledby="addPickupLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPickupLabel">
-                        AgreedDay @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Pickup @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -86,7 +110,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <fieldset>
-                        <legend>pickup for child @toddlerId</legend>
+                        <legend>pickup for child</legend>
                         <div class="form-group">
                             @Html.LabelFor(model => model.pickup.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-10">
@@ -139,19 +163,42 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="submit" class="btn btn-primary" id="savePickup">Save</button>
                 </div>
             </div>
         </div>
     </div>
-            }
+
+}
 
 
-<div class="tab-pane" id="b">
+<div class="tab-pane" id="step3">
     <div id="agreedDaysList">
         @Html.Partial("_ListAgreedDays", Model.agreedDaysList)
     </div>
     <div id="pickupsList">
         @Html.Partial("_ListPickups", Model.pickups)
+    </div>
+    <div id="ButtonsTogglerStep3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-info btn-block btn-sm" role="button" href="#step2" data-toggle="tab" name="step2">Vorige</a>
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="button" id="buttonStep4" name="step4" class="btn btn-success btn-block btn-sm" disabled>Volgende</button>
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

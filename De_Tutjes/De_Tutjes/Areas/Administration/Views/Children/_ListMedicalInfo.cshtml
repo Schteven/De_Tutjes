@@ -1,0 +1,123 @@
+﻿@model De_Tutjes.Models.Medical
+@{
+    string completed = "fa-square-o";
+    if (Model != null) { completed = "fa-check-square-o"; }
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa @completed"></i> Medische informatie</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    @if (Model.MedicalID != 0)
+                    {
+                        string id = "mi" + Model.MedicalID;
+                    <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#@id">Medisch</a></h4>
+                                    </div>
+                                    <div id="@id" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            @if (Model.DoctorId != null)
+                                            {
+                                            <fieldset>
+                                                <legend>Huisarts</legend>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Naam</label>
+                                                    <div class="col-sm-10">
+                                                        @Html.DisplayFor(model => model.Doctor.Person.FirstName)
+                                                        @Html.DisplayFor(model => model.Doctor.Person.LastName)
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            }
+                                            @if (Model.Medication != false)
+                                            {
+                                                <fieldset>
+                                                    <legend>Medicatie</legend>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-10">
+                                                            @Html.DisplayFor(model => model.MedicationName)
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            }
+                                            @if (Model.Allergies != null)
+                                            {
+                                                <fieldset>
+                                                    <legend>Allergieën</legend>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-10">
+                                                            @Html.DisplayFor(model => model.Allergies)
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            }
+                                            @if (Model.ChildDisease != null)
+                                            {
+                                                <fieldset>
+                                                    <legend>Kinderziektes</legend>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-10">
+                                                            @Html.DisplayFor(model => model.ChildDisease)
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            }
+                                            @if ((Model.HealthServiceNumber != null) || (Model.SpecialNotice != null))
+                                            {
+                                                <fieldset>
+                                                    <legend>Extra</legend>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2 col-form-label">Mutualiteit</label>
+                                                        <div class="col-sm-10">
+                                                            @Html.DisplayFor(model => model.HealthServiceNumber)
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2 col-form-label">Speciale zorgen</label>
+                                                        <div class="col-sm-10">
+                                                            @Html.DisplayFor(model => model.SpecialNotice)
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    }
+
+                </div>
+
+            </div>
+            <div class="row">
+                @{
+                    string disabledCreate = "";
+                    if (Model.MedicalID != 0)
+                    {
+                        disabledCreate = "disabled";
+                    }
+                    
+                }
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-block btn-sm" role="button" href="#" data-toggle="modal" data-target="#addMedicalInformationModal" id="openMedicalInformationForm" @disabledCreate><i class="fa fa-calendar-plus-o"></i> Medische fiche toevoegen</a>
+                </div>
+
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

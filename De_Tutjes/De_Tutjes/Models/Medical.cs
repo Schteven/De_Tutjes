@@ -11,7 +11,7 @@ namespace De_Tutjes.Models
     public class Medical
     {
         public int MedicalID { get; set; }
-        public Doctor Doctor { get; set; }
+        
         public string HealthServiceNumber { get; set; }
         public bool Medication { get; set; }
         public string MedicationName { get; set; }
@@ -20,6 +20,10 @@ namespace De_Tutjes.Models
         public string ChildDisease { get; set; }
         public string DiseaseWhen { get; set; }
         public string SpecialNotice { get; set; }
+
+        [ForeignKey("Doctor")]
+        public int? DoctorId { get; set; }
+        public Doctor Doctor { get; set; }
 
         public virtual ICollection<Toddler> Toddlers { get; set; }
 

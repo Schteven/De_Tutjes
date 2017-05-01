@@ -17,7 +17,7 @@ namespace De_Tutjes.Areas.Administration.Models
     public class CreateToddlerOverview
     {
         public Toddler toddler { get;  set;}
-        public ICollection<Toddler> toddlers { get; set; }
+        public Toddler currentToddler { get; set; }
     }
 
     public class CreateParentsOverview
@@ -34,6 +34,25 @@ namespace De_Tutjes.Areas.Administration.Models
         public ICollection<AgreedDays> agreedDaysList { get; set; }
         public ICollection<Pickup> pickups { get; set; }
         public ICollection<RelationLink> relationLinks { get; set; }
+    }
+
+    public class CreateMedicalInformation
+    {
+        public Medical medical { get; set; }
+        public Medical medicalInfo { get; set; }
+    }
+
+    public class CreateFoodAndSleepInformation
+    {
+        public Food food { get; set; }
+        public Food foodInfo { get; set; }
+        public Sleep sleep { get; set; }
+        public Sleep sleepInfo { get; set; }
+    }
+
+    public class CreateDailyRoutineAndImportantNotice
+    {
+        public Toddler toddler { get; set; }
     }
 
 }

@@ -8,9 +8,25 @@ namespace De_Tutjes
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // MAIN bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/moment.js",
                         "~/Scripts/jquery-3.1.1.js",
-                        "~/Scripts/jquery.unobtrusive-ajax.js"));
+                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/jquery-ui-1.12.1.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/apps").Include(
+                "~/Scripts/fullcalendar.js",
+                "~/Scripts/image-picker.js",
+                "~/Scripts/underscore.js"
+
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/apps/css").Include(
+                "~/Content/image-picker.css",
+                "~/Content/fullcalendar.css"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js",
@@ -26,11 +42,22 @@ namespace De_Tutjes
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.lumen.css",
-                      "~/Content/Site.css"));
+                      "~/Content/bootstrap.paper.css",
+                      "~/Content/Site.css",
+                      "~/Content/themes/base/jquery-ui.css",
+                      "~/Content/bootstrap-datepicker3.css"
+                      ));
+
+            // CHILD bundles
+
+            bundles.Add(new ScriptBundle("~/Admin/Children").Include(
+                "~/Areas/Administration/Scripts/functions.js"
+                ));
+
         }
     }
 }

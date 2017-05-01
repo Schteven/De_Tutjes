@@ -13,10 +13,16 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int PersonId { get; set; }
+        [Display(Name = "Voornaam")]
         public string FirstName { get; set; }
+        [Display(Name = "Achternaam")]
         public string LastName { get; set; }
+        [Display(Name = "Geslacht")]
         public string Gender { get; set; }
-        public DateTime? BirthDate { get; set; }
+
+        [Display(Name = "Geboortedatum")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
 
