@@ -321,7 +321,11 @@ $(function () {
 });
 
 function updatePhoto() {
-
+    if ($("#toddlerPhoto").val() == null) {
+        $("#toddlerPhotoShow").attr('src', '/Images/baby-boy.png');
+    } else {
+        $("#toddlerPhotoShow").attr('src', '/Images/Photos/' + $("#toddlerPhoto").val());
+    }
 }
 
     /**********************************************************/
