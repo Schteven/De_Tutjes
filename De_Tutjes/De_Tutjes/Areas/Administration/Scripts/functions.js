@@ -318,7 +318,7 @@ $(function () {
         $(this).closest('form').trigger('submit');
     });
 
-});1
+});
 
 function updatePhoto() {
     if ($("#toddlerPhoto").val() == null) {
@@ -334,18 +334,13 @@ function updatePhoto() {
 
     // <![CDATA[
     $(document).ready(function () {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-
         $('#calendar').fullCalendar({
             hiddenDays: [ 6, 0 ],
             locale: 'nl-be',
             header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek'
+                left: '',
+                center: '',
+                right: ''
             },
             editable: false,
             events: '/calendar/GetToddlersOfPeriod',
@@ -356,6 +351,17 @@ function updatePhoto() {
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
 
+            },
+            eventRender: function (event, element, view) {
+                if (view.name == "agendaWeek") {
+                    element.find(".fc-title")
+                        .append("<br/><b>Kinderen</b>:<br/>" + event.description);
+                }
+            },
+            views: {
+                month: {
+                    eventLimit: 1
+                }
             }
         });
     });

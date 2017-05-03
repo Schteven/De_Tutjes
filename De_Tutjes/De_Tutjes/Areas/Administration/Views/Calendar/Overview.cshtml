@@ -13,9 +13,12 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-link btn-md" role="button" href=""><span class="fa fa-plus fa-3x"></span><br>knop</a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-remove fa-3x"></span><br>Verwijderen</a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-pencil fa-3x"></span><br>Bewerken</a>
+                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('prev');"><span class="fa fa-chevron-left fa-3x"></span></a>
+                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('today');">vandaag</a>
+                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('next');"><span class="fa fa-chevron-right fa-3x"></span></a>
+                
+                <a class="pull-right btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');"><span class="fa fa-search-minus fa-3x"></span><br></a>
+                <a class="pull-right btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');"><span class="fa fa-search-plus fa-3x"></span><br></a>
             </div>
         </div>
     </div>
