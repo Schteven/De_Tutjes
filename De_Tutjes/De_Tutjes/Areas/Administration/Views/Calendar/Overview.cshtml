@@ -11,14 +11,24 @@
 
         @Html.Partial("_MenuPartial")
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="">
             <div class="panel-body">
-                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('prev');"><span class="fa fa-chevron-left fa-3x"></span></a>
-                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('today');">vandaag</a>
-                <a class="btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('next');"><span class="fa fa-chevron-right fa-3x"></span></a>
-                
-                <a class="pull-right btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');"><span class="fa fa-search-minus fa-3x"></span><br></a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');"><span class="fa fa-search-plus fa-3x"></span><br></a>
+                <div class="pull-left col-md-3">
+                    <h4>
+                        <a class="pull-left btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('prev');"><span class="fa fa-chevron-left fa-2x"></span></a>
+                        <a class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('today');">vandaag</a>
+                        <a class="pull-right btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('next');"><span class="fa fa-chevron-right fa-2x"></span></a>
+                    </h4>
+                </div>
+                <div class="col-md-6" id="calendarDate">
+                    <h4>&nbsp;</h4>
+                </div>
+                <div class="pull-right col-md-3">
+                    <h4>
+                        <a class="pull-right btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');"><span class="fa fa-search-minus fa-2x"></span><br></a>
+                        <a class="pull-right btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');"><span class="fa fa-search-plus fa-2x"></span><br></a>
+                    </h4>
+                </div>
             </div>
         </div>
     </div>

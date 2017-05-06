@@ -11229,11 +11229,12 @@ function Toolbar(calendar, toolbarOptions) {
 		return sectionEl;
 	}
 
-
+    // CHANGED: h2 -> #calendarDate
 	function updateTitle(text) {
 		if (el) {
 			el.find('h2').text(text);
 		}
+		$("#calendarDate h4").text(text);
 	}
 
 

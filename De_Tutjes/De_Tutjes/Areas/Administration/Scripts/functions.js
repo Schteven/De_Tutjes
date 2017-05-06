@@ -321,7 +321,7 @@ $(function () {
 });
 
 function updatePhoto() {
-    if ($("#toddlerPhoto").val() == null) {
+    if ($("#toddlerPhoto").val() === null) {
         $("#toddlerPhotoShow").attr('src', '/Images/baby-boy.png');
     } else {
         $("#toddlerPhotoShow").attr('src', '/Images/Photos/' + $("#toddlerPhoto").val());
@@ -348,12 +348,9 @@ function updatePhoto() {
 
                 alert('Event: ' + calEvent.title);
 
-                // change the border color just for fun
-                $(this).css('border-color', 'red');
-
             },
             eventRender: function (event, element, view) {
-                if (view.name == "agendaWeek") {
+                if (view.name === "agendaWeek") {
                     element.find(".fc-title")
                         .append("<br/><b>Kinderen</b>:<br/>" + event.description);
                 }
@@ -365,4 +362,19 @@ function updatePhoto() {
             }
         });
     });
-    // ]]>
+// ]]>
+
+    function getToddlersInfo(id) {
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Calendar/getToddlersInfoAJAX",
+                data: '{id: "' + id + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    
+                }
+            });
+        });
+    }
