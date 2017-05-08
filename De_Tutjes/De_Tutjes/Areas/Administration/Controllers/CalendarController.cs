@@ -77,18 +77,54 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 string toddlersOnThisDay = "";
                 foreach (AgreedDays agreedDay in agreedDaysOnThisDay)
                 {
+                    int i = 1;
+                    int hr = 0;
+                    string h = "00";
+                    string sm = "00";
+                    string em = "30";
+
                     toddlersOnThisDay += agreedDay.Toddler.Person.FirstName;
                     toddlersOnThisDay += "<br>";
+
+                    string startTime = h + ":" + sm + ":00";
+                    string endTime = h + ":" + em + ":00";
+
+                    calDay newCalDay = new calDay
+                    {
+                        id = ""+i,
+                        title = agreedDay.Toddler.Person.FirstName,
+                        //description = toddlersOnThisDay,
+                        start = date.ToString("s").Replace("00:00:00", startTime),
+                        end = date.ToString("s").Replace("00:00:00", endTime),
+                        allDay = false
+                    };
+
+                    calDayList.Add(newCalDay);
+
+                    if (i % 2 != 0)
+                    {
+                        hr++;
+                        h = (hr < 10) ? "0" + hr : "" + hr ;
+                        sm = "00";
+                        em = "30";
+                    }
+                    else
+                    {
+                        sm = "30";
+                        em = "00";
+                    }
+                    i++;
+
                 } 
                 if (toddlers != 0)
                 {
                     calDay newCalDay = new calDay
                     {
-                        id = "",
+                        id = "0",
                         title = "Aantal: " + toddlers,
-                        description = toddlersOnThisDay,
+                        //description = toddlersOnThisDay,
                         start = date.ToString("s"),
-                        allDay = false
+                        allDay = true
                     };
 
                     calDayList.Add(newCalDay);
