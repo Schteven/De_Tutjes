@@ -343,25 +343,6 @@ function updatePhoto() {
                 right: ''
             },
             editable: false,
-            /*events: [
-			{
-                id: 1,
-			    title: 'Kind 1',
-			    start: '2017-05-09T00:00:00',
-			    end: '2017-05-09T00:30:00'
-			},
-            {
-                title: 'Aantal: 2',
-                start: '2017-05-09',
-                allDay: true
-            },
-            {
-                id: 2,
-                title: 'Kind 2',
-                start: '2017-05-09T00:30:00',
-                end: '2017-05-09T01:00:00'
-            }
-            ],*/
             events: '/calendar/GetToddlersOfPeriod',
             eventClick: function (calEvent, jsEvent, view) {
 
@@ -377,14 +358,34 @@ function updatePhoto() {
                     }
                 }
             },
+            /*viewRender: function(currentView){
+                if (currentView.title === "month") {
+                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
+                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                } else {
+                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
+                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                }
+            },*/
             views: {
                 month: {
-                    eventLimit: 2
+                    eventLimit: 1
                 }
             }
         });
     });
 // ]]>
+
+    /*$(document).ready(function () {
+        var view = $('#calendar').fullCalendar('getView');
+        if (view.title === "Month") {
+            $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-info btn-sm disabled");
+            $("#buttonCalZoomOut").removeClass("pull-right btn btn-info btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+        } else {
+            $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-info btn-sm disabled");
+            $("#buttonCalZoomIn").removeClass("pull-right btn btn-info btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+        }
+    });*/
 
     function getToddlersInfo(id) {
         $(function () {

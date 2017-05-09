@@ -119,3 +119,7 @@
   border-color: #ddd transparent #ddd #ddd;
   *border-right-color: #ffffff;
 }
+
+a.disabled {
+    pointer-events: none;
+}
