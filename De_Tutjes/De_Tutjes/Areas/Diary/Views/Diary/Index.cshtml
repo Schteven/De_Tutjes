@@ -167,9 +167,9 @@
     <!-- ************************* MAIN CONTENT ****************************** -->
     <div class="main-content">
         <!-- ************************* CHILDREN CARDS ****************************** -->
-        if(Model != null){
+        @if(Model != null){
         
-        @foreach (var child in Model)
+        foreach (var child in Model)
         {
             switch (child.Status)
             {
