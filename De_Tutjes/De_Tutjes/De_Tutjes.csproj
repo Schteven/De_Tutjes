@@ -232,12 +232,18 @@
     <Compile Include="Migrations\201704031545577_NewSetup.Designer.cs">
       <DependentUpon>201704031545577_NewSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705081751362_Kristof migration.cs" />
+    <Compile Include="Migrations\201705081751362_Kristof migration.Designer.cs">
+      <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AgreedDays.cs" />
     <Compile Include="Models\ContactDetail.cs" />
     <Compile Include="Models\DeTutjesInitializer.cs" />
+    <Compile Include="Models\DiaryToddlerStatus.cs" />
+    <Compile Include="Models\DiaryToddlerUpdate.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Food.cs" />
@@ -372,6 +378,7 @@
     <Content Include=".bin\node.cmd" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\image-picker.js" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
@@ -444,6 +451,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704031545577_NewSetup.resx">
       <DependentUpon>201704031545577_NewSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081751362_Kristof migration.resx">
+      <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

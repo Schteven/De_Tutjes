@@ -167,6 +167,7 @@
     <!-- ************************* MAIN CONTENT ****************************** -->
     <div class="main-content">
         <!-- ************************* CHILDREN CARDS ****************************** -->
+        if(Model != null){
         
         @foreach (var child in Model)
         {
@@ -195,10 +196,10 @@
                             <label for="@child.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                 <span class="status-child glyphicon glyphicon-home" style="margin-left:30px"></span>
                                 @{
-                                    if (child.Picture == "")
+                                    if (child.Photo == "")
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@child.Picture" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
                                 <span>@child.Name</span>
                             </label>
@@ -213,10 +214,10 @@
                             <label for="@child.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                 <span class="status-child glyphicon glyphicon-cloud" style="margin-left:30px"></span>
                                 @{
-                                    if (child.Picture == "")
+                                    if (child.Photo == "")
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@child.Picture" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
                                 <span>@child.Name</span>
                             </label>
@@ -238,6 +239,7 @@
 
             }
 
+        }
         }
 
 

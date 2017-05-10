@@ -59,6 +59,10 @@ namespace De_Tutjes.Models
         // Daycare info
         public DbSet<Location> Locations { get; set; }
 
+        // Diary tables
+        public DbSet<DiaryToddlerStatus> DiaryToddlerStatus { get; set; }
+        public DbSet<DiaryToddlerUpdate> DiaryToddlerUpdate { get; set; }
+
         // System attributes
         public DbSet<NewChildWizardSession> NewChildWizardSessions { get; set; }
         

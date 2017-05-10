@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using De_Tutjes.Areas.Diary.Models;
+using De_Tutjes.Models;
 
 namespace De_Tutjes.Areas.Diary.Controllers
 {
@@ -19,7 +20,12 @@ namespace De_Tutjes.Areas.Diary.Controllers
             childcards = cm.GetAllChilds();
             return View(childcards);
         }
-
+        //public ActionResult Index(Location location)
+        //{
+        //    cm.SetLocation(location);
+        //    childcards = cm.GetAllChilds();
+        //    return View(childcards);
+        //}
         public ActionResult ChildStatus(string submitButton, FormCollection col)//DiaryModel diarymodel
         {
             try
@@ -30,7 +36,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.CheckIn);
+                                cm.SetChildUpdate((string)c, ChildUpdate.CheckIn, null);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
                             }
                             break;
@@ -40,7 +46,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Sleeping);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Sleeping, null);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Sleeping);
                             }
                             break;
@@ -49,7 +55,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Eating);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Eating, null);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
                             }
                             break;
@@ -59,7 +65,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Diaper);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Diaper, null);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
                             }
                             break;
@@ -86,7 +92,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.CheckOut);
+                                cm.SetChildUpdate((string)c, ChildUpdate.CheckOut, null);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Home);
                             }
                             break;
@@ -97,7 +103,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
 
                 }
 
-                return RedirectToAction("Index");
+                return View("Index");
             }
             catch
             {
