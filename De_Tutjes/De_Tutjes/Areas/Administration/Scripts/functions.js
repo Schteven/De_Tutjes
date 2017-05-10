@@ -321,7 +321,11 @@ $(function () {
 });
 
 function updatePhoto() {
-
+    if ($("#toddlerPhoto").val() === null) {
+        $("#toddlerPhotoShow").attr('src', '/Images/baby-boy.png');
+    } else {
+        $("#toddlerPhotoShow").attr('src', '/Images/Photos/' + $("#toddlerPhoto").val());
+    }
 }
 
     /**********************************************************/
@@ -330,29 +334,66 @@ function updatePhoto() {
 
     // <![CDATA[
     $(document).ready(function () {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-
         $('#calendar').fullCalendar({
             hiddenDays: [ 6, 0 ],
             locale: 'nl-be',
             header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek'
+                left: '',
+                center: '',
+                right: ''
             },
             editable: false,
             events: '/calendar/GetToddlersOfPeriod',
-            eventClick: function (calEvent, jsEvent, view) {
+            /*eventClick: function (calEvent, jsEvent, view) {
 
                 alert('Event: ' + calEvent.title);
 
-                // change the border color just for fun
-                $(this).css('border-color', 'red');
-
+            },*/
+            eventRender: function (event, element, view) {
+                if (view.name === "agendaWeek") {
+                    if (event.allDay === true) {
+                        element.find(".fc-title").append("<br/> <b>..</b>" + event.description);
+                    } else {
+                        //element.find(".fc-title").append("<br/>" +event.description);
+                    }
+                }
+            },
+            viewRender: function(currentView){
+                if (currentView.name === "agendaWeek") {
+                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
+                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                } else if (currentView.name === "month") {
+                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
+                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                }
+            },
+            views: {
+                month: {
+                    eventLimit: 2
+                }
+            },
+            loading: function (isLoading, view) {
+                if (isLoading) {
+                    
+                } else {
+                    
+                }
             }
         });
     });
-    // ]]>
+// ]]>
+
+    function getToddlersInfo(id) {
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Calendar/getToddlersInfoAJAX",
+                data: '{id: "' + id + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    
+                }
+            });
+        });
+    }

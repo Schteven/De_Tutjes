@@ -815,7 +815,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             int max = 17;
             //int freeplaces = 0;
-            ICollection<FreePlace> freePlaces = new List<FreePlace>();
             ICollection<DateTime> newPeriod = new List<DateTime>();
 
             ICollection<AgreedDays> agreedDaysList = db.AgreedDays.Where(st => st.EndDate >= StartDate).ToList();

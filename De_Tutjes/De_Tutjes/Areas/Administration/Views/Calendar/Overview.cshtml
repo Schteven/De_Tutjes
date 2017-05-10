@@ -5,17 +5,30 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <img class="center-block" src="http://placehold.it/185x185" alt="pic" />
+        <img class="center-block" src="http://placehold.it/150x150" alt="pic" width="150px"/>
     </div>
     <div class="col-lg-9 col-md-9">
 
         @Html.Partial("_MenuPartial")
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="">
             <div class="panel-body">
-                <a class="btn btn-link btn-md" role="button" href=""><span class="fa fa-plus fa-3x"></span><br>knop</a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-remove fa-3x"></span><br>Verwijderen</a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-pencil fa-3x"></span><br>Bewerken</a>
+                <div class="col-md-3">
+                    <h4>
+                        <a id="buttonCalPrev" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('prev');"><span class="fa fa-chevron-left fa-2x"></span></a>
+                        <a id="buttonCalToday" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('today');">vandaag</a>
+                        <a id="buttonCalNext" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('next');"><span class="fa fa-chevron-right fa-2x"></span></a>
+                    </h4>
+                </div>
+                <div class="col-md-5" id="calendarDate">
+                    <h4>&nbsp;</h4>
+                </div>
+                <div class="col-md-4">
+                    <h4>
+                        <a id="buttonCalZoomIn" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');">Week</a>
+                        <a id="buttonCalZoomOut" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');">Maand</a>
+                    </h4>
+                </div>
             </div>
         </div>
     </div>

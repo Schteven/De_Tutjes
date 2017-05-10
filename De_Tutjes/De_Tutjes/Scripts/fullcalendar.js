@@ -7444,10 +7444,12 @@ DayGrid.mixin({
 					) +
 			'>' +
 				'<div class="fc-content">' +
-					(this.isRTL ?
-						titleHtml + ' ' + timeHtml : // put a natural space in between
+					/*(this.isRTL ?
+						titleHtml + ' ' + timeHtml : // put a natural space in between EDITED
 						timeHtml + ' ' + titleHtml   //
-						) +
+						) 
+				    */
+                    titleHtml +
 				'</div>' +
 				(isResizableFromStart ?
 					'<div class="fc-resizer fc-start-resizer" />' :
@@ -7989,7 +7991,8 @@ DayGrid.mixin({
 			return opt(num);
 		}
 		else {
-			return '+' + num + ' ' + opt;
+		    //return '+' + num + ' ' + opt; EDITED
+		    return 'bekijk aanwezigen';
 		}
 	},
 
@@ -8827,15 +8830,15 @@ TimeGrid.mixin({
 				) +
 			'>' +
 				'<div class="fc-content">' +
-					(timeText ?
+					/*(timeText ?
 						'<div class="fc-time"' +
-						' data-start="' + htmlEscape(startTimeText) + '"' +
+						' data-start="' + htmlEscape(startTimeText) + '"' + EDITED
 						' data-full="' + htmlEscape(fullTimeText) + '"' +
 						'>' +
 							'<span>' + htmlEscape(timeText) + '</span>' +
 						'</div>' :
 						''
-						) +
+						) +*/
 					(event.title ?
 						'<div class="fc-title">' +
 							htmlEscape(event.title) +
@@ -11229,11 +11232,12 @@ function Toolbar(calendar, toolbarOptions) {
 		return sectionEl;
 	}
 
-
+    // CHANGED: h2 -> #calendarDate
 	function updateTitle(text) {
 		if (el) {
 			el.find('h2').text(text);
 		}
+		$("#calendarDate h4").text(text);
 	}
 
 
