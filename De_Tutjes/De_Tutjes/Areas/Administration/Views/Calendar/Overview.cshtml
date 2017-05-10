@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <img class="center-block" src="http://placehold.it/185x185" alt="pic" />
+        <img class="center-block" src="http://placehold.it/150x150" alt="pic" width="150px"/>
     </div>
     <div class="col-lg-9 col-md-9">
 
@@ -13,7 +13,7 @@
 
         <div class="panel panel-default" style="">
             <div class="panel-body">
-                <div class="pull-left col-md-4">
+                <div class="col-md-3">
                     <h4>
                         <a id="buttonCalPrev" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('prev');"><span class="fa fa-chevron-left fa-2x"></span></a>
                         <a id="buttonCalToday" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('today');">vandaag</a>
@@ -23,10 +23,10 @@
                 <div class="col-md-5" id="calendarDate">
                     <h4>&nbsp;</h4>
                 </div>
-                <div class="pull-right col-md-3">
+                <div class="col-md-4">
                     <h4>
-                        <a id="buttonCalZoomOut" class="pull-right btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');"><span class="fa fa-search-minus fa-2x"></span><br></a>
-                        <a id="buttonCalZoomIn" class="pull-right btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');"><span class="fa fa-search-plus fa-2x"></span><br></a>
+                        <a id="buttonCalZoomIn" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','agendaWeek');">Week</a>
+                        <a id="buttonCalZoomOut" class="btn btn-link btn-sm" role="button" href="#" onclick="$('#calendar').fullCalendar('changeView','month');">Maand</a>
                     </h4>
                 </div>
             </div>

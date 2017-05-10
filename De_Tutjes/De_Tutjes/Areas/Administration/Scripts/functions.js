@@ -344,11 +344,11 @@ function updatePhoto() {
             },
             editable: false,
             events: '/calendar/GetToddlersOfPeriod',
-            eventClick: function (calEvent, jsEvent, view) {
+            /*eventClick: function (calEvent, jsEvent, view) {
 
                 alert('Event: ' + calEvent.title);
 
-            },
+            },*/
             eventRender: function (event, element, view) {
                 if (view.name === "agendaWeek") {
                     if (event.allDay === true) {
@@ -358,34 +358,30 @@ function updatePhoto() {
                     }
                 }
             },
-            /*viewRender: function(currentView){
-                if (currentView.title === "month") {
+            viewRender: function(currentView){
+                if (currentView.name === "agendaWeek") {
                     $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
                     $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
-                } else {
+                } else if (currentView.name === "month") {
                     $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
                     $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
                 }
-            },*/
+            },
             views: {
                 month: {
-                    eventLimit: 1
+                    eventLimit: 2
+                }
+            },
+            loading: function (isLoading, view) {
+                if (isLoading) {
+                    
+                } else {
+                    
                 }
             }
         });
     });
 // ]]>
-
-    /*$(document).ready(function () {
-        var view = $('#calendar').fullCalendar('getView');
-        if (view.title === "Month") {
-            $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-info btn-sm disabled");
-            $("#buttonCalZoomOut").removeClass("pull-right btn btn-info btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
-        } else {
-            $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-info btn-sm disabled");
-            $("#buttonCalZoomIn").removeClass("pull-right btn btn-info btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
-        }
-    });*/
 
     function getToddlersInfo(id) {
         $(function () {

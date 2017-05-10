@@ -75,19 +75,19 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 }
                 toddlers = agreedDaysOnThisDay.Count();
                 string toddlersOnThisDay = "";
+                int i = 1;
+                DateTime Time = new DateTime(1970, 1, 1, 00, 00, 00);
+                string startTime = "";
+                string endTime = "";
+
                 foreach (AgreedDays agreedDay in agreedDaysOnThisDay)
                 {
-                    int i = 1;
-                    int hr = 0;
-                    string h = "00";
-                    string sm = "00";
-                    string em = "30";
-
                     toddlersOnThisDay += agreedDay.Toddler.Person.FirstName;
                     toddlersOnThisDay += "<br>";
 
-                    string startTime = h + ":" + sm + ":00";
-                    string endTime = h + ":" + em + ":00";
+                    startTime = (i == 1) ? Time.ToString("HH:mm:ss") : endTime;
+                    Time = Time.AddMinutes(30);
+                    endTime = Time.ToString("HH:mm:ss");
 
                     calDay newCalDay = new calDay
                     {
@@ -101,18 +101,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                     calDayList.Add(newCalDay);
 
-                    if (i % 2 != 0)
-                    {
-                        hr++;
-                        h = (hr < 10) ? "0" + hr : "" + hr ;
-                        sm = "00";
-                        em = "30";
-                    }
-                    else
-                    {
-                        sm = "30";
-                        em = "00";
-                    }
                     i++;
 
                 } 
