@@ -7774,7 +7774,7 @@ DayGrid.mixin({
 
 					// make a replacement <td> for each column the segment occupies. will be one for each colspan
 					for (j = 0; j < colSegsBelow.length; j++) {
-						moreTd = $('<td class="fc-more-cell"/>').attr('rowspan', rowspan);
+						moreTd = $('<td class="fc-event-container"/>').attr('rowspan', rowspan); // edited fc-more-cell -> fc-event-container
 						segsBelow = colSegsBelow[j];
 						moreLink = this.renderMoreLink(
 							row,
@@ -7822,7 +7822,7 @@ DayGrid.mixin({
 		var _this = this;
 		var view = this.view;
 
-		return $('<a class="fc-more"/>')
+		return $('<a class="fc-more"/>') // edited fc-more -> fc-content
 			.text(
 				this.getMoreLinkText(hiddenSegs.length)
 			)

@@ -2,13 +2,6 @@
 var readyStart = "test";
 var readyEnd = "test";
 
-$(document).ready(function () {
-
-    $("#addToddlerDiv").hide();
-    $("#openToddlerForm").click($("#addToddlerDiv").show());
-
-});
-
 function readyDatesAJAX() {
     $(function () {
         $.ajax({
@@ -359,7 +352,7 @@ function updatePhoto() {
             eventRender: function (event, element, view) {
                 if (view.name === "agendaWeek") {
                     if (event.allDay === true) {
-                        element.find(".fc-title").append("<br/> <b>..</b>" + event.description);
+                        //element.find(".fc-title").append("<br/> <b>..</b>" + event.description);
                     } else {
                         //element.find(".fc-title").append("<br/>" +event.description);
                     }
@@ -367,11 +360,11 @@ function updatePhoto() {
             },
             viewRender: function(currentView){
                 if (currentView.name === "agendaWeek") {
-                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
-                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                    $("#buttonCalZoomIn").addClass("disabled");
+                    $("#buttonCalZoomOut").removeClass("disabled");
                 } else if (currentView.name === "month") {
-                    $("#buttonCalZoomOut").removeClass("pull-right btn btn-link btn-sm").addClass("pull-right btn btn-link btn-sm disabled");
-                    $("#buttonCalZoomIn").removeClass("pull-right btn btn-link btn-sm disabled").addClass("pull-right btn btn-link btn-sm");
+                    $("#buttonCalZoomOut").addClass("disabled");
+                    $("#buttonCalZoomIn").removeClass("disabled");
                 }
             },
             views: {
@@ -381,9 +374,9 @@ function updatePhoto() {
             },
             loading: function (isLoading, view) {
                 if (isLoading) {
-                    
+                    $("#buttonCalZoomIn").addClass("disabled");
                 } else {
-                    
+                    $("#buttonCalZoomIn").removeClass("disabled");
                 }
             }
         });
