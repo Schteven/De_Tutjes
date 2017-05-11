@@ -24,7 +24,7 @@ namespace De_Tutjes.Models
         public int DiaryToddlerStatusId { get; set; }
 
         [ForeignKey("Location")]
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
 
         [ForeignKey("Toddler")]

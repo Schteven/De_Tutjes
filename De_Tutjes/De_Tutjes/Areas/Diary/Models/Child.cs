@@ -20,6 +20,7 @@ namespace De_Tutjes.Areas.Diary.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Photo { get; set; }
+        public DiaryToddlerStatus dts { get; set; }
 
         public Child()
         {

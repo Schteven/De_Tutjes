@@ -13,12 +13,12 @@ namespace De_Tutjes.Areas.Diary.Controllers
         // GET: Diary/Diary
 
         private ChildManager cm = new ChildManager();
-        private List<Child> childcards = new List<Child>();
+        //private List<Child> childcards;
 
         public ActionResult Index()
         {
-            childcards = cm.GetAllChilds();
-            return View(childcards);
+            //childcards = cm.GetAllChilds();
+            return View(cm.GetAllChilds());
         }
         //public ActionResult Index(Location location)
         //{
@@ -103,11 +103,11 @@ namespace De_Tutjes.Areas.Diary.Controllers
 
                 }
 
-                return View("Index");
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Index();
             }
             
         }
