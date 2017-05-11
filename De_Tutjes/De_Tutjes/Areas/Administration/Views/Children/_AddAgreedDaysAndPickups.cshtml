@@ -10,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addAgreedDaysLabel">
-                        AgreedDay @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Opvangdagen toevoegen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h5>
                 </div>
@@ -81,8 +81,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="saveAgreedDays">Opslaan</button>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPickupLabel">
-                        Pickup @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Ophaal- of contactpersonen toevoegen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -110,7 +110,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <fieldset>
-                        <legend>pickup for child</legend>
+                        <legend>Ophaalpersoon</legend>
                         <div class="form-group">
                             @Html.LabelFor(model => model.pickup.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-10">
@@ -134,7 +134,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>Address</legend>
+                        <legend>Adres</legend>
                         <div class="form-group">
                             @Html.LabelFor(model => model.pickup.Person.Address.City, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-10">
@@ -162,8 +162,8 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="savePickup">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="savePickup">Opslaan</button>
                 </div>
             </div>
         </div>

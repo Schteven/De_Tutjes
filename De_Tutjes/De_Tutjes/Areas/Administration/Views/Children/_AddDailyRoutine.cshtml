@@ -10,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addDailyRoutineLabel">
-                        DailyRoutine @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Dagelijks verloop opstellen
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h5>
                 </div>
@@ -20,14 +20,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.toddler.DailyRoutine, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.toddler.DailyRoutine, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.TextAreaFor(model => model.toddler.DailyRoutine, new { @class = "form-control", @rows = "10" })
                             @Html.ValidationMessageFor(model => model.toddler.DailyRoutine, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveDailyRoutine">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="saveDailyRoutine">Opslaan</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addImportantNoticeLabel">
-                        SleepInformation @HttpContext.Current.Session["NewChildWizardSession"] toevoegen
+                        Belangrijke informatie opgeven
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h5>
                 </div>
@@ -54,14 +54,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.toddler.ImportantNotice, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.toddler.ImportantNotice, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.TextAreaFor(model => model.toddler.ImportantNotice, new { @class = "form-control", @rows = "10" })
                             @Html.ValidationMessageFor(model => model.toddler.ImportantNotice, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveImportantNotice">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="saveImportantNotice">Opslaan</button>
                 </div>
             </div>
         </div>

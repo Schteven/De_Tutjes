@@ -2,6 +2,13 @@
 var readyStart = "test";
 var readyEnd = "test";
 
+$(document).ready(function () {
+
+    $("#addToddlerDiv").hide();
+    $("#openToddlerForm").click($("#addToddlerDiv").show());
+
+});
+
 function readyDatesAJAX() {
     $(function () {
         $.ajax({
