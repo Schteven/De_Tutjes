@@ -203,7 +203,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
         //returns the DiaryToddlerStatus line for a given toddler (and location)
         private DiaryToddlerStatus getDiaryToddlerStatus(Toddler tod)
         {
-            DiaryToddlerStatus dts = db.DiaryToddlerStatus.First(d => d.ToddlerId == tod.ToddlerId);//add location search
+            DiaryToddlerStatus dts = db.DiaryToddlerStatus.FirstOrDefault(d => d.ToddlerId == tod.ToddlerId);//add location search
 
             if (dts == null)
             {
