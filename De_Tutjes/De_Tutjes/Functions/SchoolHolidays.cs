@@ -34,25 +34,25 @@ namespace De_Tutjes.Functions
             return ReadyForSchool;
         }
 
-        private static DateTime FirstEaster()
-        {
-            string[] lines = System.IO.File.ReadAllLines(HostingEnvironment.MapPath(@"~/App_Data/easter.txt"));
-
-            foreach (string line in lines)
-            {
-                string[] date = line.Split('/');
+                /*
+                string[] date = singleDate.Split('/');
                 int day = Int32.Parse(date[0]);
                 int month = Int32.Parse(date[1]);
                 int year = Int32.Parse(date[2]);
                 DateTime easter = new DateTime(year, month, day);
+                */
 
+        private static DateTime FirstEaster()
+        {
+            string[] dates = System.IO.File.ReadAllLines(HostingEnvironment.MapPath(@"~/App_Data/easter.txt"));
+            foreach (string date in dates)
+            {
+                DateTime easter = Convert.ToDateTime(date);
                 if (easter.Year == readyForSchool.Year)
                 {
                     return easter;
                 }
-
             }
-
             return zero;
         }
 
