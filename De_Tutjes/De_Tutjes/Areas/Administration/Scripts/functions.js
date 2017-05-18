@@ -3,6 +3,7 @@ var readyStart = "test";
 var readyEnd = "test";
 
 function readyDatesAJAX() {
+
     $(function () {
         $.ajax({
             type: "POST",
@@ -18,6 +19,7 @@ function readyDatesAJAX() {
             }
         });
     });
+
 }
 
 function submitToddlerForm() {
@@ -381,7 +383,7 @@ function updatePhoto() {
             }
         });
     });
-// ]]>
+    // ]]>
 
     function getToddlersInfo(id) {
         $(function () {

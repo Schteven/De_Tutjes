@@ -251,6 +251,7 @@
     <Compile Include="Areas\Administration\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Administration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
+    <Compile Include="Areas\Administration\Models\EditChildModels.cs" />
     <Compile Include="Areas\Administration\Models\ToddlersOverview.cs" />
     <Compile Include="Areas\Diary\Models\Child.cs" />
     <Compile Include="Areas\Diary\Models\ChildManager.cs" />

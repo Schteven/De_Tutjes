@@ -603,6 +603,36 @@ namespace De_Tutjes.Areas.Administration.Controllers
             return PartialView("_ListImportantNotice", toddler);
         }
 
+
+        /************** EDIT Pages ************/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return View("Overview");
+            } else
+            {
+                Toddler toddler = db.Toddlers
+                                    .Where(i => i.ToddlerId.Equals(id))
+                                    .Include(p => p.Person)
+                                    .Include(f => f.Food)
+                                    .Include(s => s.Sleep)
+                                    .Include(m => m.Medical)
+                                    .FirstOrDefault();
+
+                EditChild ec = new EditChild();
+                ec.toddler = toddler;
+                ec.parents = GetParentsOfToddler(toddler);
+                ec.pickups = GetPickupsOfToddler(toddler);
+                ec.agreedDays = GetAgreedDaysOfToddler(toddler);
+
+                return View();
+            }
+        }
+
+
         /** FUNCTIONS *******************************************/
 
         public string GetNewChildWizardSession()
