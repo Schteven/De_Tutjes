@@ -258,6 +258,8 @@
     <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
     <Compile Include="Areas\Diary\Models\DiaryModel.cs" />
+    <Compile Include="Areas\Parents\Controllers\ToddlerController.cs" />
+    <Compile Include="Areas\Parents\Models\EditToddlerModels.cs" />
     <Compile Include="Areas\Parents\ParentsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -378,6 +380,8 @@
     <Content Include="Images\baby-girl.png" />
     <Content Include="Images\female.png" />
     <Content Include="Images\male.png" />
+    <Content Include="Images\Photos\jana.jpg" />
+    <Content Include="Images\Photos\lowie.jpg" />
     <Content Include="Images\Photos\seppe.jpg" />
     <Content Include="Images\stork.png" />
     <Content Include="Areas\Administration\Views\Children\Create.cshtml" />
@@ -476,8 +480,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Diary\Shared\" />
-    <Folder Include="Areas\Parents\Controllers\" />
-    <Folder Include="Areas\Parents\Models\" />
     <Folder Include="Areas\Parents\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

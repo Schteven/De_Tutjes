@@ -15,7 +15,9 @@ namespace De_Tutjes.Models
         public int ToddlerId { get; set; }
 
         public string ToddlerSession { get; set; }
+        [Display(Name = "Dagelijks verloop")]
         public string DailyRoutine { get; set; }
+        [Display(Name = "Belangrijk informatie")]
         public string ImportantNotice { get; set; }
 
         [ForeignKey("Food")]

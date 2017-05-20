@@ -155,10 +155,10 @@ namespace De_Tutjes.Functions
             DateTime septemberFirst = new DateTime(readyForSchool.Year, 9, 1);
             switch (septemberFirst.ToString("dddd"))
             {
-                case "zaterdag":
+                case "Saturday":
                     septemberFirst = new DateTime(readyForSchool.Year, 9, 3);
                     break;
-                case "zondag":
+                case "Sunday":
                     septemberFirst = new DateTime(readyForSchool.Year, 9, 2);
                     break;
                 default:
@@ -175,25 +175,25 @@ namespace De_Tutjes.Functions
             DateTime novemberFirst = new DateTime(readyForSchool.Year, 11, 1);
             switch (novemberFirst.ToString("dddd"))
             {
-                case "maandag":
+                case "Monday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 8);
                     break;
-                case "dinsdag":
+                case "Tuesday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 7);
                     break;
-                case "woensdag":
+                case "Wednesday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 6);
                     break;
-                case "donderdag":
+                case "Thursday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 5);
                     break;
-                case "vrijdag":
+                case "Friday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 4);
                     break;
-                case "zaterdag":
+                case "Saturday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 3);
                     break;
-                case "zondag":
+                case "Sunday":
                     novemberFirst = new DateTime(readyForSchool.Year, 11, 2);
                     break;
                 default:
@@ -212,25 +212,25 @@ namespace De_Tutjes.Functions
             DateTime firstDayAfterHoliday;
             switch (christmas.ToString("dddd"))
             {
-                case "maandag":
+                case "Monday":
                     firstDayAfterHoliday = christmas.AddDays(14);
                     break;
-                case "dinsdag":
+                case "Tuesday":
                     firstDayAfterHoliday = christmas.AddDays(13);
                     break;
-                case "woensdag":
+                case "Wednesday":
                     firstDayAfterHoliday = christmas.AddDays(12);
                     break;
-                case "donderdag":
+                case "Thursday":
                     firstDayAfterHoliday = christmas.AddDays(11);
                     break;
-                case "vrijdag":
+                case "Friday":
                     firstDayAfterHoliday = christmas.AddDays(10);
                     break;
-                case "zaterdag":
+                case "Saturday":
                     firstDayAfterHoliday = christmas.AddDays(16);
                     break;
-                case "zondag":
+                case "Sunday":
                     firstDayAfterHoliday = christmas.AddDays(15);
                     break;
                 default:
@@ -245,25 +245,25 @@ namespace De_Tutjes.Functions
             DateTime firstDayInJanuary;
             switch (januaryFirst.ToString("dddd"))
             {
-                case "maandag":
+                case "Monday":
                     firstDayInJanuary = januaryFirst.AddDays(7);
                     break;
-                case "dinsdag":
+                case "Tuesday":
                     firstDayInJanuary = januaryFirst.AddDays(6);
                     break;
-                case "woensdag":
+                case "Wednesday":
                     firstDayInJanuary = januaryFirst.AddDays(5);
                     break;
-                case "donderdag":
+                case "Thursday":
                     firstDayInJanuary = januaryFirst.AddDays(4);
                     break;
-                case "vrijdag":
+                case "Friday":
                     firstDayInJanuary = januaryFirst.AddDays(3);
                     break;
-                case "zaterdag":
+                case "Saturday":
                     firstDayInJanuary = januaryFirst.AddDays(9);
                     break;
-                case "zondag":
+                case "Sunday":
                     firstDayInJanuary = januaryFirst.AddDays(8);
                     break;
                 default:
@@ -279,10 +279,10 @@ namespace De_Tutjes.Functions
             DateTime februaryFirst = new DateTime(readyForSchool.Year, 2, 1);
             switch (februaryFirst.ToString("dddd"))
             {
-                case "zaterdag":
+                case "Saturday":
                     februaryFirst = new DateTime(readyForSchool.Year, 2, 3);
                     break;
-                case "zondag":
+                case "Sunday":
                     februaryFirst = new DateTime(readyForSchool.Year, 2, 2);
                     break;
                 default:
@@ -341,25 +341,25 @@ namespace De_Tutjes.Functions
                     {
                         switch (FirstEaster().ToString("dddd"))
                         {
-                            case "maandag":
+                            case "Monday":
                                 firstDayAfterEaster = FirstEaster().AddDays(14);
                                 break;
-                            case "dinsdag":
+                            case "Tuesday":
                                 firstDayAfterEaster = FirstEaster().AddDays(13);
                                 break;
-                            case "woensdag":
+                            case "Wednesday":
                                 firstDayAfterEaster = FirstEaster().AddDays(12);
                                 break;
-                            case "donderdag":
+                            case "Thursday":
                                 firstDayAfterEaster = FirstEaster().AddDays(11);
                                 break;
-                            case "vrijdag":
+                            case "Friday":
                                 firstDayAfterEaster = FirstEaster().AddDays(10);
                                 break;
-                            case "zaterdag":
+                            case "Saturday":
                                 firstDayAfterEaster = FirstEaster().AddDays(16);
                                 break;
-                            case "zondag":
+                            case "Sunday":
                                 firstDayAfterEaster = FirstEaster().AddDays(15);
                                 break;
                             default:

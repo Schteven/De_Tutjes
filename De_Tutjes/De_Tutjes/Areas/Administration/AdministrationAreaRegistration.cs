@@ -13,13 +13,7 @@ namespace De_Tutjes.Areas.Administration
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
-        {   
-            context.MapRoute(
-                "Administration_Child_CreateStep",
-                "Administration/{controller}/{action}/{step}/{id}",
-                new { action = "Create", step = UrlParameter.Optional, id = UrlParameter.Optional }
-            );
-
+        {  
             context.MapRoute(
                 "Administration_default",
                 "Administration/{controller}/{action}/{id}",

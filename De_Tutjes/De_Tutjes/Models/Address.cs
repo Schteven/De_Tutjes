@@ -12,10 +12,15 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int AddressId { get; set; }
+        [Display(Name = "Straat")]
         public string Street { get; set; }
+        [Display(Name = "Nummer")]
         public int? Number { get; set; }
+        [Display(Name = "Bus")]
         public string Bus { get; set; }
+        [Display(Name = "Gemeente")]
         public string City { get; set; }
+        [Display(Name = "Postcode")]
         public int? PostalCode { get; set; }
 
         public virtual ICollection<Person> Persons { get; set; }

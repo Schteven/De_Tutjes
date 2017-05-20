@@ -24,6 +24,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         private DeTutjesContext db = new DeTutjesContext();
 
         // GET: Administration/Children
+
         public ActionResult Overview()
         {
             ToddlersOverview to = new ToddlersOverview();
@@ -605,17 +606,16 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
 
         /************** EDIT Pages ************/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return View("Overview");
-            } else
+                return RedirectToAction("Overview");
+            }
+            else
             {
                 Toddler toddler = db.Toddlers
-                                    .Where(i => i.ToddlerId.Equals(id))
+                                    .Where(i => i.ToddlerId == id)
                                     .Include(p => p.Person)
                                     .Include(f => f.Food)
                                     .Include(s => s.Sleep)
@@ -628,7 +628,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 ec.pickups = GetPickupsOfToddler(toddler);
                 ec.agreedDays = GetAgreedDaysOfToddler(toddler);
 
-                return View();
+                return View(ec);
             }
         }
 

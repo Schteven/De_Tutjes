@@ -317,6 +317,10 @@ $(function () {
     });
 
     $('#toddlerOverview').change(function () {
+        var id = $('#toddlerOverview').val();
+        //if ($('#toddlerOverview').is(':selected')) {
+            $("#EditLink").prop("href", "/Administration/Children/Edit/" + id + "");
+        //}
         $(this).closest('form').trigger('submit');
     });
 
@@ -329,6 +333,23 @@ function updatePhoto() {
         $("#toddlerPhotoShow").attr('src', '/Images/Photos/' + $("#toddlerPhoto").val());
     }
 }
+
+// EDIT
+
+$(document).ready(function () {
+
+    function hideElements(name) {
+        $("#content").children().hide();
+        $("div[name='" + name + "']").show();
+    }
+
+    hideElements("personal");
+
+    $('#editBar a').click(function () {
+        hideElements($(this).attr('name'));
+    });
+
+});
 
     /**********************************************************/
 

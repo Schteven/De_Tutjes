@@ -5,8 +5,17 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3">
-        <img class="center-block" src="http://placehold.it/185x185" alt="pic" />
-        <a class="btn btn-link btn-xs center-block" role="button" href="#"></a>
+        @if (Model.toddler.Person.Photo == null)
+        {
+            <img class="center-block" src="@Url.Content("~/Images/baby-boy.png")" alt="pic" style="width: 150px;" />
+            <a class="btn btn-link btn-xs center-block" role="button" href="#">Foto uploaden</a>
+        }
+        else
+        {
+            <img class="center-block" src="@Url.Content("~/Images/Photos/"+Model.toddler.Person.Photo)" alt="pic" style="width: 150px;" />
+            <a class="btn btn-link btn-xs center-block" role="button" href="#">Foto wijzigen</a>
+        }
+
     </div>
     <div class="col-lg-9 col-md-9">
 
@@ -25,36 +34,114 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        <div class="list-group list-group-root well">
-            <a href="#" class="list-group-item">@Model.toddler.Person.FirstName</a>
+        <div id="editBar" class="list-group list-group-root well">
+
+            <a name="personal" href="#" class="list-group-item editList">@Model.toddler.Person.FirstName</a>
             <div class="list-group">
-                <a href="#" class="list-group-item">Medisch document</a>
-                <a href="#" class="list-group-item">Eten</a>
-                <a href="#" class="list-group-item">Slapen</a>
-                <a href="#" class="list-group-item">Dagelijkse routine</a>
+                <a name="medical" href="#" class="list-group-item editList">Medisch document</a>
+                <a name="food" href="#" class="list-group-item editList">Eten</a>
+                <a name="sleep" href="#" class="list-group-item editList">Slapen</a>
+                <a name="daily" href="#" class="list-group-item editList">Dagelijkse routine</a>
             </div>
             <a href="#" class="list-group-item disabled">Ouders</a>
             <div class="list-group">
-                <a href="#" class="list-group-item">Item 1.1.1</a>
-                <a href="#" class="list-group-item">Item 1.1.2</a>
+                @foreach (var parent in Model.parents)
+                {
+                <a name="parent" id="@parent.ParentId" href="#" class="list-group-item editList">@parent.Person.FirstName @parent.Person.LastName</a>
+                }
             </div>
 
             <a href="#" class="list-group-item disabled">Opvangdagen</a>
             <div class="list-group">
-                <a href="#" class="list-group-item">Item 1.2.1</a>
-                <a href="#" class="list-group-item">Item 1.2.2</a>
-                <a href="#" class="list-group-item">Item 1.2.3</a>
+                @foreach (var agreeddays in Model.agreedDays)
+                {
+                    string start = agreeddays.StartDate.ToString("dd/MM/yy");
+                    string eind = agreeddays.EndDate.ToString("dd/MM/yy");
+                    <a name="agreedDays" id="@agreeddays.AgreedDaysId" href="#" class="list-group-item editList">@start - @eind</a>
+                }
             </div>
 
-            <a href="#" class="list-group-item disabled">Ophaalpersonen</a>
+            <a href="#" class="list-group-item disabled">Contactpersonen</a>
             <div class="list-group">
-                <a href="#" class="list-group-item">Item 1.3.1</a>
-                <a href="#" class="list-group-item">Item 1.3.2</a>
-                <a href="#" class="list-group-item">Item 1.3.3</a>
+                @foreach (var pickup in Model.pickups)
+                {
+                    <a name="pickup" id="@pickup.PickupId" href="#" class="list-group-item editList">@pickup.Person.FirstName (@pickup.Relation)</a>
+                }
             </div>
         </div>
     </div>
-        <div class="tab-content col-md-9" id="contentRefresh">
+        <div class="tab-content col-md-9" id="content">
+            <div name="personal">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Model.toddler.Person.FirstName</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.toddler.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.toddler.Person.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.toddler.Person.FirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @{ 
+                                        string birthdate = Model.toddler.Person.BirthDate.ToString("dd/MM/yyyy");
+                                    }
+                                    @Html.LabelFor(model => model.toddler.Person.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="toddler.Person.BirthDate" id="toddler_Person_BirthDate" value="@birthdate">
+                                        @Html.ValidationMessageFor(model => model.toddler.Person.BirthDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.toddler.Person.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-sm-10">
+                                        <div class="btn-group-sm" data-toggle="buttons">
+                                            <label class="btn btn-primary">
+                                                @Html.RadioButtonFor(model => model.toddler.Person.Gender, "male")jongen
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                @Html.RadioButtonFor(model => model.toddler.Person.Gender, "female")meisje
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                @Html.RadioButtonFor(model => model.toddler.Person.Gender, "unknown")nog niet gekend
+                                            </label>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.toddler.Person.Gender, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </fieldset>
 
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-3">
+                                
+                            </div>
+                            <div class="col-md-3">
+                                <input class="btn btn-success btn-block btn-sm" value="Opslaan" type="submit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div name="medical">
+                Medisch
+            </div>
+            <div name="food">
+                Eten
+            </div>
+            <div name="sleep">
+                Slapen
+            </div>
+            <div name="daily">
+                Dagelijks verloop
+            </div>
         </div>
 </div>

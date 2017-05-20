@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <a class="btn btn-link btn-md" role="button" href="/Administration/Children/Create"><span class="fa fa-plus fa-3x"></span><br>Kind toevoegen</a>
                 <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-remove fa-3x"></span><br>Verwijderen</a>
-                <a class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-pencil fa-3x"></span><br>Bewerken</a>
+                <a id="EditLink" class="pull-right btn btn-link btn-md" role="button" href="#"><span class="fa fa-pencil fa-3x"></span><br>Bewerken</a>
             </div>
         </div>
     </div>
@@ -27,26 +27,35 @@
         </div>
     </div>
     <div class="col-lg-9 col-md-12">
+
         <div class="picker">
-@using (Ajax.BeginForm("ShowToddler", null, new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "updatePhoto();" }, new { id = "ShowToddlerSelection" }))
-{
+        @using (Ajax.BeginForm("ShowToddler",
+            null,
+            new AjaxOptions { UpdateTargetId = "ShowToddlerDiv", OnSuccess = "updatePhoto();" },
+            new { id = "ShowToddlerSelection" }))
+        {
             <select id="toddlerOverview" name="toddlerOverview" class="image-picker">
                 <option value=""></option>
-
                 @foreach (var toddler in Model.toddlerList)
                 {
-
-                    <option data-img-label="@toddler.Person.FirstName" data-img-src="@Url.Content("~/Images/Photos/" + toddler.Person.Photo)" value="@toddler.ToddlerId">@toddler.Person.FirstName</option>
-
+                    <option 
+                            data-img-label="@toddler.Person.FirstName" 
+                            data-img-src="@Url.Content("~/Images/Photos/" + toddler.Person.Photo)" 
+                            value="@toddler.ToddlerId"
+                    >
+                        @toddler.Person.FirstName
+                    </option>
                 }
 
             </select>
-}
+        }
         </div>
+
     </div>
     <style type="text/css">
         .thumbnails li img {
             width: 100px;
+            height: 100px;
         }
     </style>
 

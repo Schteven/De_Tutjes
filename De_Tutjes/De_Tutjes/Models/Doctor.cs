@@ -12,6 +12,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int DoctorId { get; set; }
+        [Display(Name = "Titel")]
         public string Title { get; set; }
 
         [ForeignKey("Person")]

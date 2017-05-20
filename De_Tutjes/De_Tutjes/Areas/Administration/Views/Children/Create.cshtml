@@ -69,16 +69,12 @@
                 }
 
                 @Html.Action("_AddToddler", "Children")
-
                 @Html.Action("_AddParents", "Children")
-
                 @Html.Action("_AddAgreedDaysAndPickups", "Children")
-
                 @Html.Action("_AddMedicalInformation", "Children")
-
                 @Html.Action("_AddFoodAndSleep", "Children")
-
                 @Html.Action("_AddDailyRoutine", "Children")
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -99,7 +95,7 @@
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Aflsuiten</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Afsluiten</button>
                                 <button type="submit" class="btn btn-success" id="finishWizard">Opslaan</button>
                             </div>
                         </div>
