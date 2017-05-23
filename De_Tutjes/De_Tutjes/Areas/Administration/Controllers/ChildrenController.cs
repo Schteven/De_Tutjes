@@ -56,11 +56,16 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     .Include(f => f.Food)
                     .Include(s => s.Sleep)
                     .Include(m => m.Medical)
+                    .Include(d => d.Medical.Doctor)
+                    .Include(dp => dp.Medical.Doctor.Person)
+                    .Include(dpa => dpa.Medical.Doctor.Person.Address)
+                    .Include(dpc => dpc.Medical.Doctor.Person.ContactDetail)
                     .FirstOrDefault();
 
                 ViewBag.Parents = GetParentsOfToddler(toddler);
                 ViewBag.Pickups = GetPickupsOfToddler(toddler);
                 ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
+                ViewBag.Doctor = db.Doctors.Where(d => d.DoctorId.Equals(toddler.Medical.DoctorId)).Include(p => p.Person);
             } else
             {
                 toddler = new Toddler();
