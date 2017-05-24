@@ -12,9 +12,13 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int ContactDetailId { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public int? HomePhone { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public int CellPhone { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public int? WorkPhone { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string Email { get; set; }
 
         [ForeignKey("Person")]

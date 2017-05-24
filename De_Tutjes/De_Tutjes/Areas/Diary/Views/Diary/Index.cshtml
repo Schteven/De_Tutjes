@@ -1,4 +1,4 @@
-﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.Child>
+﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.ChildCard>
 @{
     ViewBag.Title = "DiaryIndex";
 }
@@ -49,119 +49,9 @@
     <!-- ************************* MAIN BODY ****************************** -->
 <div class="main-body">
     <!-- ************************* MAIN SIDEBAR ****************************** -->
-    <div class="main-sidebar">
+    <div id="mainsidebar">
         <!-- ************************* SIDEBAR INFOBOX ****************************** -->
-        <div class="infobox">
-            <div class="infobox-childtag img-rounded">
-                <div class="infobox-childphoto">
-                    <img src="http://kingofwallpapers.com/child/child-012.jpg" class="img-responsive img-rounded" alt="">
-                </div>
-                <div class="infobox-childname text-center">
-                    Stefanie<br> 2jaar 3mnd
-                </div>
-                <div class="infobox-childbuttongroup text-center">
-                    <a href="#" class="btn btn-success text-center" role="button">
-                        Meer info
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>
-                    </a>
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        Agenda
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </a>
-                </div>
-            </div>
-            <!-- ************************* SIDEBAR INFOBOX MORE INFO ACCORDION ****************************** -->             
-            <div class="infobox-moreinfo">
-                <div class="infobox-panel-button">
-                    <a href="#" class="btn btn-default text-center" role="button"onclick="ToggleVisibility('InfoboxExtraPanelParentsInfo')">
-                        Ouders gegevens
-                        <span class="glyphicon glyphicon-triangle-bottom" style="float:right;"></span>
-                    </a>
-                </div>
-                <div class="infobox-moreinfopanel" id="InfoboxExtraPanelParentsInfo" style="height:0;">
-                    heeeeey
-                </div>
-                <div class="infobox-panel-button">
-                    <a href="#" class="btn btn-default text-center" role="button" onclick="ToggleVisibility('InfoboxExtraPanelMedicalInfo')">
-                        Medische gegevens
-                        <span class="glyphicon glyphicon-triangle-bottom" style="float:right;"></span>
-                    </a>
-                </div>
-                <div class="infobox-moreinfopanel" id="InfoboxExtraPanelMedicalInfo" style="height:0;">
-                    heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>
-                </div>
-                <div class="infobox-panel-button">
-                    <a href="#" class="btn btn-default text-center" role="button"onclick="ToggleVisibility('InfoboxExtraPanelNutritionInfo')">
-                        Voeding
-                        <span class="glyphicon glyphicon-triangle-bottom" style="float:right;"></span>
-                    </a>
-                </div>
-                <div class="infobox-moreinfopanel" id="InfoboxExtraPanelNutritionInfo" style="height:0;">
-                    heeeeey
-                </div>
-                <div class="infobox-panel-button">
-                    <a href="#" class="btn btn-default text-center" role="button"onclick="ToggleVisibility('InfoboxExtraPanelSleepInfo')">
-                        Slapen
-                        <span class="glyphicon glyphicon-triangle-bottom" style="float:right;"></span>
-                    </a>
-                </div>
-                <div class="infobox-moreinfopanel" id="InfoboxExtraPanelSleepInfo" style="height:0;">
-                    heeeeey
-                </div>
-                <div class="infobox-panel-button">
-                    <a href="#" class="btn btn-default text-center" role="button"onclick="ToggleVisibility('InfoboxExtraPanelRemarksInfo')">
-                        Opmerkingen
-                        <span class="glyphicon glyphicon-triangle-bottom" style="float:right;"></span>
-                    </a>
-                </div>
-                <div class="infobox-moreinfopanel" id="InfoboxExtraPanelRemarksInfo" style="height:0;">
-                    heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>heeeeey<br>
-                </div>
-            </div>
-            <!-- ************************* SIDEBAR INFOBOX ALLERGIES ****************************** -->
-            <div class="infobox-allergies">
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="Allergie/allergens-eggs.png" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="Allergie/allergens-milk.png" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-danger text-center" role="button">
-                        <img src="Allergie/peanuts-allergens.png" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="Allergie/sea-food.png" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="Allergie/wheat.png" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        <img src="" alt="">
-                    </a>
-                </div>
-                <div class="infobox-allergie-item">
-                    <a href="#" class="btn btn-info text-center" role="button">
-                        ?
-                    </a>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <!-- ************************* MAIN CONTENT ****************************** -->
@@ -169,22 +59,22 @@
         <!-- ************************* CHILDREN CARDS ****************************** -->
         @if(Model != null){
         
-        foreach (var child in Model)
+        foreach (var childcard in Model)
         {
-            switch (child.Status)
+            switch (childcard.Status)
             {
                 case De_Tutjes.Areas.Diary.Models.ChildStatus.Normal:
                     {
                         <div class="checkbox">
-                            <input type="checkbox" id="@child.Id" name="@child.Id" />
-                            <label for="@child.Id" class="img-rounded">
+                            <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
+                            <label for="@childcard.Id" class="img-rounded">
                                 @{
-                                    if (child.Photo == "" || child.Photo == null)
+                                    if (childcard.Photo == "" || childcard.Photo == null)
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
-                                <span>@child.Name</span>
+                                <span>@childcard.Name</span>
                             </label>
                         </div>
                         break;
@@ -192,16 +82,16 @@
                case De_Tutjes.Areas.Diary.Models.ChildStatus.Home:
                             {
                         <div class="checkbox">
-                            <input type="checkbox" id="@child.Id" name="@child.Id" />
-                            <label for="@child.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
+                            <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
+                            <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                 <span class="status-child glyphicon glyphicon-home" style="margin-left:30px"></span>
                                 @{
-                                    if (child.Photo == "" || child.Photo == null)
+                                    if (childcard.Photo == "" || childcard.Photo == null)
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
-                                <span>@child.Name</span>
+                                <span>@childcard.Name</span>
                             </label>
                         </div>
                         break;
@@ -210,16 +100,16 @@
                 case De_Tutjes.Areas.Diary.Models.ChildStatus.Sleeping:
                     {
                         <div class="checkbox">
-                            <input type="checkbox" id="@child.Id" name="@child.Id" />
-                            <label for="@child.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
+                            <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
+                            <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                 <span class="status-child glyphicon glyphicon-cloud" style="margin-left:30px"></span>
                                 @{
-                                    if (child.Photo == "" || child.Photo == null)
+                                    if (childcard.Photo == "" || childcard.Photo == null)
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
-                                    {<img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
                                 }
-                                <span>@child.Name</span>
+                                <span>@childcard.Name</span>
                             </label>
                         </div>
                         break;
@@ -228,7 +118,7 @@
                 default:
                     {
                         <div class="checkbox">
-                            <input type="checkbox" id="childid"  name="@child.Id" />
+                            <input type="checkbox" id="childid"  name="@childcard.Id" />
                             <label for="childid" class="img-rounded">
                                 <span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br>
                                 <span>default</span>
@@ -251,11 +141,24 @@
                 <span style="font-size:1em;">Kind<br />Toevoegen</span>
             </label>
         </div>
-
-    </div>
+        
+    </div> 
 </div>
 
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".childcard").click(function (evt) {
+            var id = this.id;
+            $("#mainsidebar").load("/Diary/Diary/shortinfo", { toddlerid: id });
+            alert("hey " + id);
+        });
+    });
+</script>
+
+
 
 
 <script language="javascript" type="text/javascript">
@@ -271,13 +174,4 @@
             return false;
 
         }
-    
-        //$(function() {
-        //    $('#ChildCheckin').click(function () {
-        //        $(this).closest('form').trigger('submit');         }
-        //});
-
-
-        
-        
 </script>

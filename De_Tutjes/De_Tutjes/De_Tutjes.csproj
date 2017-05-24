@@ -253,6 +253,7 @@
     <Compile Include="Areas\Administration\Models\CreateChildModels.cs" />
     <Compile Include="Areas\Administration\Models\ToddlersOverview.cs" />
     <Compile Include="Areas\Diary\Models\Child.cs" />
+    <Compile Include="Areas\Diary\Models\ChildCard.cs" />
     <Compile Include="Areas\Diary\Models\ChildManager.cs" />
     <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
@@ -417,6 +418,7 @@
     <Content Include="Scripts\image-picker.js" />
     <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\Administration\Views\Children\Edit.cshtml" />
+    <Content Include="Areas\Diary\Views\Diary\ShortToddlerInfo.cshtml" />
     <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />

@@ -13,7 +13,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int RelationLinkID { get; set; }
-
+        [DisplayFormat(NullDisplayText = "")]
         public string RelationToChild { get; set; }
 
         [ForeignKey("Person")]

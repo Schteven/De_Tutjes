@@ -14,8 +14,11 @@ namespace De_Tutjes.Models
         [Key]
         public int ToddlerId { get; set; }
 
+        [DisplayFormat(NullDisplayText = "")]
         public string ToddlerSession { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string DailyRoutine { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string ImportantNotice { get; set; }
 
         [ForeignKey("Food")]

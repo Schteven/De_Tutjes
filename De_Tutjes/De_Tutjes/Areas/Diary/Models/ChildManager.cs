@@ -22,28 +22,69 @@ namespace De_Tutjes.Areas.Diary.Controllers
     public class ChildManager
     {
         private List<Child> children = new List<Child>();
+        private List<ChildCard> childcards = new List<ChildCard>();
         private DeTutjesContext db = new DeTutjesContext();
         private Location location;
         
         public ChildManager()
         {
-            //TODO: load Toddlers from database
-            //CreateChildren();
-
             fillChildrenList();
-
-            //temp
         }
-
+        public ChildManager(Location location)
+        {
+            fillChildrenList();
+            this.location = location;
+        }
         public void SetLocation(Location loc)
         {
             this.location = loc;
         }
+
+        // RETURN FUNCTIONS
+        // return all Childs from children
         public List<Child> GetAllChilds()
         {
             return children;
         }
-        //Sets the Status (Home, Sleeping, Normal) of the child
+        // return Child for Partial View child informatie
+        public Child GetChildById(string id)
+        {
+            Child child = new Child();
+            child.Toddler = getToddler(Int32.Parse(id));
+            child.dts = getDiaryToddlerStatus(child.Toddler);
+            child.Status = (ChildStatus)child.dts.Status;
+            child.Parents = GetParentsOfToddler(child.Toddler.ToddlerId);
+            return child;
+        }
+        // return ChildCard for each child that has to come today
+        public List<ChildCard> GetChildCardsForToday()
+        {
+            DateTime today = DateTime.Now;
+            string dayOfWeek = DateTime.Now.DayOfWeek.ToString();
+            List<AgreedDays> agreedDaysList = whoHasToComeToday(dayOfWeek, today);
+            List<ChildCard> ccList = new List<ChildCard>();
+            if (agreedDaysList != null)
+            {
+                foreach (AgreedDays AD in agreedDaysList)
+                {
+                    Toddler tod = getToddler(AD.ToddlerId);
+                    if (tod != null)
+                    {
+                        ChildCard cc = new ChildCard();
+                        cc.Id = tod.ToddlerId.ToString();
+                        cc.Name = tod.Person.FirstName;
+                        cc.Photo = tod.Person.Photo;
+                        cc.Status = (ChildStatus)getDiaryToddlerStatus(tod).Status;
+
+                        ccList.Add(cc);
+                    }
+                }
+            }
+            return ccList;
+        }
+
+        // SET FUNCTIONS
+        // Sets the Status (Home, Sleeping, Normal) of the child
         public void SetChildStatus(string ChildId, ChildStatus status)
         {
             foreach (Child c in children)
@@ -114,9 +155,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
             }
         }
 
-        
-        
-        //TODO: Add a location to the search
+        // PRIVAT HELPER FUNCTIONS
         private void fillChildrenList()
         {
             DateTime today = DateTime.Now;
@@ -132,16 +171,17 @@ namespace De_Tutjes.Areas.Diary.Controllers
                     {
                         Child child = new Child();
                         child.Toddler = tod;
-                        child.Id = tod.ToddlerId.ToString();
-                        child.Name = tod.Person.FirstName;
-                        child.Photo = tod.Person.Photo;
                         child.dts = getDiaryToddlerStatus(tod);
                         child.Status = (ChildStatus)child.dts.Status;
+                        child.Parents = GetParentsOfToddler(tod.ToddlerId);
                         children.Add(child);
+
+                        
                     }
                 }
             }
         }
+
         private Toddler getToddler(int id)
         {
             Toddler tod = db.Toddlers
@@ -152,6 +192,38 @@ namespace De_Tutjes.Areas.Diary.Controllers
                             .Where(p => p.ToddlerId == id)
                             .First();
             return tod;
+        }
+
+        private ICollection<Parent> GetParentsOfToddler(int id)
+        {
+            ICollection<Parent> Parents = new List<Parent>();
+            Toddler t = getToddler(id);
+            foreach (RelationLink rl in GetRelationLinksOfToddler(t))
+            {
+                foreach (Parent p in db.Parents.Include(i => i.Person).Include(i => i.Person.Address).Include(i => i.Person.ContactDetail).ToList())
+                {
+                    if (rl.PersonId.Equals(p.PersonId) && rl.RelationToChild.Equals("isParent"))
+                    {
+                        Parents.Add(p);
+                    }
+                }
+            }
+
+            return Parents;
+        }
+
+        private ICollection<RelationLink> GetRelationLinksOfToddler(Toddler toddler)
+        {
+            ICollection<RelationLink> RelationLinks = new List<RelationLink>();
+
+            RelationLinks = db.RelationLinks
+                .Include(i => i.Person)
+                .Include(i => i.Person.Address)
+                .Include(i => i.Person.ContactDetail)
+                .Where(i => (i.ToddlerId.Equals(toddler.ToddlerId)))
+                .ToList();
+
+            return RelationLinks;
         }
         //returns AgreedDays from the day of the week and when today is between start and end day
         private List<AgreedDays> whoHasToComeToday(string dayofWeek, DateTime today)
@@ -227,53 +299,6 @@ namespace De_Tutjes.Areas.Diary.Controllers
             return dts;
         }
 
-
-
-
-        //private void addChild(Child child)
-        //{
-        //    children.Add(child);
-        //}
         
-        //public void CreateChildren()
-        //{
-        //   List<Toddler> tods = GetAllToddlers();
-        //
-        //    foreach (Toddler t in tods)
-        //    {
-        //        Child c = new Child(t, ChildStatus.Home);
-        //        addChild(c);
-        //    }
-        //}
-
-        //Returns all the children
-        
-        //public List<Toddler> GetAllToddlers()
-        //{
-        //    //return all childs
-        //    List<Toddler> toddlers = new List<Toddler>();
-        //    try
-        //    {
-        //        toddlers = db.Toddlers.Where(a => a.Person.Active == true)
-        //        .Include(p => p.Person)
-        //        .Include(f => f.Food)
-        //        .Include(s => s.Sleep)
-        //        .Include(m => m.Medical)
-        //        .ToList();
-        //    }
-        //    catch (Exception e)
-        //   {
-        //       throw new Exception(e.Message);
-        //    }
-        //
-        //    return toddlers;
-        //}
-
-        
-
-
-
-
-
     }
 }

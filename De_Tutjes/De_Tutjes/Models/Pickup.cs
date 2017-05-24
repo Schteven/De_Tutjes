@@ -13,6 +13,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int PickupId { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string Relation { get; set; }
 
         [ForeignKey("Person")]
