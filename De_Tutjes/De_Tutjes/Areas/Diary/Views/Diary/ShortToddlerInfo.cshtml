@@ -13,7 +13,7 @@
             <img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-responsive img-rounded" alt="">
         </div>
         <div class="infobox-childname text-center" id="Infobox_ChildShortInfo">
-            @child.Toddler.Person.FirstName<br>@child.Toddler.Person.BirthDate
+            @child.Toddler.Person.FirstName<br>@(child.Toddler.Person.BirthDate == null ? "" : child.Toddler.Person.BirthDate.ToString("dd MMMM yyyy"))
         </div>
         <div class="infobox-childbuttongroup text-center">
             <a href="#" class="btn btn-success text-center" role="button">
@@ -50,11 +50,11 @@
                         <span id="Acc_Gegevens_Adres_Content">
                             @child.Toddler.Person.Address.Street @child.Toddler.Person.Address.Number</span> if (@child.Toddler.Person.Address.Bus != null)
                             {<span> bus @child.Toddler.Person.Address.Bus</span> } <br />
-                        <span>    @child.Toddler.Person.Address.PostalCode @child.Toddler.Person.Address.City
+                        <span>    @(child.Toddler.Person.Address.PostalCode == null ? "" : child.Toddler.Person.Address.PostalCode.ToString()) @child.Toddler.Person.Address.City
                         </span>
                         }
                         <span id="Acc_Gegevens_TelThuis_Title">Tel thuis:</span>
-                        <span id="Acc_Gegevens_TelThuis_Content">@child.Toddler.Person.ContactDetail.HomePhone</span>
+                        <span id="Acc_Gegevens_TelThuis_Content">homephone werkt niet</span>
                         
                     </div>
                 </div>
@@ -79,21 +79,21 @@
                                     <span id="Acc_Ouders_NaamP_Title">Naam papa:</span>
                                     <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@p.Person.ContactDetail.WorkPhone</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
                                 }
                                 else if (p.Person.Gender != null && p.Person.Gender == "female")
                                 {
                                     <span id="Acc_Ouders_NaamM_Title">Naam mama:</span>
                                     <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@p.Person.ContactDetail.WorkPhone</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
                                 }
                                 else
                                 {
                                     <span id="Acc_Ouders_NaamO_Title">Naam ouder:</span>
                                     <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@p.Person.ContactDetail.WorkPhone</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
                                 }
                             }
                         }
@@ -117,13 +117,18 @@
                         <span id="Acc_Medisch_NaamH_Title">Huisarts:</span>
                         <span id="Acc_Medisch_NaamH_Content">
                             @child.Toddler.Medical.Doctor.Person.FirstName @child.Toddler.Medical.Doctor.Person.LastName<br />
-                            @child.Toddler.Medical.Doctor.Person.Address.
-                            @child.Toddler.Medical.Doctor.Person.Address.Street @child.Toddler.Medical.Doctor.Person.Address.Number
-                        </span> @if (@child.Toddler.Medical.Doctor.Person.Address.Bus != null)
-                        {<span> bus @child.Toddler.Medical.Doctor.Person.Address.Bus</span> } <br />
-                        <span>
-                            @child.Toddler.Medical.Doctor.Person.Address.PostalCode @child.Toddler.Medical.Doctor.Person.Address.City
                         </span>
+                        @if (child.Toddler.Medical.Doctor.Person.Address != null)
+                        {
+                            @child.Toddler.Medical.Doctor.Person.Address.Street @child.Toddler.Medical.Doctor.Person.Address.Number
+                            
+                                 if (@child.Toddler.Medical.Doctor.Person.Address.Bus != null) {
+                                 <span> bus child.Toddler.Medical.Doctor.Person.Address.Bus </span> } <br />
+                                            <span>
+                                                child.Toddler.Medical.Doctor.Person.Address.PostalCode @child.Toddler.Medical.Doctor.Person.Address.City
+                                            </span>
+                            } }
+                            
                         <span id="Acc_Medisch_Medicatie_Title">Medicatie:</span>
                         <span id="Acc_Medisch_Medicatie_Content">@child.Toddler.Medical.MedicationName</span>
                         <span id="Acc_Medisch_Allergien_Title">Allergiën:</span>
@@ -151,7 +156,7 @@
                         <span id="Acc_Voeding_FlesPoeder_Title">Flesvoeding - Poeder:</span>
                         <span id="Acc_Voeding_FlesPoeder_Content">@child.Toddler.Food.BottlePowder</span>
                         <span id="Acc_Voeding_FlesPerDag_Title">Flesjes per dag:</span>
-                        <span id="Acc_Voeding_FlesPerDag_Content">@child.Toddler.Food.BottleDay</span>
+                        <span id="Acc_Voeding_FlesPerDag_Content">@(child.Toddler.Food.BottleDay == null ? "" : child.Toddler.Food.BottleDay.ToString())</span>
                         <span id="Acc_Voeding_Speciaal_Title">Speciale weten:</span>
                         <span id="Acc_Voeding_Speciaal_Content">@child.Toddler.Food.SpecialNotice</span>
                     </div>
