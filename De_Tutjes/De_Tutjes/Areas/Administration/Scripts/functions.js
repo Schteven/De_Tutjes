@@ -3,6 +3,7 @@ var readyStart = "test";
 var readyEnd = "test";
 
 function readyDatesAJAX() {
+
     $(function () {
         $.ajax({
             type: "POST",
@@ -18,6 +19,7 @@ function readyDatesAJAX() {
             }
         });
     });
+
 }
 
 function submitToddlerForm() {
@@ -315,6 +317,10 @@ $(function () {
     });
 
     $('#toddlerOverview').change(function () {
+        var id = $('#toddlerOverview').val();
+        //if ($('#toddlerOverview').is(':selected')) {
+            $("#EditLink").prop("href", "/Administration/Children/Edit/" + id + "");
+        //}
         $(this).closest('form').trigger('submit');
     });
 
@@ -327,6 +333,24 @@ function updatePhoto() {
         $("#toddlerPhotoShow").attr('src', '/Images/Photos/' + $("#toddlerPhoto").val());
     }
 }
+
+// EDIT
+
+$(document).ready(function () {
+
+    function hideElements(name) {
+        $("#content").children().hide();
+        $("div[name='" + name + "']").show();
+        $("div[name='submitter']").show();
+    }
+
+    hideElements("personal");
+
+    $('#editBar a').click(function () {
+        hideElements($(this).attr('name'));
+    });
+
+});
 
     /**********************************************************/
 
@@ -381,7 +405,7 @@ function updatePhoto() {
             }
         });
     });
-// ]]>
+    // ]]>
 
     function getToddlersInfo(id) {
         $(function () {

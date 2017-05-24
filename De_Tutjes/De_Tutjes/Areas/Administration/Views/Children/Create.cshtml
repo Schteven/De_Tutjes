@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "registreren";
 }
 
 <div class="row">
@@ -69,16 +69,12 @@
                 }
 
                 @Html.Action("_AddToddler", "Children")
-
                 @Html.Action("_AddParents", "Children")
-
                 @Html.Action("_AddAgreedDaysAndPickups", "Children")
-
                 @Html.Action("_AddMedicalInformation", "Children")
-
                 @Html.Action("_AddFoodAndSleep", "Children")
-
                 @Html.Action("_AddDailyRoutine", "Children")
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -87,19 +83,20 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="finishWizardLabel">
-                                    @HttpContext.Current.Session["NewChildWizardSession"] opslaan
+                                    Opslaan
                                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </h5>
                             </div>
 
                             <div class="modal-body">
                                 <p>
-                                    opslaantext.
+                                    De wizard om een nieuw kindje in te schrijven is afgerond. Na het opslaan wordt het kindje geactiveerd en verschijnt in het overzicht.<br/>
+                                    Er zal automatisch een e-mail worden verzonden naar de ouders met hun respectievelijk wachtwoord om later gebruik te maken van de interface.
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" id="finishWizard">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Afsluiten</button>
+                                <button type="submit" class="btn btn-success" id="finishWizard">Opslaan</button>
                             </div>
                         </div>
                     </div>

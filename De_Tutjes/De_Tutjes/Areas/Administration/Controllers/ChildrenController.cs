@@ -24,6 +24,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         private DeTutjesContext db = new DeTutjesContext();
 
         // GET: Administration/Children
+
         public ActionResult Overview()
         {
             ToddlersOverview to = new ToddlersOverview();
@@ -55,11 +56,16 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     .Include(f => f.Food)
                     .Include(s => s.Sleep)
                     .Include(m => m.Medical)
+                    .Include(d => d.Medical.Doctor)
+                    .Include(dp => dp.Medical.Doctor.Person)
+                    .Include(dpa => dpa.Medical.Doctor.Person.Address)
+                    .Include(dpc => dpc.Medical.Doctor.Person.ContactDetail)
                     .FirstOrDefault();
 
                 ViewBag.Parents = GetParentsOfToddler(toddler);
                 ViewBag.Pickups = GetPickupsOfToddler(toddler);
                 ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
+                ViewBag.Doctor = db.Doctors.Where(d => d.DoctorId.Equals(toddler.Medical.DoctorId)).Include(p => p.Person);
             } else
             {
                 toddler = new Toddler();
@@ -602,6 +608,42 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
             return PartialView("_ListImportantNotice", toddler);
         }
+
+
+        /************** EDIT Pages ************/
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Overview");
+            }
+            else
+            {
+                Toddler toddler = db.Toddlers
+                                    .Where(i => i.ToddlerId == id)
+                                    .Include(p => p.Person)
+                                    .Include(f => f.Food)
+                                    .Include(s => s.Sleep)
+                                    .Include(m => m.Medical)
+                                    .FirstOrDefault();
+
+                EditToddler ec = new EditToddler();
+                ec.toddler = toddler;
+                ec.parents = GetParentsOfToddler(toddler);
+                ec.pickups = GetPickupsOfToddler(toddler);
+                ec.agreedDays = GetAgreedDaysOfToddler(toddler);
+
+                return View(ec);
+            }
+        }
+
+        [HttpPost]
+        public PartialViewResult EditToddler(EditToddler et)
+        {
+
+            return PartialView("_OverviewShowToddler", et);
+        }
+
 
         /** FUNCTIONS *******************************************/
 

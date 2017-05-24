@@ -17,8 +17,10 @@ namespace De_Tutjes.Models
         [DisplayFormat(NullDisplayText = "")]
         public string ToddlerSession { get; set; }
         [DisplayFormat(NullDisplayText = "")]
+        [Display(Name = "Dagelijks verloop")]
         public string DailyRoutine { get; set; }
         [DisplayFormat(NullDisplayText = "")]
+        [Display(Name = "Belangrijk informatie")]
         public string ImportantNotice { get; set; }
 
         [ForeignKey("Food")]

@@ -24,9 +24,13 @@ namespace De_Tutjes.Models
         [Display(Name = "vrijdag")]
         public bool Friday { get; set; }
         [DisplayFormat(NullDisplayText = "")]
+
+        [Display(Name = "Speciale opmerking")]
         public string SpecialNotice { get; set; }
 
+        [Display(Name = "Startdatum")]
         public DateTime StartDate { get; set; }
+        [Display(Name = "Einddatum")]
         public DateTime EndDate { get; set; }
 
         [ForeignKey("Toddler")]

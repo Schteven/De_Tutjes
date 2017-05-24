@@ -28,6 +28,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
         // GET: Administration/Calendar
+
         public ActionResult Overview()
         {
             return View();
@@ -36,45 +37,47 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult GetToddlersOfPeriod(string start, string end)
         {
+
             DateTime calStartDate = Convert.ToDateTime(start);
             DateTime calEndDate = Convert.ToDateTime(end);
             int days = Convert.ToInt32((calEndDate - calStartDate).TotalDays);
-
-            List<calDay> calDayList = new List<calDay>();
-            List<AgreedDays> agreedDaysOfToddlers = db.AgreedDays.ToList();
-
             List<DateTime> calPeriod = new List<DateTime>();
-            List<DateTime> agreedDaysPeriod = new List<DateTime>();
-            ICollection<AgreedDays> agreedDaysOnThisDay = new List<AgreedDays>();
 
             for (int i = 0; i <= days; i++ )
             {
                 calPeriod.Add(calStartDate.AddDays(i));
             }
-            
+
+            List<calDay> calDayList = new List<calDay>();
+            ICollection<AgreedDays> agreedDaysOnThisDay = new List<AgreedDays>();
+
             foreach(DateTime date in calPeriod)
             {
                 int toddlers = 0;
+                var searchQuery = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Include(t => t.Toddler.Person);
                 switch (date.DayOfWeek.ToString())
                 {
                     case "Monday":
-                        agreedDaysOnThisDay = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Where(m => m.Monday == true).Include(t => t.Toddler.Person).ToList();
+                        searchQuery = searchQuery.Where(m => m.Monday == true);
                         break;
                     case "Tuesday":
-                        agreedDaysOnThisDay = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Where(m => m.Tuesday == true).Include(t => t.Toddler.Person).ToList();
+                        searchQuery = searchQuery.Where(m => m.Tuesday == true);
                         break;
                     case "Wednesday":
-                        agreedDaysOnThisDay = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Where(m => m.Wednesday == true).Include(t => t.Toddler.Person).ToList();
+                        searchQuery = searchQuery.Where(m => m.Wednesday == true);
                         break;
                     case "Thursday":
-                        agreedDaysOnThisDay = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Where(m => m.Thursday == true).Include(t => t.Toddler.Person).ToList();
+                        searchQuery = searchQuery.Where(m => m.Thursday == true);
                         break;
                     case "Friday":
-                        agreedDaysOnThisDay = db.AgreedDays.Where(d => (d.StartDate <= date) && (d.EndDate >= date)).Where(m => m.Friday == true).Include(t => t.Toddler.Person).ToList();
+                        searchQuery = searchQuery.Where(m => m.Friday == true);
                         break;
                 }
+                agreedDaysOnThisDay = searchQuery.ToList();
                 toddlers = agreedDaysOnThisDay.Count();
+
                 string toddlersOnThisDay = "";
+
                 int i = 1;
                 DateTime Time = new DateTime(1970, 1, 1, 00, 00, 00);
                 string startTime = "";
@@ -84,43 +87,37 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 {
                     toddlersOnThisDay += agreedDay.Toddler.Person.FirstName;
                     toddlersOnThisDay += "<br>";
-
                     startTime = (i == 1) ? Time.ToString("HH:mm:ss") : endTime;
                     Time = Time.AddMinutes(30);
                     endTime = Time.ToString("HH:mm:ss");
-
                     calDay newCalDay = new calDay
                     {
                         id = ""+i,
                         title = agreedDay.Toddler.Person.FirstName,
-                        //description = toddlersOnThisDay,
                         start = date.ToString("s").Replace("00:00:00", startTime),
                         end = date.ToString("s").Replace("00:00:00", endTime),
                         allDay = false
                     };
-
                     calDayList.Add(newCalDay);
-
                     i++;
-
                 } 
+
                 if (toddlers != 0)
                 {
                     calDay newCalDay = new calDay
                     {
                         id = "0",
                         title = "Aantal: " + toddlers,
-                        //description = toddlersOnThisDay,
                         start = date.ToString("s"),
                         allDay = true
                     };
-
                     calDayList.Add(newCalDay);
                 }
-            }
 
+            }
             var rows = calDayList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
+
     }
 }
