@@ -622,7 +622,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                                     .Include(m => m.Medical)
                                     .FirstOrDefault();
 
-                EditChild ec = new EditChild();
+                EditToddler ec = new EditToddler();
                 ec.toddler = toddler;
                 ec.parents = GetParentsOfToddler(toddler);
                 ec.pickups = GetPickupsOfToddler(toddler);
@@ -630,6 +630,13 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 return View(ec);
             }
+        }
+
+        [HttpPost]
+        public PartialViewResult EditToddler(EditToddler et)
+        {
+
+            return PartialView("_OverviewShowToddler", et);
         }
 
 

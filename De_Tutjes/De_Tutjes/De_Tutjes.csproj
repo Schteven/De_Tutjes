@@ -264,6 +264,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Functions\AutocompleteAddress.cs" />
     <Compile Include="Functions\SchoolHolidays.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -303,6 +304,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Address.xml" />
     <Content Include="App_Data\easter.txt" />
     <Content Include="Areas\Administration\Scripts\functions.js" />
     <Content Include="Content\bootstrap-datepicker3.css" />
