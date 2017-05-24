@@ -15,10 +15,10 @@
                 <p>
                 @if (Model.Person.BirthDate > DateTime.Now)
                 {
-                    @Html.Raw("Wordt verwacht op: ") @Model.Person.BirthDate <br/>
+                    @Html.Raw("Wordt verwacht op: ") @Model.Person.BirthDate.ToString("dd/MM/yyyy") <br/>
                 } else
                 {
-                    @Html.Raw("Geboren op: ") @Model.Person.BirthDate <br/>
+                    @Html.Raw("Geboren op: ") @Model.Person.BirthDate.ToString("dd/MM/yyyy") <br/>
                 }
                 Geslacht: @Model.Person.Gender
                 </p>
@@ -73,7 +73,7 @@
                     }
                     if (Model.Food.SpecialNotice != null)
                     {
-                        <h6>Belangrijke informatie</h6>
+                        <h6>Speciale opmerking</h6>
                         <p>@Model.Food.SpecialNotice</p>
                     }
                 }
@@ -88,7 +88,28 @@
         </div>
         <div id="collapseThree" class="panel-collapse collapse">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                @{
+                    if (Model.Sleep.SleepingPosition != null)
+                    {
+                        <h6>Slaaphouding</h6>
+                        <p>@Model.Sleep.SleepingPosition</p>
+                    }
+                    if (Model.Sleep.Toy != null)
+                    {
+                        <h6>Knuffel</h6>
+                        <p>@Model.Sleep.Toy</p>
+                    }
+                    if (Model.Sleep.Soother != null)
+                    {
+                        <h6>Tutje</h6>
+                        <p>@Model.Sleep.Soother</p>
+                    }
+                    if (Model.Sleep.SpecialNotice != null)
+                    {
+                        <h6>Speciale opmerking</h6>
+                        <p>@Model.Sleep.SpecialNotice</p>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -100,19 +121,90 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                @{ 
+                    if (Model.Medical.HealthServiceNumber != null)
+                    {
+                        <h6>Rijksregisternummer</h6>
+                        <p>@Model.Medical.HealthServiceNumber</p>
+                    }
+                    if (Model.Medical.MedicationName != null)
+                    {
+                        <h6>Medicatie</h6>
+                        <p>@Model.Medical.MedicationName</p>
+                    }
+                    if (Model.Medical.Allergies != null)
+                    {
+                        <h6>Allergieën</h6>
+                        <p>@Model.Medical.Allergies</p>
+                        <p>
+                            Medicatie tegen allergie:<br />
+                            @if (Model.Medical.AllergiesMedication != null)
+                            {
+                                @Model.Medical.AllergiesMedication
+
+                            }
+                            else
+                            {
+                                Html.Raw("geen");
+                            }
+                        </p>
+                    }
+                    if (Model.Medical.ChildDisease != null)
+                    {
+                        <h6>Kinderziektes</h6>
+                        <p>@Model.Medical.ChildDisease</p>
+                        if (Model.Medical.DiseaseWhen != null)
+                        {
+                            <p>Gehad op: @Model.Medical.DiseaseWhen</p>
+                        }
+                    }
+                    if (Model.Medical.DoctorId != null)
+                    {
+                        <h6>Huisarts</h6>
+                        <p>
+                            @Model.Medical.Doctor.Person.FirstName @Model.Medical.Doctor.Person.LastName<br />
+                            @Model.Medical.Doctor.Person.Address.Street, @Model.Medical.Doctor.Person.Address.Number<br />
+                            @Model.Medical.Doctor.Person.Address.PostalCode @Model.Medical.Doctor.Person.Address.City<br />
+                            Tel: @Model.Medical.Doctor.Person.ContactDetail.CellPhone
+                        </p>
+                    }
+                    if (Model.Medical.SpecialNotice != null)
+                    {
+                        <h6>Speciale opmerking</h6>
+                        <p>@Model.Medical.SpecialNotice</p>
+                    }
+                }
             </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">
-                Bezoekdagen
+                Opvangdagen
             </h4>
         </div>
         <div id="collapseFive" class="panel-collapse collapse">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                @{ 
+                    foreach (var agreedDay in Model.AgreedDays)
+                    {
+                        <h6>@agreedDay.StartDate.ToString("dd/MM/yyyy") t.e.m. @agreedDay.EndDate.ToString("dd/MM/yyyy")</h6>
+                        <p>
+                            @{ 
+                                var monday = (agreedDay.Monday == true) ? "ma " : "";
+                                var tuesday = (agreedDay.Tuesday == true) ? "di " : "";
+                                var wednesday = (agreedDay.Wednesday == true) ? "woe " : "";
+                                var thursday = (agreedDay.Thursday == true) ? "do " : "";
+                                var friday = (agreedDay.Friday == true) ? "vr" : "";
+                            }
+                            @monday @tuesday @wednesday @thursday @friday
+                        </p>
+                            if (agreedDay.SpecialNotice != null)
+                            {
+                                <p>@agreedDay.SpecialNotice</p>
+                            }
+                        }
+                }
             </div>
         </div>
     </div>
