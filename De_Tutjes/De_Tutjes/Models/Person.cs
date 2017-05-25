@@ -14,18 +14,22 @@ namespace De_Tutjes.Models
         [Key]
         public int PersonId { get; set; }
         [Display(Name = "Voornaam")]
+        [DisplayFormat(NullDisplayText = "")]
         public string FirstName { get; set; }
         [Display(Name = "Achternaam")]
+        [DisplayFormat(NullDisplayText = "")]
         public string LastName { get; set; }
         [Display(Name = "Geslacht")]
+        [DisplayFormat(NullDisplayText = "")]
         public string Gender { get; set; }
 
         [Display(Name = "Geboortedatum")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
-
+        [DisplayFormat(NullDisplayText = "")]
         public string Photo { get; set; }
 
         [ForeignKey("Address")]

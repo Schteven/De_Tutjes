@@ -12,7 +12,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int LocationId { get; set; }
-
+        [DisplayFormat(NullDisplayText = "")]
         public string Name { get; set; }
 
         [ForeignKey("Manager")]

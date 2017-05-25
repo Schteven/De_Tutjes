@@ -13,6 +13,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int RelationLinkID { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         [Display(Name = "Relatie tot kind")]
         public string RelationToChild { get; set; }
 

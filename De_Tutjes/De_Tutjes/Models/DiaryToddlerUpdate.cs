@@ -32,6 +32,7 @@ namespace De_Tutjes.Models
         public virtual Toddler Toddler { get; set; }
 
         public int UpdateType { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public String Comment { get; set; }
     }
 }

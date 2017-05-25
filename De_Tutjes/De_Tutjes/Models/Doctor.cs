@@ -12,6 +12,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int DoctorId { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         [Display(Name = "Titel")]
         public string Title { get; set; }
 

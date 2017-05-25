@@ -13,13 +13,13 @@ namespace De_Tutjes.Areas.Diary.Controllers
         // GET: Diary/Diary
 
         private ChildManager cm = new ChildManager();
-        //private List<Child> childcards;
 
         public ActionResult Index()
         {
-            //childcards = cm.GetAllChilds();
-            return View(cm.GetAllChilds());
+            return View(cm.GetChildCardsForToday());
         }
+
+
         //public ActionResult Index(Location location)
         //{
         //    cm.SetLocation(location);
@@ -112,6 +112,15 @@ namespace De_Tutjes.Areas.Diary.Controllers
             
         }
         
+        public ActionResult ShortInfo(string toddlerid)
+        {
+            Child child = new Child();
+            if(toddlerid != null)
+            {
+                child = cm.GetChildById(toddlerid);               
+            }
 
+            return PartialView("ShortToddlerInfo", child);
+        }
     }
 }

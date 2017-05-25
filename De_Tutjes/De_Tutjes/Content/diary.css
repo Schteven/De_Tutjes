@@ -2,7 +2,7 @@
     margin:0;
     padding:0;
     
-    background:lightgrey;
+    background:white;
     
 }
 .main-container{
@@ -14,7 +14,7 @@
     text-align: center;
     height:150px;
     min-width: 1200px;
-    background: darkgrey;
+    background: lightgrey;
 }
 /* ***********************************MAIN HEADER EMPLOYEE PICTURE********************** */
 .main-header-worker {
@@ -92,7 +92,7 @@
     float:left;
     width:90%;
     background-image:url("http://kingofwallpapers.com/child/child-012.jpg");
-    background:lightgrey;
+    background:white;
         
 }
 /* ***********************************MAIN CONTENT CHILDREN CARDS ********************** */
@@ -162,11 +162,11 @@ input[type="checkbox"]:checked + label{
     font-size: 1em;
 }
 /* ***********************************INFOBOX SIDEBAR ********************** */
-.main-sidebar {
+#mainsidebar {
     float:left;
     width:10%;
     min-width:250px;
-    border-right: 2px solid white;
+    border-right: 2px solid lightgrey;
     padding:5px;
 }
 .infobox{

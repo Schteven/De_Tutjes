@@ -21,18 +21,21 @@ namespace De_Tutjes.Areas.Diary.Models
         public string Name { get; set; }
         public string Photo { get; set; }
         public DiaryToddlerStatus dts { get; set; }
-
+        public ICollection<Parent> Parents { get; set; }
+        //public Parent ParentOne { get; set; }
+        //public Parent ParentTwo { get; set; }
         public Child()
         {
 
         }
-        public Child(Toddler toddler, ChildStatus status)
+        public Child(Toddler toddler, ICollection<Parent> parents, ChildStatus status)
         {
             this.Status = status;
             this.Toddler = toddler;
             this.Id = toddler.ToddlerId.ToString();
             this.Name = toddler.Person.FirstName;
             this.Photo = toddler.Person.Photo;
+            this.Parents = parents;
         }
 
 

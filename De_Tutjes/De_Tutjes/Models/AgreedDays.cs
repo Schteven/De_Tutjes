@@ -23,6 +23,7 @@ namespace De_Tutjes.Models
         public bool Thursday { get; set; }
         [Display(Name = "vrijdag")]
         public bool Friday { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
 
         [Display(Name = "Speciale opmerking")]
         public string SpecialNotice { get; set; }

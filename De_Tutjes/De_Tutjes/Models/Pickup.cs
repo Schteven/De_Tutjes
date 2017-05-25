@@ -13,6 +13,7 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int PickupId { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         [Display(Name = "Relatie")]
         public string Relation { get; set; }
 

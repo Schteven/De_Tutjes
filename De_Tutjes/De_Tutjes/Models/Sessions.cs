@@ -12,7 +12,9 @@ namespace De_Tutjes.Models
     {
         [Key]
         public int SessionId { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string Username { get; set; }
+        [DisplayFormat(NullDisplayText = "")]
         public string ToddlerSession { get; set; }
         public DateTime Start { get; set; }
         public DateTime? Stop { get; set; }

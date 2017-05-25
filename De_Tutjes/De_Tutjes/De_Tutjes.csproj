@@ -254,6 +254,7 @@
     <Compile Include="Areas\Administration\Models\EditChildModels.cs" />
     <Compile Include="Areas\Administration\Models\ToddlersOverview.cs" />
     <Compile Include="Areas\Diary\Models\Child.cs" />
+    <Compile Include="Areas\Diary\Models\ChildCard.cs" />
     <Compile Include="Areas\Diary\Models\ChildManager.cs" />
     <Compile Include="Areas\Diary\Controllers\DiaryController.cs" />
     <Compile Include="Areas\Diary\DiaryAreaRegistration.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Functions\AutocompleteAddress.cs" />
     <Compile Include="Functions\SchoolHolidays.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -275,6 +277,10 @@
     <Compile Include="Migrations\201705081751362_Kristof migration.cs" />
     <Compile Include="Migrations\201705081751362_Kristof migration.Designer.cs">
       <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705250934155_DisplayNullText.cs" />
+    <Compile Include="Migrations\201705250934155_DisplayNullText.Designer.cs">
+      <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -303,6 +309,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Address.xml" />
     <Content Include="App_Data\easter.txt" />
     <Content Include="Areas\Administration\Scripts\functions.js" />
     <Content Include="Content\bootstrap-datepicker3.css" />
@@ -422,6 +429,7 @@
     <Content Include="Scripts\image-picker.js" />
     <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\Administration\Views\Children\Edit.cshtml" />
+    <Content Include="Areas\Diary\Views\Diary\ShortToddlerInfo.cshtml" />
     <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
@@ -495,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705081751362_Kristof migration.resx">
       <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705250934155_DisplayNullText.resx">
+      <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

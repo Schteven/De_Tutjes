@@ -7,7 +7,7 @@ using De_Tutjes.Models;
 
 namespace De_Tutjes.Areas.Administration.Models
 {
-    public class EditChild
+    public class EditToddler
     {
         public Toddler toddler { get; set; }
         public ICollection<Parent> parents { get; set; }

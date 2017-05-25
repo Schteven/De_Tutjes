@@ -341,6 +341,7 @@ $(document).ready(function () {
     function hideElements(name) {
         $("#content").children().hide();
         $("div[name='" + name + "']").show();
+        $("div[name='submitter']").show();
     }
 
     hideElements("personal");
