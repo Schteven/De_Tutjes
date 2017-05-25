@@ -278,6 +278,10 @@
     <Compile Include="Migrations\201705081751362_Kristof migration.Designer.cs">
       <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705250934155_DisplayNullText.cs" />
+    <Compile Include="Migrations\201705250934155_DisplayNullText.Designer.cs">
+      <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -499,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705081751362_Kristof migration.resx">
       <DependentUpon>201705081751362_Kristof migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705250934155_DisplayNullText.resx">
+      <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

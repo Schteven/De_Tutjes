@@ -10,10 +10,12 @@
 <div class="infobox">
     <div class="infobox-childtag img-rounded">
         <div class="infobox-childphoto">
-            <img src="@Url.Content("~/Images/Photos/" + child.Photo)" class="img-responsive img-rounded" alt="">
+            <img src="@Url.Content("~/Images/Photos/" + child.Toddler.Person.Photo )" class="img-responsive img-rounded" alt="">
         </div>
         <div class="infobox-childname text-center" id="Infobox_ChildShortInfo">
-            @child.Toddler.Person.FirstName<br>@(child.Toddler.Person.BirthDate == null ? "" : child.Toddler.Person.BirthDate.ToString("dd MMMM yyyy"))
+            @child.Toddler.Person.FirstName
+            <br>
+            @(child.Toddler.Person.BirthDate == null ? "" : child.Toddler.Person.BirthDate.ToString("dd MMMM yyyy"))
         </div>
         <div class="infobox-childbuttongroup text-center">
             <a href="#" class="btn btn-success text-center" role="button">
@@ -40,17 +42,25 @@
                 <div id="collapse1" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <!-- inhoud -->
-                        @if (!string.IsNullOrEmpty(@child.Toddler.Person.FirstName)) {
                         <span id = "Acc_Gegevens_Naam_Title" >Naam:</span>
-                        <span id = "Acc_Gegevens_Naam_Content" >@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</span>
-                        }
+                        <span id = "Acc_Gegevens_Naam_Content" >
+                            @child.Toddler.Person.FirstName 
+                            @child.Toddler.Person.LastName
+                        </span>
+                        
                         @if (@child.Toddler.Person.Address != null)
                         {
                         <span id="Acc_Gegevens_Adres_Title">Adres:</span>
                         <span id="Acc_Gegevens_Adres_Content">
-                            @child.Toddler.Person.Address.Street @child.Toddler.Person.Address.Number</span> if (@child.Toddler.Person.Address.Bus != null)
-                            {<span> bus @child.Toddler.Person.Address.Bus</span> } <br />
-                        <span>    @(child.Toddler.Person.Address.PostalCode == null ? "" : child.Toddler.Person.Address.PostalCode.ToString()) @child.Toddler.Person.Address.City
+                            @child.Toddler.Person.Address.Street 
+                            @child.Toddler.Person.Address.Number
+                        </span> 
+                            if (@child.Toddler.Person.Address.Bus != null) {
+                                <span> bus @child.Toddler.Person.Address.Bus</span> 
+                            } <br />
+                        <span>    
+                            @(child.Toddler.Person.Address.PostalCode == null ? "" : child.Toddler.Person.Address.PostalCode.ToString()) 
+                            @child.Toddler.Person.Address.City
                         </span>
                         }
                         <span id="Acc_Gegevens_TelThuis_Title">Tel thuis:</span>
@@ -77,23 +87,38 @@
                                 if (p.Person.Gender != null && p.Person.Gender == "male")
                                 {
                                     <span id="Acc_Ouders_NaamP_Title">Naam papa:</span>
-                                    <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
+                                    <span id="Acc_Ouders_NaamP_Content">
+                                        @p.Person.FirstName 
+                                        @p.Person.LastName
+                                    </span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">
+                                        @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())
+                                    </span>
                                 }
                                 else if (p.Person.Gender != null && p.Person.Gender == "female")
                                 {
                                     <span id="Acc_Ouders_NaamM_Title">Naam mama:</span>
-                                    <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
+                                    <span id="Acc_Ouders_NaamP_Content">
+                                        @p.Person.FirstName
+                                        @p.Person.LastName
+                                    </span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">
+                                        @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())
+                                    </span>
                                 }
                                 else
                                 {
                                     <span id="Acc_Ouders_NaamO_Title">Naam ouder:</span>
-                                    <span id="Acc_Ouders_NaamP_Content">@p.Person.FirstName @p.Person.LastName</span>
+                                    <span id="Acc_Ouders_NaamP_Content">
+                                        @p.Person.FirstName
+                                        @p.Person.LastName
+                                    </span>
                                     <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
-                                    <span id="Acc_Ouders_BereikenP_Content">@(p.Person.ContactDetail.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())</span>
+                                    <span id="Acc_Ouders_BereikenP_Content">
+                                        @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail?.WorkPhone.ToString())
+                                    </span>
                                 }
                             }
                         }
@@ -116,25 +141,34 @@
                     <div class="panel-body">
                         <span id="Acc_Medisch_NaamH_Title">Huisarts:</span>
                         <span id="Acc_Medisch_NaamH_Content">
-                            @child.Toddler.Medical.Doctor.Person.FirstName @child.Toddler.Medical.Doctor.Person.LastName<br />
+                            @(child.Toddler.Medical?.Doctor?.Person?.FirstName == null ? "" : child.Toddler.Medical.Doctor.Person.FirstName)
+                            @(child.Toddler.Medical?.Doctor?.Person?.LastName == null ? "" : child.Toddler.Medical.Doctor.Person.LastName) <br />
                         </span>
-                        @if (child.Toddler.Medical.Doctor.Person.Address != null)
+                        @if (child.Toddler.Medical?.Doctor?.Person?.Address != null)
                         {
-                            @child.Toddler.Medical.Doctor.Person.Address.Street @child.Toddler.Medical.Doctor.Person.Address.Number
+                            @child.Toddler.Medical.Doctor.Person.Address.Street 
+                            @child.Toddler.Medical.Doctor.Person.Address.Number
                             
-                                 if (@child.Toddler.Medical.Doctor.Person.Address.Bus != null) {
-                                 <span> bus child.Toddler.Medical.Doctor.Person.Address.Bus </span> } <br />
-                                            <span>
-                                                child.Toddler.Medical.Doctor.Person.Address.PostalCode @child.Toddler.Medical.Doctor.Person.Address.City
-                                            </span>
+                            if (@child.Toddler.Medical.Doctor.Person.Address.Bus != null) {
+                                <span> bus @child.Toddler.Medical.Doctor.Person.Address.Bus </span> } <br />
+                                <span>
+                                    @child.Toddler.Medical.Doctor.Person.Address.PostalCode 
+                                    @child.Toddler.Medical.Doctor.Person.Address.City
+                                </span>
                             } }
                             
                         <span id="Acc_Medisch_Medicatie_Title">Medicatie:</span>
-                        <span id="Acc_Medisch_Medicatie_Content">@child.Toddler.Medical.MedicationName</span>
+                        <span id="Acc_Medisch_Medicatie_Content">
+                            @(child.Toddler.Medical?.MedicationName == null ? "" : child.Toddler.Medical.MedicationName)
+                        </span>
                         <span id="Acc_Medisch_Allergien_Title">Allergiën:</span>
-                        <span id="Acc_Medisch_Allergien_Content">@child.Toddler.Medical.Allergies</span>
+                        <span id="Acc_Medisch_Allergien_Content">
+                            @(child.Toddler.Medical?.Allergies == null ? "" : child.Toddler.Medical.Allergies)
+                        </span>
                         <span id="Acc_Medisch_SpecialeZorgen_Title">Speciale zorgen:</span>
-                        <span id="Acc_Medisch_SpecialeZorgen_Content">@child.Toddler.Medical.SpecialNotice</span>
+                        <span id="Acc_Medisch_SpecialeZorgen_Content">
+                            @(child.Toddler.Medical?.SpecialNotice == null ? "" : child.Toddler.Medical.SpecialNotice)
+                        </span>
                     </div>
                 </div>
             </div>
@@ -150,15 +184,25 @@
                 <div id="collapse4" class="panel-collapse collapse">
                     <div class="panel-body">
                         <span id="Acc_Voeding_SpecDieet_Title">Speciaal dieet:</span>
-                        <span id="Acc_Voeding_SpecDieet_Content">@child.Toddler.Food.SpecialDiet</span>
+                        <span id="Acc_Voeding_SpecDieet_Content">
+                            @(child.Toddler.Food?.SpecialDiet == null ? "" : child.Toddler.Food.SpecialDiet)
+                        </span>
                         <span id="Acc_Voeding_NietToedienen_Title">Niet toedienen:</span>
-                        <span id="Acc_Voeding_NietToedienen_Content">@child.Toddler.Food.MayNotEat</span>
+                        <span id="Acc_Voeding_NietToedienen_Content">
+                            @(child.Toddler.Food?.MayNotEat == null ? "" : child.Toddler.Food.MayNotEat)
+                        </span>
                         <span id="Acc_Voeding_FlesPoeder_Title">Flesvoeding - Poeder:</span>
-                        <span id="Acc_Voeding_FlesPoeder_Content">@child.Toddler.Food.BottlePowder</span>
+                        <span id="Acc_Voeding_FlesPoeder_Content">
+                            @(child.Toddler.Food?.BottlePowder == null ? "" : child.Toddler.Food.BottlePowder)
+                        </span>
                         <span id="Acc_Voeding_FlesPerDag_Title">Flesjes per dag:</span>
-                        <span id="Acc_Voeding_FlesPerDag_Content">@(child.Toddler.Food.BottleDay == null ? "" : child.Toddler.Food.BottleDay.ToString())</span>
+                        <span id="Acc_Voeding_FlesPerDag_Content">
+                            @(child.Toddler.Food?.BottleDay == null ? "" : child.Toddler.Food.BottleDay.ToString())
+                        </span>
                         <span id="Acc_Voeding_Speciaal_Title">Speciale weten:</span>
-                        <span id="Acc_Voeding_Speciaal_Content">@child.Toddler.Food.SpecialNotice</span>
+                        <span id="Acc_Voeding_Speciaal_Content">
+                            @(child.Toddler.Food?.SpecialNotice == null ? "" : child.Toddler.Food.SpecialNotice)
+                        </span>
                     </div>
                 </div>
             </div>
@@ -174,9 +218,13 @@
                 <div id="collapse5" class="panel-collapse collapse">
                     <div class="panel-body">
                         <span id="Acc_Slapen_Slaaphouding_Title">Slaaphouding:</span>
-                        <span id="Acc_Slapen_Slaaphouding_Content">@child.Toddler.Sleep.SleepingPosition</span>
+                        <span id="Acc_Slapen_Slaaphouding_Content">
+                            @(child.Toddler.Sleep?.SleepingPosition == null ? "" : child.Toddler.Sleep.SleepingPosition)
+                        </span>
                         <span id="Acc_Slapen_Speciaal_Title">Speciale weten:</span>
-                        <span id="Acc_Slapen_Speciaal_Content">@child.Toddler.Sleep.SpecialNotice</span>
+                        <span id="Acc_Slapen_Speciaal_Content">
+                            @(child.Toddler.Sleep?.SpecialNotice == null ? "" : child.Toddler.Sleep.SpecialNotice)
+                        </span>
                     </div>
                 </div>
             </div>

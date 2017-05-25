@@ -151,9 +151,10 @@
 <script>
     $(document).ready(function () {
         $(".childcard").click(function (evt) {
+            $('#mainsidebar').html('<img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="">');
             var id = this.id;
             $("#mainsidebar").load("/Diary/Diary/shortinfo", { toddlerid: id });
-            alert("hey " + id);
+            //alert("hey " + id);
         });
     });
 </script>
