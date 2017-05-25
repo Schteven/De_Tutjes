@@ -350,6 +350,8 @@ $(document).ready(function () {
         hideElements($(this).attr('name'));
     });
 
+    //$('#personalDiv #postalCode').key
+
 });
 
     /**********************************************************/
