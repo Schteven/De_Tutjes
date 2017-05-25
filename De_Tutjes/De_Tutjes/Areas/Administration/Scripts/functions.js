@@ -350,7 +350,25 @@ $(document).ready(function () {
         hideElements($(this).attr('name'));
     });
 
-    //$('#personalDiv #postalCode').key
+    $('#personalDiv #postalCode').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetPostalCode",
+                type: "POST",
+                dataType: "json",
+                data: { input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.str, value: item.id };
+                    }))
+
+                }
+            })
+        },
+        messages: {
+            noResults: "", results: ""
+        }
+    });
 
 });
 

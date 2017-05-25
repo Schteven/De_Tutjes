@@ -244,6 +244,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\SharedController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Administration\Controllers\ChildrenController.cs" />

@@ -30,22 +30,22 @@ namespace De_Tutjes.Functions
 
     public class AutocompleteAddress
     {
-        dataroot XmlData;
+        public dataroot XmlData;
         public AutocompleteAddress() { }
 
         public void Initialize()
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(dataroot));
-            TextReader reader = new StreamReader("Address.xml");
+            TextReader reader = new StreamReader(HostingEnvironment.MapPath(@"~/App_Data/Address.xml"));
             object obj = deserializer.Deserialize(reader);
             XmlData = (dataroot)obj;
             reader.Close();
         }
 
-        public List<string> GetPostalcodes()
+        public SortedList<string,string> GetPostalcodes()
         {
-            List<string> postalCodes = new List<string>();
-            foreach (XMLAddress address in XmlData.addressList)
+            SortedList<string, string> postalCodes = new SortedList<string, string>();
+            foreach (XMLAddress address in XmlData.addressList.Distinct())
             {
                 switch (address.Postalcode)
                 {
@@ -56,13 +56,15 @@ namespace De_Tutjes.Functions
                     case "3381": // Kapellen
                     case "3384": // Attenrode
                     case "3471": // Hoeleden
+                    case "3470": // Kortenaken
                     case "3440": // Zoutleeuw
                     case "3350": // Linter
                     case "3400": // Landen
                     case "3404": // Attenhoven
                     case "3321": // Outgaarden
                     case "3320": // Hoegaarden
-                        postalCodes.Add(address.Postalcode);
+                        
+                        //postalCodes.Add(address.Postalcode, address.Municipal);
                         break;
                 }
             }
