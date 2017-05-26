@@ -42,9 +42,9 @@ namespace De_Tutjes.Functions
             reader.Close();
         }
 
-        public SortedList<string,string> GetPostalcodes()
+        public List<string> GetPostalcodes()
         {
-            SortedList<string, string> postalCodes = new SortedList<string, string>();
+            List<string> postalCodes = new List<string>();
             foreach (XMLAddress address in XmlData.addressList.Distinct())
             {
                 switch (address.Postalcode)
@@ -64,7 +64,7 @@ namespace De_Tutjes.Functions
                     case "3321": // Outgaarden
                     case "3320": // Hoegaarden
                         
-                        //postalCodes.Add(address.Postalcode, address.Municipal);
+                        postalCodes.Add(address.Postalcode);
                         break;
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using De_Tutjes.Functions;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,19 +19,44 @@ namespace De_Tutjes.Areas.Administration.Controllers
         // Shared JQuery AJAX Functions
 
         [HttpPost]
-        public JsonResult GetPostalCode(string input)
+        public JsonResult GetPostalCodes(string input)
         {
             AutocompleteAddress aca = new AutocompleteAddress();
             aca.Initialize();
 
-            SortedList<string, string> postalCodes = aca.GetPostalcodes();
+            List<XMLAddress> addresses = aca.XmlData.addressList;
 
-            var PostalCode = postalCodes.Where(pc => pc.Key.StartsWith(input))
-                                        .Distinct()
-                                        .Select(pc => new { id = pc.Key, str = pc.Value })
-                                        .OrderBy(pc => pc);
-            return Json(PostalCode, JsonRequestBehavior.AllowGet);
+            var postalCode = addresses.Where(pc => pc.Postalcode.StartsWith(input)).DistinctBy(pc => pc.Postalcode);
+            return Json(postalCode, JsonRequestBehavior.AllowGet);
 
         }
+
+        [HttpPost]
+        public JsonResult GetCity(string input)
+        {
+            AutocompleteAddress aca = new AutocompleteAddress();
+            aca.Initialize();
+
+            List<XMLAddress> addresses = aca.XmlData.addressList.Where(pc => pc.Postalcode.Equals(input)).ToList();
+
+            XMLAddress address = addresses.Where(pc => pc.Postalcode.Equals(input)).FirstOrDefault();
+            string city = address.Municipal;
+            return Json(city, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public JsonResult GetStreet(string postal, string input)
+        {
+            AutocompleteAddress aca = new AutocompleteAddress();
+            aca.Initialize();
+
+            List<XMLAddress> addresses = aca.XmlData.addressList.Where(pc => pc.Postalcode.Equals(postal)).ToList();
+
+            var addressList = addresses.Where(pc => pc.Street.StartsWith(input));
+            return Json(addressList, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

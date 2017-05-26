@@ -353,20 +353,42 @@ $(document).ready(function () {
     $('#personalDiv #postalCode').autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "/shared/GetPostalCode",
+                url: "/shared/GetPostalCodes",
                 type: "POST",
                 dataType: "json",
                 data: { input: request.term },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        return { label: item.str, value: item.id };
+                        return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
                     }))
-
                 }
             })
         },
-        messages: {
-            noResults: "", results: ""
+        select: function (e, ui) {
+            $.ajax({
+                url: "/shared/GetCity",
+                type: "POST",
+                dataType: "json",
+                data: { input: ui.item.value },
+                success: function (data) {
+                    $("#city").val(data);
+                }
+            })
+        }
+    });
+    $('#personalDiv #street').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetStreet",
+                type: "POST",
+                dataType: "json",
+                data: { postal: $('#postalCode').val(), input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Street, value: item.Street };
+                    }))
+                }
+            })
         }
     });
 
