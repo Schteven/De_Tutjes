@@ -133,6 +133,8 @@ $(function () {
         e.preventDefault();
         $('#steps a[href="#step6"]').tab('show');
     });
+
+
     
 });
 
@@ -154,6 +156,49 @@ $(function () {
         language: "nl",
         autoclose: true
     });
+
+    $('#parent_Person_Address_PostalCode').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetPostalCodes",
+                type: "POST",
+                dataType: "json",
+                data: { input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
+                    }))
+                }
+            })
+        },
+        select: function (e, ui) {
+            $.ajax({
+                url: "/shared/GetCity",
+                type: "POST",
+                dataType: "json",
+                data: { input: ui.item.value },
+                success: function (data) {
+                    $("#parent_Person_Address_City").val(data);
+                }
+            })
+        }
+    });
+    $('#parent_Person_Address_Street').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetStreet",
+                type: "POST",
+                dataType: "json",
+                data: { postal: $('#parent_Person_Address_PostalCode').val(), input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Street, value: item.Street };
+                    }))
+                }
+            })
+        }
+    });
+
 });
 
 // CREATE/CHILD/AGREEDDAYS
@@ -203,6 +248,48 @@ function setDatePickerAgreedDaysAndPickups() {
 
 
 $(function () {
+
+    $('#pickup_Person_Address_PostalCode').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetPostalCodes",
+                type: "POST",
+                dataType: "json",
+                data: { input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
+                    }))
+                }
+            })
+        },
+        select: function (e, ui) {
+            $.ajax({
+                url: "/shared/GetCity",
+                type: "POST",
+                dataType: "json",
+                data: { input: ui.item.value },
+                success: function (data) {
+                    $("#pickup_Person_Address_City").val(data);
+                }
+            })
+        }
+    });
+    $('#pickup_Person_Address_Street').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetStreet",
+                type: "POST",
+                dataType: "json",
+                data: { postal: $('#pickup_Person_Address_PostalCode').val(), input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Street, value: item.Street };
+                    }))
+                }
+            })
+        }
+    });
 
     $("#agreedDays_StartDate").change(function () {
         readyStart = $("#agreedDays_StartDate").datepicker('getDate');
@@ -267,6 +354,48 @@ $(function () {
 
 //CREATE/CHILD/MEDICAL
 $(function () {
+
+    $('#medical_Doctor_Person_Address_PostalCode').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetPostalCodes",
+                type: "POST",
+                dataType: "json",
+                data: { input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
+                    }))
+                }
+            })
+        },
+        select: function (e, ui) {
+            $.ajax({
+                url: "/shared/GetCity",
+                type: "POST",
+                dataType: "json",
+                data: { input: ui.item.value },
+                success: function (data) {
+                    $("#medical_Doctor_Person_Address_City").val(data);
+                }
+            })
+        }
+    });
+    $('#medical_Doctor_Person_Address_Street').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetStreet",
+                type: "POST",
+                dataType: "json",
+                data: { postal: $('#medical_Doctor_Person_Address_PostalCode').val(), input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Street, value: item.Street };
+                    }))
+                }
+            })
+        }
+    });
 
     $("#DoctorForm").hide();
     $("#HasDoctor").click(function () {
@@ -348,6 +477,48 @@ $(document).ready(function () {
 
     $('#editBar a').click(function () {
         hideElements($(this).attr('name'));
+    });
+
+    $('#personalDiv #postalCode').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetPostalCodes",
+                type: "POST",
+                dataType: "json",
+                data: { input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
+                    }))
+                }
+            })
+        },
+        select: function (e, ui) {
+            $.ajax({
+                url: "/shared/GetCity",
+                type: "POST",
+                dataType: "json",
+                data: { input: ui.item.value },
+                success: function (data) {
+                    $("#city").val(data);
+                }
+            })
+        }
+    });
+    $('#personalDiv #street').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/shared/GetStreet",
+                type: "POST",
+                dataType: "json",
+                data: { postal: $('#postalCode').val(), input: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Street, value: item.Street };
+                    }))
+                }
+            })
+        }
     });
 
 });

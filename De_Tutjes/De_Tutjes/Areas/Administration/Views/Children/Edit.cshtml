@@ -73,7 +73,7 @@
         @using (Ajax.BeginForm("EditToddler",
             null,
             new AjaxOptions { UpdateTargetId = "content", OnSuccess = "" },
-            new { id = "EditPersonalInfo" }))
+            new { id = "EditToddlerInfo" }))
         {
         <div class="tab-content col-md-9" id="content">
             <div name="personal">
@@ -83,6 +83,10 @@
                     </div>
                     <div class="panel-body">
                         <div class="row" id="personalDiv">
+
+                            <input type="text" class="form-control" name="postalCode" id="postalCode" />
+                            <input type="text" class="form-control" name="city" id="city"/>
+                            <input type="text" class="form-control" name="street" id="street" />
 
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <fieldset>

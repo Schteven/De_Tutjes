@@ -244,6 +244,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\SharedController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Administration\Controllers\ChildrenController.cs" />
@@ -385,6 +386,7 @@
     <Content Include="Areas\Administration\Views\Settings\Overview.cshtml" />
     <Content Include="Images\baby-boy.png" />
     <Content Include="Images\baby-girl.png" />
+    <Content Include="Images\detutjes-logo-mini.png" />
     <Content Include="Images\female.png" />
     <Content Include="Images\giphy.gif" />
     <Content Include="Images\male.png" />
@@ -489,8 +491,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="Areas\Diary\Shared\" />
     <Folder Include="Areas\Parents\Views\Shared\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

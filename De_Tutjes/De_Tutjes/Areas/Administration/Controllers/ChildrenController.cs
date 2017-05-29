@@ -65,7 +65,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 ViewBag.Parents = GetParentsOfToddler(toddler);
                 ViewBag.Pickups = GetPickupsOfToddler(toddler);
                 ViewBag.AgreedDays = GetAgreedDaysOfToddler(toddler);
-                ViewBag.Doctor = db.Doctors.Where(d => d.DoctorId.Equals(toddler.Medical.DoctorId)).Include(p => p.Person);
             } else
             {
                 toddler = new Toddler();
