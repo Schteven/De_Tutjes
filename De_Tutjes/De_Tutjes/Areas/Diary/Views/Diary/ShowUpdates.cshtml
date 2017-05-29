@@ -38,7 +38,7 @@
                 <table style="width:240px;">
                     @foreach (var child in Model)
                     {
-                    <tr style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
+                    <tr onclick="ToggleVisibility(@child.Toddler.ToddlerId)" style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
                     <td style="width:160px;">@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</td>
                     <td style="padding-right:5px;"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-envelope"></span> Verzenden</button></td>
                     </tr>
@@ -66,7 +66,7 @@
         {
             foreach (var child in Model)
             {
-                <div class="updateview-childinfo-child" id="@child.Id" style="margin-left:50px; visibility:hidden;">
+                <div class="updateview-childinfo-child" id="@child.Toddler.ToddlerId" style="margin-left:50px; visibility:hidden;">
                     <table>
                         <tr><th>@child.Toddler.Person.FirstName :</th><th>Om:</th></tr>
                         @foreach (var update in child.Updates)
@@ -128,11 +128,9 @@
         document.getElementsByClassName("updateview-childinfo-child").style.visibility == "hidden";
             if (document.getElementById(idend).style.visibility == "hidden") {
                 document.getElementById(idend).style.visibility = "visible";
-                document.getElementById(idend).style.height = null;
             }
             else {
                 document.getElementById(idend).style.visibility = "hidden";
-                document.getElementById(idend).style.height = 0;
             }
             return false;
         }
