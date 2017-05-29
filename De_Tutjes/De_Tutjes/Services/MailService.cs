@@ -1,4 +1,5 @@
-﻿using System;
+﻿using De_Tutjes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -23,6 +24,15 @@ namespace De_Tutjes.Services
         public CreateNewAccount() { }
     }
 
+    public class DiaryOverviewMail
+    {
+        public string email { get; set; }
+        public ICollection<DiaryToddlerUpdate> dtu { get; set; }
+        public string firstname { get; set; }
+
+        public DiaryOverviewMail() { }
+    }
+
     public class MailService
     {
 
@@ -32,6 +42,7 @@ namespace De_Tutjes.Services
         public string content { get; set; }
 
         public CreateNewAccount cna { get; set; }
+        public DiaryOverviewMail dom { get; set; }
 
         public string host { get; set; }
 
@@ -54,8 +65,14 @@ namespace De_Tutjes.Services
                 case "CreateNewAccount":
                     cna = (CreateNewAccount)o;
                     this.receiver = cna.email;
-                    this.subject = NewAccount().subject;
-                    this.content = NewAccount().content;
+                    this.subject = NewAccountTemplate().subject;
+                    this.content = NewAccountTemplate().content;
+                    break;
+                case "DiaryOverviewMail":
+                    dom = (DiaryOverviewMail)o;
+                    this.receiver = dom.email;
+                    this.subject = DiaryOverviewTemplate().subject;
+                    this.content = DiaryOverviewTemplate().content;
                     break;
             }
 
@@ -74,7 +91,7 @@ namespace De_Tutjes.Services
             client.Send(mail);
         }
 
-        public EmailTemplate NewAccount()
+        public EmailTemplate NewAccountTemplate()
         {
             EmailTemplate et = new EmailTemplate();
             et.subject = "Je account op detutjes.be";
@@ -86,6 +103,18 @@ namespace De_Tutjes.Services
                 "<tr><td>Wachtwoord:</td><td>"+cna.password+"</td></tr></table><br>"+
                 "Vriendelijke groeten<br>"+
                 "De Tutjes";
+
+            return et;
+        }
+
+        public EmailTemplate DiaryOverviewTemplate()
+        {
+            EmailTemplate et = new EmailTemplate();
+            et.subject = "Dagboek overzicht van " + dom.firstname + " op " + DateTime.Now.ToString("dddd/MM");
+            et.content =
+                "<h2>Beste ouder</h2>" +
+                "<p></p>" +
+                "";
 
             return et;
         }
