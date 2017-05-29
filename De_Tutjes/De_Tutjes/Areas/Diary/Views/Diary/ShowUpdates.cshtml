@@ -1,0 +1,140 @@
+﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.Child>
+@{
+    ViewBag.Title = "ShowUpdates";
+    Layout = "~/Areas/Diary/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ************************* ACTIVE WORKER BUTTON ****************************** -->
+<div class="main-header">
+    <div class="main-header-worker">
+        <a href="#" class="btn btn-default btn-lg" role="button">
+            <img src="~/Images/detutjes-logo-mini.png" class="img-responsive" alt="" style="height:100px; ">
+        </a>
+    </div>
+
+    <!-- ************************* EXIT BUTTON ****************************** -->
+    <div class="main-header-exit">
+        <a href="#" class="btn btn-warning btn-lg verylargebtn" role="button">
+            <span class="glyphicon glyphicon-off"></span>
+        </a>
+    </div>
+
+    <!-- ************************* CHILD STATUS BUTTONS ****************************** -->
+    <div class="main-header-buttons">
+        <button name="submitButton" value="ChildCheckIn" id="ChildCheckInButton" class="btn btn-default btn-lg text-center" type="submit">
+            @Html.ActionLink("Terug", "Index", "Diary")
+        </button>
+    </div>
+</div>
+
+<!-- ************************* MAIN BODY ****************************** -->
+<div class="main-body">
+    <!-- ************************* MAIN SIDEBAR ****************************** -->
+    <div id="mainsidebar">
+        <!-- ************************* SIDEBAR INFOBOX ****************************** -->
+        <div style="margin:30px 30px 0 0;">
+            @if (Model != null)
+            {
+                <table style="width:240px;">
+                    @foreach (var child in Model)
+                    {
+                    <tr style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
+                    <td style="width:160px;">@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</td>
+                    <td style="padding-right:5px;"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-envelope"></span> Verzenden</button></td>
+                    </tr>
+
+                    }
+                </table>
+                <span>Tik op de naam van een kind om het overzicht te openen.</span>
+            }
+        </div>
+    </div>
+
+    <!-- ************************* MAIN CONTENT ****************************** -->
+    <div class="main-content">
+        <!-- ************************* CHILDREN INFO ****************************** -->
+        <!-- 
+            CheckIn = 1,
+            Sleeping = 2,
+            WakeUp = 3,
+            Eating = 4,
+            Diaper = 5,
+            CheckOut = 6,
+            Comment = 7
+            -->
+        @if (Model != null)
+        {
+            foreach (var child in Model)
+            {
+                <div class="updateview-childinfo-child" id="@child.Id" style="margin-left:50px; visibility:hidden;">
+                    <table>
+                        <tr><th>@child.Toddler.Person.FirstName :</th><th>Om:</th></tr>
+                        @foreach (var update in child.Updates)
+                        {
+                            <tr><td>
+                            @switch (update.UpdateType)
+                            {
+                                case 1:
+                                    <span class="glyphicon glyphicon-log-in"></span><span>Is aangekomen</span>                                    ;
+                                    break;
+                                case 2:
+                                    <span class="glyphicon glyphicon-cloud"></span><span>Ging slapen</span>                                    ;
+                                    break;
+                                case 3:
+                                    <span class="glyphicon glyphicon-cloud"></span><span>Werd wakker</span>                                    ;
+                                    break;
+                                case 4:
+                                    <span class="glyphicon glyphicon-cutlery"></span><span>Heeft gegeten</span>;
+                                    break;
+                                case 5:
+                                    <span class="glyphicon glyphicon-log-in"></span><span>Heeft een nieuwe pamper gekregen</span>                                    ;
+                                    break;
+                                case 6:
+                                    <span class="glyphicon glyphicon-log-out"></span><span>Is naar huis</span>                                    ;
+                                    break;
+                                case 7:
+                                    <span class="glyphicon glyphicon-comment"></span><span>Info: @update.Comment</span>;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            </td><td>@update.Timestamp.Hour uur @update.Timestamp.Minute</td></tr>
+                        }
+
+
+                    </table>
+                </div>
+            }
+                            }
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".childcard").click(function (evt) {
+            $('#mainsidebar').html('<img src="@Url.Content("~/Images/giphy.gif")" alt="" />');
+                                var id = this.id;
+            $("#mainsidebar").load("/Diary/Diary/shortinfo", { toddlerid: id });
+                                //alert("hey " + id);
+                            });
+    });
+</script>
+
+<script language="javascript" type="text/javascript">
+    function ToggleVisibility(idend) {
+        document.getElementsByClassName("updateview-childinfo-child").style.visibility == "hidden";
+            if (document.getElementById(idend).style.visibility == "hidden") {
+                document.getElementById(idend).style.visibility = "visible";
+                document.getElementById(idend).style.height = null;
+            }
+            else {
+                document.getElementById(idend).style.visibility = "hidden";
+                document.getElementById(idend).style.height = 0;
+            }
+            return false;
+        }
+</script>
+

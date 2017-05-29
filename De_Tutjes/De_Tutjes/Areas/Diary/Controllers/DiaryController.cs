@@ -83,9 +83,9 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         foreach (var c in col)
                         {
                             //TODO: IF count >2, niets doen
-                            
-                                //Give window with overview of this child
-                            
+
+                            //Give window with overview of this child
+                            return RedirectToAction("ShowUpdates");
                         }
                         break;
                     case "ChildCheckOut":
@@ -122,5 +122,11 @@ namespace De_Tutjes.Areas.Diary.Controllers
 
             return PartialView("ShortToddlerInfo", child);
         }
+
+        public ActionResult ShowUpdates()
+        {
+            return View(cm.GetChildrenWithUpdates());
+        }
+
     }
 }

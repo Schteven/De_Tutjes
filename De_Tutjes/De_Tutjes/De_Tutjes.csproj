@@ -387,7 +387,9 @@
     <Content Include="Areas\Administration\Views\Settings\Overview.cshtml" />
     <Content Include="Images\baby-boy.png" />
     <Content Include="Images\baby-girl.png" />
+    <Content Include="Images\detutjes-logo-mini.png" />
     <Content Include="Images\female.png" />
+    <Content Include="Images\giphy.gif" />
     <Content Include="Images\male.png" />
     <Content Include="Images\Photos\jana.jpg" />
     <Content Include="Images\Photos\lowie.jpg" />
@@ -432,6 +434,7 @@
     <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\Administration\Views\Children\Edit.cshtml" />
     <Content Include="Areas\Diary\Views\Diary\ShortToddlerInfo.cshtml" />
+    <Content Include="Areas\Diary\Views\Diary\ShowUpdates.cshtml" />
     <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
