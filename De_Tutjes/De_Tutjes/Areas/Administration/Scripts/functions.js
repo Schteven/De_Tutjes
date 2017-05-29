@@ -449,16 +449,16 @@ $(document).ready(function () {
     });
     // ]]>
 
-    function getToddlersInfo(id) {
+    function sendDemoMail() {
         $(function () {
             $.ajax({
                 type: "POST",
-                url: "/Calendar/getToddlersInfoAJAX",
-                data: '{id: "' + id + '" }',
+                url: "/Shared/sendDemoMailAJAX",
+                data: '{id: "0" }',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    
+                    alert("mail send");
                 }
             });
         });

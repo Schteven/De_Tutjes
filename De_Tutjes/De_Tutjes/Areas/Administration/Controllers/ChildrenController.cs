@@ -12,6 +12,7 @@ using System.Net.Mail;
 using De_Tutjes.Models;
 using De_Tutjes.Functions;
 using De_Tutjes.Areas.Administration.Models;
+using De_Tutjes.Services;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -135,7 +136,13 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                     var chkUser = UserManager.Create(parent.Person.UserAccount, userPWD);
 
-                    SendFirstMail(email, userPWD);
+                    MailService ms = new MailService();
+                    CreateNewAccount cna = new CreateNewAccount();
+                    cna.firstname = parent.Person.FirstName;
+                    cna.email = email;
+                    cna.password = userPWD;
+
+                    ms.SendMail(cna);
                 }
                 else
                 {
@@ -819,19 +826,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             readyForSchool = schoolHolidays.CanGoToSchoolFrom();
             string date = readyForSchool.ToString("dd'/'MM'/'yyyy");
             return date;
-        }
-
-        public void SendFirstMail(string email, string password)
-        {
-            MailMessage mail = new MailMessage("noreply@detutjes.be", email);
-            SmtpClient client = new SmtpClient();
-            client.Port = 25;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Host = "relay.proximus.be";
-            mail.Subject = "Je account bij De Tutjes";
-            mail.Body = "Welkom bij de tutjes, je wachtwoord is " + password;
-            client.Send(mail);
         }
 
         // JQUERY AJAX FUNCTIONS

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using De_Tutjes.Services;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -53,8 +54,24 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             List<XMLAddress> addresses = aca.XmlData.addressList.Where(pc => pc.Postalcode.Equals(postal)).ToList();
 
-            var addressList = addresses.Where(pc => pc.Street.StartsWith(input));
+            var addressList = addresses.Where(pc => pc.Street.StartsWith(input, StringComparison.InvariantCultureIgnoreCase)).OrderBy(s => s.Street);
             return Json(addressList, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public JsonResult sendDemoMailAJAX(string id)
+        {
+            MailService ms = new MailService();
+
+            CreateNewAccount cna = new CreateNewAccount();
+            cna.firstname = "Demo";
+            cna.email = "steven.janssens@oplinter.be";
+            cna.password = "demopass";
+
+            ms.SendMail(cna);
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
 
         }
 
