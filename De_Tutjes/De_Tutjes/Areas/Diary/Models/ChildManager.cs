@@ -155,6 +155,32 @@ namespace De_Tutjes.Areas.Diary.Controllers
             }
         }
 
+        public List<Child> GetChildrenWithUpdates()
+        {
+            List<Child> childrenWithUpdates = new List<Child>();
+            /*
+             weekend test
+             */
+            children = new List<Child>();
+            Child c = GetChildById("57");
+            children.Add(c);
+            Child c1 = GetChildById("58");
+            children.Add(c1);
+            /*
+            */
+
+            foreach (Child cu in children)
+            {
+                List<DiaryToddlerUpdate> dtu = db.DiaryToddlerUpdate.Where(d => (d.ToddlerId.Equals(cu.Toddler.ToddlerId) && (d.Timestamp >= DateTime.Today))).ToList();
+                Child cwu = cu;
+                cwu.Updates = dtu;
+                childrenWithUpdates.Add(cwu);
+            }
+
+
+            return childrenWithUpdates;
+        }
+
         // PRIVAT HELPER FUNCTIONS
         private void fillChildrenList()
         {
@@ -170,6 +196,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                     if (tod != null)
                     {
                         Child child = new Child();
+                        child.Id = tod.ToddlerId.ToString();
                         child.Toddler = tod;
                         child.dts = getDiaryToddlerStatus(tod);
                         child.Status = (ChildStatus)child.dts.Status;
@@ -184,13 +211,21 @@ namespace De_Tutjes.Areas.Diary.Controllers
 
         private Toddler getToddler(int id)
         {
-            Toddler tod = db.Toddlers
-                            .Include(p => p.Person)
-                            .Include(p => p.Food)
-                            .Include(p => p.Medical)
-                            .Include(p => p.Sleep)
-                            .Where(p => p.ToddlerId == id)
-                            .First();
+            Toddler tod = new Toddler();
+            try
+            {
+                tod = db.Toddlers.Include(p => p.Person)
+                                    .Include(p => p.Food)
+                                    .Include(p => p.Medical)
+                                    .Include(p => p.Sleep)
+                                    .Where(p => p.ToddlerId == id)
+                                    .First();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return tod;
         }
 

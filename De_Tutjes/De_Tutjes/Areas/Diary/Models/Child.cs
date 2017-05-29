@@ -22,6 +22,7 @@ namespace De_Tutjes.Areas.Diary.Models
         public string Photo { get; set; }
         public DiaryToddlerStatus dts { get; set; }
         public ICollection<Parent> Parents { get; set; }
+        public ICollection<DiaryToddlerUpdate> Updates { get; set; }
         //public Parent ParentOne { get; set; }
         //public Parent ParentTwo { get; set; }
         public Child()

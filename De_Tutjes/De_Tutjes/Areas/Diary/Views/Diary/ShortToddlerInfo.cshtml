@@ -8,26 +8,7 @@
 
 }
 <div class="infobox">
-    <div class="infobox-childtag img-rounded">
-        <div class="infobox-childphoto">
-            <img src="@Url.Content("~/Images/Photos/" + child.Toddler.Person.Photo )" class="img-responsive img-rounded" alt="">
-        </div>
-        <div class="infobox-childname text-center" id="Infobox_ChildShortInfo">
-            @child.Toddler.Person.FirstName
-            <br>
-            @(child.Toddler.Person.BirthDate == null ? "" : child.Toddler.Person.BirthDate.ToString("dd MMMM yyyy"))
-        </div>
-        <div class="infobox-childbuttongroup text-center">
-            <a href="#" class="btn btn-success text-center" role="button">
-                Meer info
-                <span class="glyphicon glyphicon-triangle-bottom"></span>
-            </a>
-            <a href="#" class="btn btn-info text-center" role="button">
-                Agenda
-                <span class="glyphicon glyphicon-calendar"></span>
-            </a>
-        </div>
-    </div>
+    
     <!-- ************************* SIDEBAR INFOBOX MORE INFO ACCORDION ****************************** -->
     <div class="infobox-moreinfo">
         <div class="panel-group" id="accordion">
@@ -35,22 +16,33 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                            Gegevens
+                            <span class="glyphicon glyphicon-list-alt"></span> Gegevens van @child.Toddler.Person.FirstName
                         </a>
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
                     <div class="panel-body">
+
+                            <div class="infobox-childphoto">
+                                <img src="@Url.Content("~/Images/Photos/" + child.Toddler.Person.Photo)" class="img-responsive img-rounded" alt="">
+                            </div>
+                            <div class="infobox-childname text-center" id="Infobox_ChildShortInfo">
+                                @child.Toddler.Person.FirstName
+                                <br>
+                                @(child.Toddler.Person.BirthDate == null ? "" : child.Toddler.Person.BirthDate.ToString("dd MMMM yyyy"))
+                            </div>
+
+                        <span id="Acc_Gegevens_Naam_Title"><b><u>Details:</u></b></span><br />
                         <!-- inhoud -->
-                        <span id = "Acc_Gegevens_Naam_Title" >Naam:</span>
+                        <span id = "Acc_Gegevens_Naam_Title" ><b>Naam:</b></span>
                         <span id = "Acc_Gegevens_Naam_Content" >
                             @child.Toddler.Person.FirstName 
                             @child.Toddler.Person.LastName
                         </span>
-                        
+                        <br />
                         @if (@child.Toddler.Person.Address != null)
                         {
-                        <span id="Acc_Gegevens_Adres_Title">Adres:</span>
+                        <span id="Acc_Gegevens_Adres_Title"><b>Adres:</b></span><br />
                         <span id="Acc_Gegevens_Adres_Content">
                             @child.Toddler.Person.Address.Street 
                             @child.Toddler.Person.Address.Number
@@ -61,10 +53,10 @@
                         <span>    
                             @(child.Toddler.Person.Address.PostalCode == null ? "" : child.Toddler.Person.Address.PostalCode.ToString()) 
                             @child.Toddler.Person.Address.City
-                        </span>
+                        </span><br />
                         }
-                        <span id="Acc_Gegevens_TelThuis_Title">Tel thuis:</span>
-                        <span id="Acc_Gegevens_TelThuis_Content">homephone werkt niet</span>
+                        <span id="Acc_Gegevens_TelThuis_Title"><span class="glyphicon glyphicon-earphone"></span><b>Thuis: </b></span>
+                        <span id="Acc_Gegevens_TelThuis_Content">"homephone" werkt niet</span>
                         
                     </div>
                 </div>
@@ -74,7 +66,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                            Ouders
+                            <span class="glyphicon glyphicon-user"></span> Ouders
                         </a>
                     </h4>
                 </div>
@@ -86,44 +78,44 @@
                             {
                                 if (p.Person.Gender != null && p.Person.Gender == "male")
                                 {
-                                    <span id="Acc_Ouders_NaamP_Title">Naam papa:</span>
+                                    <span id="Acc_Ouders_NaamP_Title"><b>Papa:</b></span>
                                     <span id="Acc_Ouders_NaamP_Content">
                                         @p.Person.FirstName 
                                         @p.Person.LastName
-                                    </span>
-                                    <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
+                                    </span><br />
+                                    <span id="Acc_Ouders_BereikenP_Title"><span class="glyphicon glyphicon-earphone"></span> (Werk)</span>
                                     <span id="Acc_Ouders_BereikenP_Content">
                                         @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())
-                                    </span>
+                                    </span><br />
                                 }
                                 else if (p.Person.Gender != null && p.Person.Gender == "female")
                                 {
-                                    <span id="Acc_Ouders_NaamM_Title">Naam mama:</span>
+                                    <span id="Acc_Ouders_NaamM_Title"><b>Mama:</b></span>
                                     <span id="Acc_Ouders_NaamP_Content">
                                         @p.Person.FirstName
                                         @p.Person.LastName
-                                    </span>
-                                    <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
+                                    </span><br />
+                                    <span id="Acc_Ouders_BereikenP_Title"><span class="glyphicon glyphicon-earphone"></span> (Werk)</span>
                                     <span id="Acc_Ouders_BereikenP_Content">
                                         @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail.WorkPhone.ToString())
-                                    </span>
+                                    </span><br />
                                 }
                                 else
                                 {
-                                    <span id="Acc_Ouders_NaamO_Title">Naam ouder:</span>
+                                    <span id="Acc_Ouders_NaamO_Title"><b>Ouder:</b></span><br />
                                     <span id="Acc_Ouders_NaamP_Content">
                                         @p.Person.FirstName
                                         @p.Person.LastName
-                                    </span>
-                                    <span id="Acc_Ouders_BereikenP_Title">Te bereiken tijdens werkuren:</span>
+                                    </span><br />
+                                    <span id="Acc_Ouders_BereikenP_Title"><span class="glyphicon glyphicon-earphone"></span> (Werk)</span>
                                     <span id="Acc_Ouders_BereikenP_Content">
                                         @(p.Person.ContactDetail?.WorkPhone == null ? "" : p.Person.ContactDetail?.WorkPhone.ToString())
-                                    </span>
+                                    </span><br />
                                 }
                             }
                         }
                         
-                        <span id="Acc_Ouders_Ziekte_Title">Contacteren bij ziekte:</span>
+                        <span id="Acc_Ouders_Ziekte_Title"><b>Contacteren bij ziekte:</b></span><br />
                         <span id="Acc_Ouders_Ziekte_Content">Toe te voegen</span>
                     </div>
                 </div>
@@ -133,39 +125,42 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                            Medische gegevens
+                            <span class="glyphicon glyphicon-plus"></span> Medische gegevens
                         </a>
                     </h4>
                 </div>
                 <div id="collapse3" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <span id="Acc_Medisch_NaamH_Title">Huisarts:</span>
+                        <span id="Acc_Medisch_NaamH_Title"><b>Huisarts:</b></span>
                         <span id="Acc_Medisch_NaamH_Content">
-                            @(child.Toddler.Medical?.Doctor?.Person?.FirstName == null ? "" : child.Toddler.Medical.Doctor.Person.FirstName)
-                            @(child.Toddler.Medical?.Doctor?.Person?.LastName == null ? "" : child.Toddler.Medical.Doctor.Person.LastName) <br />
-                        </span>
+                            @(child.Toddler.Medical?.Doctor?.Person?.FirstName == null ? "" : child.Toddler.Medical.Doctor.Person.FirstName) 
+                            @(child.Toddler.Medical?.Doctor?.Person?.LastName == null ? "" : child.Toddler.Medical.Doctor.Person.LastName)
+                        </span><br />
                         @if (child.Toddler.Medical?.Doctor?.Person?.Address != null)
                         {
                             @child.Toddler.Medical.Doctor.Person.Address.Street 
                             @child.Toddler.Medical.Doctor.Person.Address.Number
                             
                             if (@child.Toddler.Medical.Doctor.Person.Address.Bus != null) {
-                                <span> bus @child.Toddler.Medical.Doctor.Person.Address.Bus </span> } <br />
+                                <span> bus @child.Toddler.Medical.Doctor.Person.Address.Bus </span> 
+                            } <br />
                                 <span>
                                     @child.Toddler.Medical.Doctor.Person.Address.PostalCode 
                                     @child.Toddler.Medical.Doctor.Person.Address.City
-                                </span>
-                            } }
+                                </span><br />
+                            } 
                             
-                        <span id="Acc_Medisch_Medicatie_Title">Medicatie:</span>
+                        <span id="Acc_Medisch_Medicatie_Title"><b>Medicatie:</b></span><br />
                         <span id="Acc_Medisch_Medicatie_Content">
                             @(child.Toddler.Medical?.MedicationName == null ? "" : child.Toddler.Medical.MedicationName)
                         </span>
-                        <span id="Acc_Medisch_Allergien_Title">Allergiën:</span>
+                        <br />
+                        <span id="Acc_Medisch_Allergien_Title"><b>Allergiën:</b></span><br />
                         <span id="Acc_Medisch_Allergien_Content">
                             @(child.Toddler.Medical?.Allergies == null ? "" : child.Toddler.Medical.Allergies)
                         </span>
-                        <span id="Acc_Medisch_SpecialeZorgen_Title">Speciale zorgen:</span>
+                        <br />
+                        <span id="Acc_Medisch_SpecialeZorgen_Title"><b>Speciale zorgen:</b></span><br />
                         <span id="Acc_Medisch_SpecialeZorgen_Content">
                             @(child.Toddler.Medical?.SpecialNotice == null ? "" : child.Toddler.Medical.SpecialNotice)
                         </span>
@@ -176,30 +171,34 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                            Voeding
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                            <span class="glyphicon glyphicon-cutlery"></span> Voeding
                         </a>
                     </h4>
                 </div>
                 <div id="collapse4" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <span id="Acc_Voeding_SpecDieet_Title">Speciaal dieet:</span>
+                        <span id="Acc_Voeding_SpecDieet_Title"><b>Speciaal dieet:</b></span><br />
                         <span id="Acc_Voeding_SpecDieet_Content">
                             @(child.Toddler.Food?.SpecialDiet == null ? "" : child.Toddler.Food.SpecialDiet)
                         </span>
-                        <span id="Acc_Voeding_NietToedienen_Title">Niet toedienen:</span>
+                        <br />
+                        <span id="Acc_Voeding_NietToedienen_Title"><b>Niet toedienen:</b></span><br />
                         <span id="Acc_Voeding_NietToedienen_Content">
                             @(child.Toddler.Food?.MayNotEat == null ? "" : child.Toddler.Food.MayNotEat)
                         </span>
-                        <span id="Acc_Voeding_FlesPoeder_Title">Flesvoeding - Poeder:</span>
+                        <br />
+                        <span id="Acc_Voeding_FlesPoeder_Title"><b>Flesvoeding - Poeder:</b></span><br />
                         <span id="Acc_Voeding_FlesPoeder_Content">
                             @(child.Toddler.Food?.BottlePowder == null ? "" : child.Toddler.Food.BottlePowder)
                         </span>
-                        <span id="Acc_Voeding_FlesPerDag_Title">Flesjes per dag:</span>
+                        <br />
+                        <span id="Acc_Voeding_FlesPerDag_Title"><b>Flesjes per dag:</b></span><br />
                         <span id="Acc_Voeding_FlesPerDag_Content">
                             @(child.Toddler.Food?.BottleDay == null ? "" : child.Toddler.Food.BottleDay.ToString())
                         </span>
-                        <span id="Acc_Voeding_Speciaal_Title">Speciale weten:</span>
+                        <br />
+                        <span id="Acc_Voeding_Speciaal_Title"><b>Speciale weten:</b></span><br />
                         <span id="Acc_Voeding_Speciaal_Content">
                             @(child.Toddler.Food?.SpecialNotice == null ? "" : child.Toddler.Food.SpecialNotice)
                         </span>
@@ -210,18 +209,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                            Slapen
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                            <span class="glyphicon glyphicon-bed"></span> Slapen
                         </a>
                     </h4>
                 </div>
                 <div id="collapse5" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <span id="Acc_Slapen_Slaaphouding_Title">Slaaphouding:</span>
+                        <span id="Acc_Slapen_Slaaphouding_Title"><b>Slaaphouding:</b></span><br />
                         <span id="Acc_Slapen_Slaaphouding_Content">
                             @(child.Toddler.Sleep?.SleepingPosition == null ? "" : child.Toddler.Sleep.SleepingPosition)
-                        </span>
-                        <span id="Acc_Slapen_Speciaal_Title">Speciale weten:</span>
+                        </span><br />
+                        <span id="Acc_Slapen_Speciaal_Title"><b>Speciale weten:</b></span><br />
                         <span id="Acc_Slapen_Speciaal_Content">
                             @(child.Toddler.Sleep?.SpecialNotice == null ? "" : child.Toddler.Sleep.SpecialNotice)
                         </span>
@@ -231,7 +230,7 @@
         </div>
     </div>
     <!-- ************************* SIDEBAR INFOBOX ALLERGIES ****************************** -->
-    <div class="infobox-allergies">
+    <div class="infobox-allergies" style="visibility:hidden">
         <div class="infobox-allergie-item">
             <a href="#" class="btn btn-info text-center" role="button">
                 <img src="Allergie/allergens-eggs.png" alt="">

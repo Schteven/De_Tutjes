@@ -9,7 +9,7 @@
 <div class="main-header">
     <div class="main-header-worker">
         <a href="#" class="btn btn-default btn-lg" role="button">
-            <img src="C:\Users\Kristof\Dropbox\Eindwerk\6 HTML previews\images\person.jpg" class="img-responsive" alt="">
+            <img src="~/Images/baby-boy.png" class="img-responsive" alt="">
         </a>
     </div>
 
@@ -108,7 +108,7 @@
                                     {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                     else
                                     {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
-                                }
+                                } 
                                 <span>@childcard.Name</span>
                             </label>
                         </div>
@@ -151,16 +151,13 @@
 <script>
     $(document).ready(function () {
         $(".childcard").click(function (evt) {
-            $('#mainsidebar').html('<img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="">');
+            $('#mainsidebar').html('<img src="@Url.Content("~/Images/giphy.gif")" alt="" />');
             var id = this.id;
             $("#mainsidebar").load("/Diary/Diary/shortinfo", { toddlerid: id });
             //alert("hey " + id);
         });
     });
 </script>
-
-
-
 
 <script language="javascript" type="text/javascript">
         function ToggleVisibility(idend) {
@@ -173,6 +170,5 @@
                 document.getElementById(idend).style.height = 0;
             }
             return false;
-
         }
 </script>
