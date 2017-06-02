@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using De_Tutjes.Areas.Diary.Models;
 using De_Tutjes.Models;
+using De_Tutjes.Services;
 
 namespace De_Tutjes.Areas.Diary.Controllers
 {
@@ -26,17 +27,26 @@ namespace De_Tutjes.Areas.Diary.Controllers
         //    childcards = cm.GetAllChilds();
         //    return View(childcards);
         //}
-        public ActionResult ChildStatus(string submitButton, FormCollection col)//DiaryModel diarymodel
+        public ActionResult ChildStatus(string submitButton, FormCollection col, string commentinput)//DiaryModel diarymodel
         {
             try
             {
+                string comment = null;
+                foreach (var c in col)
+                {
+                    if(commentinput != null)
+                    {
+                        comment = commentinput;
+                    }
+                }
                 switch (submitButton)
                 {
                     case "ChildCheckIn":
                         {
+                            
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.CheckIn, null);
+                                cm.SetChildUpdate((string)c, ChildUpdate.CheckIn, comment);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
                             }
                             break;
@@ -46,7 +56,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Sleeping, null);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Sleeping, comment);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Sleeping);
                             }
                             break;
@@ -55,8 +65,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Eating, null);
-                                cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Eating, comment);
                             }
                             break;
                         }
@@ -65,8 +74,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.Diaper, null);
-                                cm.SetChildStatus((string)c, Models.ChildStatus.Normal);
+                                cm.SetChildUpdate((string)c, ChildUpdate.Diaper, comment);
                             }
                             break;
                         }
@@ -75,7 +83,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         foreach (var c in col)
                         {
                             
-                                //Give window to send a comment
+                                cm.SetChildUpdate((string)c, ChildUpdate.Comment, comment);
                             
                         }
                         break;
@@ -92,7 +100,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         {
                             foreach (var c in col)
                             {
-                                cm.SetChildUpdate((string)c, ChildUpdate.CheckOut, null);
+                                cm.SetChildUpdate((string)c, ChildUpdate.CheckOut, comment);
                                 cm.SetChildStatus((string)c, Models.ChildStatus.Home);
                             }
                             break;
@@ -127,6 +135,17 @@ namespace De_Tutjes.Areas.Diary.Controllers
         {
             return View(cm.GetChildrenWithUpdates());
         }
+
+        public void SendUpdateMail(string toddlerId)
+        {
+            MailService ms = new MailService();
+
+           
+
+
+
+        }
+
 
     }
 }

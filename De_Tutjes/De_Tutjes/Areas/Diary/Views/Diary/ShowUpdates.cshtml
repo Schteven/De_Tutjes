@@ -38,8 +38,8 @@
                 <table style="width:240px;">
                     @foreach (var child in Model)
                     {
-                    <tr onclick="ToggleVisibility(@child.Toddler.ToddlerId)" style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
-                    <td style="width:160px;">@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</td>
+                    <tr style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
+                    <td style="width:160px;"><span class="childname" data-toggle="@child.Toddler.ToddlerId" >@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</span></td>
                     <td style="padding-right:5px;"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-envelope"></span> Verzenden</button></td>
                     </tr>
 
@@ -66,39 +66,51 @@
         {
             foreach (var child in Model)
             {
-                <div class="updateview-childinfo-child" id="@child.Toddler.ToddlerId" style="margin-left:50px; visibility:hidden;">
-                    <table>
-                        <tr><th>@child.Toddler.Person.FirstName :</th><th>Om:</th></tr>
+                <div class="updateview-childinfo-child" id="@child.Toddler.ToddlerId" style="margin-left:50px;">
+                    <table style="font-size:16px;">
+                        <tr><th>@child.Toddler.Person.FirstName :</th><th></th></tr>
                         @foreach (var update in child.Updates)
                         {
-                            <tr><td>
+                            <tr style="border-bottom:1px solid grey;"><td style="">@update.Timestamp.Hour:@update.Timestamp.Minute</td><td>
                             @switch (update.UpdateType)
                             {
                                 case 1:
-                                    <span class="glyphicon glyphicon-log-in"></span><span>Is aangekomen</span>                                    ;
+                                    <span class="glyphicon glyphicon-log-in" style="display: inline-block; width:20px;"></span> <span>Is aangekomen bij De Tutjes</span><br />;                                                                                                                                        ;
+
                                     break;
                                 case 2:
-                                    <span class="glyphicon glyphicon-cloud"></span><span>Ging slapen</span>                                    ;
+                                    <span class="glyphicon glyphicon-cloud" style="display: inline-block; width:20px;"></span> <span>Gaat slapen</span><br />;                                                                                                                                       ;
+
                                     break;
                                 case 3:
-                                    <span class="glyphicon glyphicon-cloud"></span><span>Werd wakker</span>                                    ;
+                                    <span class="glyphicon glyphicon-cloud" style="display: inline-block; width:20px;"></span> <span>Is wakker geworder</span><br />;                                                                                                                                         ;
+
                                     break;
                                 case 4:
-                                    <span class="glyphicon glyphicon-cutlery"></span><span>Heeft gegeten</span>;
+                                    <span class="glyphicon glyphicon-cutlery" style="display: inline-block; width:20px;"></span> <span>Is aan het eten.</span><br />;                                                                                                                                         ;
+
                                     break;
                                 case 5:
-                                    <span class="glyphicon glyphicon-log-in"></span><span>Heeft een nieuwe pamper gekregen</span>                                    ;
+                                    <span class="" style="display: inline-block; width:20px;"><b>P</b></span> <span>Heeft een nieuwe pamper gekregen</span><br />;                                                                                                                                         ;
+
                                     break;
                                 case 6:
-                                    <span class="glyphicon glyphicon-log-out"></span><span>Is naar huis</span>                                    ;
+                                    <span class="glyphicon glyphicon-log-out" style="display: inline-block; width:20px;"></span> <span>Is naar huis</span><br />;
+
                                     break;
                                 case 7:
-                                    <span class="glyphicon glyphicon-comment"></span><span>Info: @update.Comment</span>;
+                                    
+                                    
                                     break;
                                 default:
                                     break;
                             }
-                            </td><td>@update.Timestamp.Hour uur @update.Timestamp.Minute</td></tr>
+                            @if (update.Comment != null && update.Comment != "")
+                            {
+                                <span class="glyphicon glyphicon-comment" style="display: inline-block; width:20px;"></span><span><i>" @update.Comment "</i></span>;
+                            }
+
+                            </td></tr>
                         }
 
 
@@ -112,27 +124,22 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
+
+<script>
+    function ToggleVisibility(idend) {
+        alert("hey " + idend);
+        }
+
+
+</script>
 <script>
     $(document).ready(function () {
-        $(".childcard").click(function (evt) {
-            $('#mainsidebar').html('<img src="@Url.Content("~/Images/giphy.gif")" alt="" />');
-                                var id = this.id;
-            $("#mainsidebar").load("/Diary/Diary/shortinfo", { toddlerid: id });
-                                //alert("hey " + id);
-                            });
+        $(".updateview-childinfo-child").toggle();
+        $(".childname").click(function (evt){
+            idToToggle = $(this).data('toggle');
+            $('.updateview-childinfo-child').hide();
+             $('#' + idToToggle).toggle();
+        });
     });
 </script>
-
-<script language="javascript" type="text/javascript">
-    function ToggleVisibility(idend) {
-        document.getElementsByClassName("updateview-childinfo-child").style.visibility == "hidden";
-            if (document.getElementById(idend).style.visibility == "hidden") {
-                document.getElementById(idend).style.visibility = "visible";
-            }
-            else {
-                document.getElementById(idend).style.visibility = "hidden";
-            }
-            return false;
-        }
-</script>
-

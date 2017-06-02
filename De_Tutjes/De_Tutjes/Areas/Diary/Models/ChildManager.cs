@@ -145,7 +145,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         DiaryToddlerUpdate dtu = new DiaryToddlerUpdate();
                         dtu.Toddler = db.Toddlers.Find(c.Toddler.ToddlerId);
                         dtu.Timestamp = DateTime.Now;
-                        dtu.UpdateType = (int)update;
+                        dtu.UpdateType = (int)realUpdate;
                         if (comment != null) dtu.Comment = comment;
                         db.DiaryToddlerUpdate.Add(dtu);
                         db.SaveChanges();
@@ -160,13 +160,12 @@ namespace De_Tutjes.Areas.Diary.Controllers
             List<Child> childrenWithUpdates = new List<Child>();
             /*
              weekend test
-             */
-            children = new List<Child>();
-            Child c = GetChildById("57");
-            children.Add(c);
-            Child c1 = GetChildById("58");
-            children.Add(c1);
-            /*
+             
+                Child c = GetChildById("57");
+                children.Add(c);
+                Child c1 = GetChildById("58");
+                children.Add(c1);
+            
             */
 
             foreach (Child cu in children)
