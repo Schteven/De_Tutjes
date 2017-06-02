@@ -136,11 +136,26 @@ namespace De_Tutjes.Areas.Diary.Controllers
             return View(cm.GetChildrenWithUpdates());
         }
 
-        public void SendUpdateMail(string toddlerId)
+        public void SendUpdateMail(string id)
         {
             MailService ms = new MailService();
 
-           
+            Child c = cm.GetChildWithUpdates(id);
+            ICollection<Parent> parents = c.Parents;
+            foreach(Parent p in parents)
+            {
+                if(p.Person.ContactDetail.Email != null && p.Person.ContactDetail.Email != "")
+                {
+                    DiaryOverviewMail dom = new DiaryOverviewMail();
+                    dom.email = p.Person.ContactDetail.Email;
+                    dom.dtu = c.Updates;
+                    dom.firstname = c.Toddler.Person.FirstName;
+
+                    ms.SendMail(dom);
+                }
+                
+
+            }
 
 
 

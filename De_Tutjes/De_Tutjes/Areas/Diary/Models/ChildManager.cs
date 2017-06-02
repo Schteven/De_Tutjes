@@ -180,6 +180,20 @@ namespace De_Tutjes.Areas.Diary.Controllers
             return childrenWithUpdates;
         }
 
+        public Child GetChildWithUpdates(string toddlerID)
+        {
+            if (toddlerID != null)
+            {
+                int id = int.Parse(toddlerID);
+                List<DiaryToddlerUpdate> dtu = db.DiaryToddlerUpdate.Where(d => (d.ToddlerId.Equals(id) && (d.Timestamp >= DateTime.Today))).ToList();
+                Child cwu = GetChildById(toddlerID);
+                cwu.Updates = dtu;
+                return cwu;
+            }
+            return null;
+            
+        }
+
         // PRIVAT HELPER FUNCTIONS
         private void fillChildrenList()
         {

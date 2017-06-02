@@ -40,7 +40,7 @@
                     {
                     <tr style="height:50px; border-top: 1px solid grey; border-bottom:1px solid lightgrey;">
                     <td style="width:160px;"><span class="childname" data-toggle="@child.Toddler.ToddlerId" >@child.Toddler.Person.FirstName @child.Toddler.Person.LastName</span></td>
-                    <td style="padding-right:5px;"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-envelope"></span> Verzenden</button></td>
+                    <td style="padding-right:5px;"><button type="button" onclick="SendMail(@child.Toddler.ToddlerId)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-envelope"></span> Verzenden</button></td>
                     </tr>
 
                     }
@@ -142,4 +142,19 @@
              $('#' + idToToggle).toggle();
         });
     });
+
+    function SendMail(id) {
+        alert('sending mail')
+        $.ajax({
+            url: '@Url.Action("SendUpdateMail", "Diary")',
+            data: { id: id }
+        }).done(function () {
+            alert('Mail has been send');
+            $(this).html('Verzonden')
+            $(this).removeClass('btn-primary');
+            $(this).addClass('btn-success');
+
+        });
+    }
+
 </script>
