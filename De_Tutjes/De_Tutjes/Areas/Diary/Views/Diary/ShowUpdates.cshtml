@@ -71,7 +71,7 @@
                         <tr><th>@child.Toddler.Person.FirstName :</th><th></th></tr>
                         @foreach (var update in child.Updates)
                         {
-                            <tr style="border-bottom:1px solid grey;"><td style="">@update.Timestamp.Hour:@update.Timestamp.Minute</td><td>
+                            <tr style="border-bottom:1px solid grey;"><td valign="top">@update.Timestamp.Hour:@update.Timestamp.Minute</td><td>
                             @switch (update.UpdateType)
                             {
                                 case 1:

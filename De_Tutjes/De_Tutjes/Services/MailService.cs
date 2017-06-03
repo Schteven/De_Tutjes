@@ -33,6 +33,13 @@ namespace De_Tutjes.Services
         public DiaryOverviewMail() { }
     }
 
+    public class InvoiceMail
+    {
+        public string email { get; set; }
+        public Person parent { get; set; }
+        public Invoice invoice { get; set; }
+    }
+
     public class MailService
     {
 
@@ -113,7 +120,7 @@ namespace De_Tutjes.Services
 
             foreach (DiaryToddlerUpdate d in dom.dtu)
             {
-                updatelines += @"<tr style = ""border-bottom:1px solid grey;""><td> " + d.Timestamp.Hour + ":" + d.Timestamp.Minute + "</td><td>";
+                updatelines += @"<tr style = ""border-bottom:1px solid grey;""><td valign=""top""> " + d.Timestamp.Hour + ":" + d.Timestamp.Minute + "</td><td>";
 
                 switch (d.UpdateType)
                 {
