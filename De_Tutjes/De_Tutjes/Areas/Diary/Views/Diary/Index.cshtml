@@ -9,7 +9,7 @@
 <div class="main-header">
     <div class="main-header-worker">
         <a href="#" class="btn btn-default btn-lg" role="button">
-            <img src="~/Images/baby-boy.png" class="img-responsive" alt="">
+            <img src="~/Images/detutjes-logo-mini.png" class="img-responsive" alt="" style="height:100px; ">
         </a>
     </div>
 
@@ -57,6 +57,13 @@
     <!-- ************************* MAIN CONTENT ****************************** -->
     <div class="main-content">
         <!-- ************************* CHILDREN CARDS ****************************** -->
+
+        <div id="CommentSection" class="form-group" style="float:right; border:1px solid grey; margin-right:25px;">
+            <label for="commentinput">Comment:</label>
+            <textarea class="form-control" rows="5" name="commentinput" id="commentinput"></textarea>
+        </div>
+
+
         @if(Model != null){
         
         foreach (var childcard in Model)

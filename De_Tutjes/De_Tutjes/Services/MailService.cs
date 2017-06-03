@@ -34,6 +34,13 @@ namespace De_Tutjes.Services
         public DiaryOverviewMail() { }
     }
 
+    public class InvoiceMail
+    {
+        public string email { get; set; }
+        public Person parent { get; set; }
+        public Invoice invoice { get; set; }
+    }
+
     public class MailService
     {
 
@@ -112,12 +119,59 @@ namespace De_Tutjes.Services
 
         public EmailTemplate DiaryOverviewTemplate()
         {
+            String updatelines = @"<table style=""font - size:16px; ""><tr><th> " + dom.firstname + " :</th><th></th></tr> ";
+
+            foreach (DiaryToddlerUpdate d in dom.dtu)
+            {
+                updatelines += @"<tr style = ""border-bottom:1px solid grey;""><td valign=""top""> " + d.Timestamp.Hour + ":" + d.Timestamp.Minute + "</td><td>";
+
+                switch (d.UpdateType)
+                {
+                    case 1:
+                        updatelines += @"<span>Is aangekomen bij De Tutjes</span><br />";                                                                                                                                        ;
+
+                        break;
+                    case 2:
+                        updatelines += @"<span>Gaat slapen</span><br />";                                                                                                                                       ;
+
+                        break;
+                    case 3:
+                        updatelines += @"<span>Is wakker geworder</span><br />";                                                                                                                                         ;
+
+                        break;
+                    case 4:
+                        updatelines += @"<span>Is aan het eten.</span><br />";                                                                                                                                         ;
+
+                        break;
+                    case 5:
+                        updatelines += @"<span>Heeft een nieuwe pamper gekregen</span><br />";                                                                                                                                         ;
+
+                        break;
+                    case 6:
+                        updatelines += @"<span>Is naar huis</span><br />";
+
+                        break;
+                    case 7:
+                            
+                        break;
+                    default:
+                        break;
+                }
+                if(d.Comment != null && d.Comment != "")
+                {
+                    updatelines += @"<span class=""glyphicon glyphicon-comment"" style=""display: inline-block; width:20px;""></span><span><i>" + d.Comment + "</i></span>";
+                }
+                updatelines += "</td></tr>";
+            }
+            updatelines += "</table>";
+
             EmailTemplate et = new EmailTemplate();
             et.subject = "Dagboek overzicht van " + dom.firstname + " op " + DateTime.Now.ToString("dddd/MM");
             et.content =
-                "<h2>Beste ouder</h2>" +
-                "<p></p>" +
-                "";
+                "<h2>Beste ouder,</h2>" +
+                "<p><span>Vandaag is </span>" + dom.firstname + "<span> opgevangen door De Tutjes.</span><br />" +
+                "<span>Hieronder vind je een overzicht van het dagboek van vandaag, </span>" + DateTime.Now.Day + " " + DateTime.Now.Month + " " + DateTime.Now.Year + "<span>.</span></p>" +
+                updatelines;
 
             return et;
         }

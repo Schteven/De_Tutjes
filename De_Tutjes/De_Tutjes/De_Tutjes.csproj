@@ -286,6 +286,14 @@
     <Compile Include="Migrations\201705250934155_DisplayNullText.Designer.cs">
       <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706022134056_Invoice.cs" />
+    <Compile Include="Migrations\201706022134056_Invoice.Designer.cs">
+      <DependentUpon>201706022134056_Invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706030952397_invoice.cs" />
+    <Compile Include="Migrations\201706030952397_invoice.Designer.cs">
+      <DependentUpon>201706030952397_invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -298,6 +306,8 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\RegisteredDay.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Medical.cs" />
@@ -310,6 +320,7 @@
     <Compile Include="Models\Toddler.cs" />
     <Compile Include="Models\VacationDay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -521,6 +532,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705250934155_DisplayNullText.resx">
       <DependentUpon>201705250934155_DisplayNullText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706022134056_Invoice.resx">
+      <DependentUpon>201706022134056_Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706030952397_invoice.resx">
+      <DependentUpon>201706030952397_invoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
