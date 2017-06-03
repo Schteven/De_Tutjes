@@ -25,7 +25,7 @@ namespace De_Tutjes.Models
         [Display(Name = "Flesvoeding")]
         public string BottlePowder { get; set; }
         [DisplayFormat(NullDisplayText = "")]
-        [Display(Name = "lessen per dag")]
+        [Display(Name = "Flessen per dag")]
         public int? BottleDay { get; set; }
         [DisplayFormat(NullDisplayText = "")]
         [Display(Name = "Speciale opmerking")]

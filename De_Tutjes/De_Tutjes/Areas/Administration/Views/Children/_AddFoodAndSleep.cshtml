@@ -17,48 +17,50 @@
 
                 <div class="modal-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <fieldset>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.food.SpecialDiet, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
+                            @Html.LabelFor(model => model.food.SpecialDiet, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
                                 @Html.EditorFor(model => model.food.SpecialDiet, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.food.SpecialDiet, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.food.Allergies, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
-                            @Html.EditorFor(model => model.food.Allergies, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.food.Allergies, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.food.Allergies, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.food.Allergies, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.food.Allergies, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.food.MayNotEat, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
-                            @Html.EditorFor(model => model.food.MayNotEat, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.food.MayNotEat, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.food.MayNotEat, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.food.MayNotEat, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.food.MayNotEat, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.food.BottlePowder, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
-                            @Html.EditorFor(model => model.food.BottlePowder, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.food.BottlePowder, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.food.BottlePowder, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.food.BottlePowder, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.food.BottlePowder, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.food.BottleDay, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
-                            @Html.EditorFor(model => model.food.BottleDay, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.food.BottleDay, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.food.BottleDay, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.food.BottleDay, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.food.BottleDay, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.food.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
-                            @Html.EditorFor(model => model.food.SpecialNotice, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.food.SpecialNotice, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.food.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.food.SpecialNotice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.food.SpecialNotice, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
@@ -87,29 +89,29 @@
                 <div class="modal-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
-                            @Html.LabelFor(model => model.sleep.SleepingPosition, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-sm-10">
+                            @Html.LabelFor(model => model.sleep.SleepingPosition, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-sm-8">
                                 @Html.EditorFor(model => model.sleep.SleepingPosition, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.sleep.SleepingPosition, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.sleep.Toy, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
+                        @Html.LabelFor(model => model.sleep.Toy, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-sm-8">
                             @Html.EditorFor(model => model.sleep.Toy, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.sleep.Toy, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.sleep.Soother, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
+                        @Html.LabelFor(model => model.sleep.Soother, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-sm-8">
                             @Html.EditorFor(model => model.sleep.Soother, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.sleep.Soother, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.sleep.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-sm-10">
+                        @Html.LabelFor(model => model.sleep.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-sm-8">
                             @Html.EditorFor(model => model.sleep.SpecialNotice, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.sleep.SpecialNotice, "", new { @class = "text-danger" })
                         </div>

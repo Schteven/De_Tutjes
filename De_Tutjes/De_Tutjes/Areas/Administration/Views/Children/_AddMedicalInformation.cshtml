@@ -83,8 +83,9 @@
                         <legend>Medicatie <input class="" type="checkbox" name="HasMedication" id="HasMedication" value="1" /></legend>
                     </fieldset>
                         <div class="row" id="MedicationForm">
+                            @Html.LabelFor(model => model.medical.MedicationName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-12">
-                                @Html.LabelFor(model => model.medical.MedicationName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                
                                 @Html.TextAreaFor(model => model.medical.MedicationName, new { @class = "form-control", @rows = "4" })
                                 @Html.ValidationMessageFor(model => model.medical.MedicationName, "", new { @class = "text-danger" })
                             </div>
@@ -93,8 +94,9 @@
                         <legend>Allergieën <input class="" type="checkbox" name="HasAllergies" id="HasAllergies" value="1" /></legend>
                     </fieldset>
                         <div class="row" id="AllergiesForm">
+                            @Html.LabelFor(model => model.medical.Allergies, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-12">
-                                @Html.LabelFor(model => model.medical.Allergies, htmlAttributes: new { @class = "control-label col-md-2" })
+                                
                                 @Html.TextAreaFor(model => model.medical.Allergies, new { @class = "form-control", @rows = "4" })
                                 @Html.ValidationMessageFor(model => model.medical.Allergies, "", new { @class = "text-danger" })
                             </div>
@@ -103,8 +105,9 @@
                         <legend>Kinderziektes <input class="" type="checkbox" name="HadChildDiseases" id="HadChildDiseases" value="1" /></legend>
                     </fieldset>
                         <div class="row" id="ChildDiseasesForm">
+                            @Html.LabelFor(model => model.medical.ChildDisease, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-sm-12">
-                                @Html.LabelFor(model => model.medical.ChildDisease, htmlAttributes: new { @class = "control-label col-md-2" })
+                                
                                 @Html.TextAreaFor(model => model.medical.ChildDisease, new { @class = "form-control", @rows = "4" })
                                 @Html.ValidationMessageFor(model => model.medical.ChildDisease, "", new { @class = "text-danger" })
                             </div>

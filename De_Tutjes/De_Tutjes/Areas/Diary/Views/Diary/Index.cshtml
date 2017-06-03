@@ -3,7 +3,8 @@
     ViewBag.Title = "DiaryIndex";
 }
 
-@Html.BeginForm("ChildStatus", "Diary", FormMethod.Post){ 
+@using (Html.BeginForm("ChildStatus", "Diary", FormMethod.Post))
+{ 
 
 <!-- ************************* ACTIVE WORKER BUTTON ****************************** -->
 <div class="main-header">
@@ -64,80 +65,79 @@
         </div>
 
 
-        @if(Model != null){
-        
-        foreach (var childcard in Model)
+        @if (Model != null)
         {
-            switch (childcard.Status)
+
+            foreach (var childcard in Model)
             {
-                case De_Tutjes.Areas.Diary.Models.ChildStatus.Normal:
-                    {
-                        <div class="checkbox">
-                            <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
-                            <label for="@childcard.Id" class="img-rounded">
-                                @{
-                                    if (childcard.Photo == "" || childcard.Photo == null)
-                                    {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
-                                    else
-                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
-                                }
-                                <span>@childcard.Name</span>
-                            </label>
-                        </div>
-                        break;
-                    }
-               case De_Tutjes.Areas.Diary.Models.ChildStatus.Home:
-                            {
-                        <div class="checkbox">
-                            <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
-                            <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
-                                <span class="status-child glyphicon glyphicon-home" style="margin-left:30px"></span>
-                                @{
-                                    if (childcard.Photo == "" || childcard.Photo == null)
-                                    {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
-                                    else
-                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
-                                }
-                                <span>@childcard.Name</span>
-                            </label>
-                        </div>
-                        break;
-                    }
+                switch (childcard.Status)
+                {
+                    case De_Tutjes.Areas.Diary.Models.ChildStatus.Normal:
+                        {
+                            <div class="checkbox">
+                                <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
+                                <label for="@childcard.Id" class="img-rounded">
+                                    @{
+                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
+                                        else
+                                        {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    }
+                                    <span>@childcard.Name</span>
+                                </label>
+                            </div>
+                                                break;
+                                            }
+                                        case De_Tutjes.Areas.Diary.Models.ChildStatus.Home:
+                                            {
+                            <div class="checkbox">
+                                <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
+                                <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
+                                    <span class="status-child glyphicon glyphicon-home" style="margin-left:30px"></span>
+                                    @{
+                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
+                                        else
+                                        {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    }
+                                    <span>@childcard.Name</span>
+                                </label>
+                            </div>
+                                                break;
+                                            }
 
-                case De_Tutjes.Areas.Diary.Models.ChildStatus.Sleeping:
-                    {
-                        <div class="checkbox">
-                            <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
-                            <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
-                                <span class="status-child glyphicon glyphicon-cloud" style="margin-left:30px"></span>
-                                @{
-                                    if (childcard.Photo == "" || childcard.Photo == null)
-                                    {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
-                                    else
-                                    {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
-                                } 
-                                <span>@childcard.Name</span>
-                            </label>
-                        </div>
-                        break;
-                    }
+                                        case De_Tutjes.Areas.Diary.Models.ChildStatus.Sleeping:
+                                            {
+                            <div class="checkbox">
+                                <input type="checkbox" class="childcard" value="@childcard.Id"  id="@childcard.Id" name="@childcard.Id" />
+                                <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
+                                    <span class="status-child glyphicon glyphicon-cloud" style="margin-left:30px"></span>
+                                    @{
+                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
+                                        else
+                                        {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
+                                    } 
+                                    <span>@childcard.Name</span>
+                                </label>
+                            </div>
+                                                break;
+                                            }
 
-                default:
-                    {
-                        <div class="checkbox">
-                            <input type="checkbox" id="childid"  name="@childcard.Id" />
-                            <label for="childid" class="img-rounded">
-                                <span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br>
-                                <span>default</span>
-                            </label>
-                        </div>
-                        break;
-                    }
-
-            }
-
-        }
-        }
+                                        default:
+                                            {
+                            <div class="checkbox">
+                                <input type="checkbox" id="childid"  name="@childcard.Id" />
+                                <label for="childid" class="img-rounded">
+                                    <span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br>
+                                    <span>default</span>
+                                </label>
+                            </div>
+                                                            break;
+                                                        }
+                                                }
+                                            }
+                                        }
 
 
         <div class="checkbox">
