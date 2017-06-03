@@ -11,7 +11,7 @@ namespace De_Tutjes.Models
     /*
     This table holds the Invoice
     */
-    [Table("DiaryToddlerUpdates")]
+    [Table("Invoices")]
     public class Invoice
     {
         [Key]

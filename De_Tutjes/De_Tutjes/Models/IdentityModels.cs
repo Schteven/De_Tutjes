@@ -57,6 +57,8 @@ namespace De_Tutjes.Models
         public DbSet<Medical> MedicalInfo { get; set; }
         public DbSet<AgreedDays> AgreedDays { get; set; }
         public DbSet<VacationDay> VacationDays { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<RegisteredDay> RegisteredDays { get; set; }
 
         // Daycare info
         public DbSet<Location> Locations { get; set; }

@@ -7,6 +7,7 @@ using System.Web;
 
 namespace De_Tutjes.Models
 {
+    [Table("RegisteredDays")]
     public class RegisteredDay
     {
         [Key]
