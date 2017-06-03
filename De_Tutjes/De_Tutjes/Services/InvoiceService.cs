@@ -47,9 +47,12 @@ namespace De_Tutjes.Services
             newInvoice.Month = newInvoicePeriod.Month;
             newInvoice.Year = newInvoicePeriod.Year;
             newInvoice.Toddler = toddler;
-            newInvoice.NormalDaysNextMonth = getAllAgreedDaysInMonth(lastInvoice.Year, ++lastInvoice.Month).Count;
-            newInvoice.ExtraDaysThisMonth = 0;
-            newInvoice.DayCareClosedThisMonth = 0;
+            newInvoice.NormalDaysNextMonth = getAllAgreedDaysInMonth(newInvoice.Month, newInvoice.Year).Count;
+            newInvoice.ExtraDaysThisMonth = getAllExtraDaysinPeriod(startdate, enddate).Count;
+            newInvoice.DayCareClosedThisMonth = getAllClosingDaysInPeriod(startdate, enddate).Count;
+            newInvoice.Payed = false;
+            newInvoice.HasSibling = false;
+            newInvoice.TotalAmount = 0;
             
             
         }
@@ -74,7 +77,7 @@ namespace De_Tutjes.Services
             lastInvoice.CreationDate = new DateTime(2017, 5, 30);
             lastInvoice.Month = 6;
             lastInvoice.Year = 2017;
-            //Get last Invoice from DB
+            //TODO : Get last Invoice from DB
 
             return lastInvoice;
         }
@@ -101,7 +104,6 @@ namespace De_Tutjes.Services
             Check if the toddler has to come that day 
             Add that day to the list
         */
-
         private List<DateTime> getAllAgreedDaysInMonth(int year, int month)
         {
             List<DateTime> ADays = new List<DateTime>();
@@ -151,24 +153,59 @@ namespace De_Tutjes.Services
             }
             return ADays;
         }
-
-        // How many days will the toddler come next month
-        // This is the next month after the last Invoice month
-        // We will check for every day there is in the next month if the agreed days apply to them
-        // get all AgreedDays for the toddler
-        // check each day in the next month if its below End Date of AD
-        // then check if its the day that the toddler is coming.
-
-        private int amountOfDaysNextMonth(int year, int month)
+        
+        /// <summary>
+        /// Returns all the extra days the child has come, not according to the AgreedDays.
+        /// </summary>
+        /// <param name="startdate"></param>
+        /// <param name="enddate"></param>
+        /// <returns></returns>
+        private List<DateTime> getAllExtraDaysinPeriod(DateTime startdate, DateTime enddate)
         {
-            AgreedDays ADnextMonth = agreedDaysThatApply(year, month);
-
-
-
-            return 0;
+            List<DateTime> extraDays = new List<DateTime>();
+            // TODO: DB get the days from RegisteredDays where CheckedIN == true and ExtraDay == true.
+            
+            return extraDays;
         }
 
-        // Return the ONLY AgreedDays where the NextMonth falls in
+        /// <summary>
+        /// Returns all the Closing Days that the child couldn't come, but the day was already payed.
+        /// </summary>
+        /// <param name="startdate"></param>
+        /// <param name="enddate"></param>
+        /// <returns></returns>
+        private List<DateTime> getAllClosingDaysInPeriod(DateTime startdate, DateTime enddate)
+        {
+            List<RegisteredDay> registeredDaysChildHasntCome = new List<RegisteredDay>();
+            // TODO: DB get the days where rb.CheckedIn == false.
+            List<VacationDay> vacationDays = db.VacationDays.Where(vd => (vd.Day >= startdate)&&(vd.Day <= enddate)).ToList();
+            List<DateTime> allClosingDays = new List<DateTime>();
+            if(registeredDaysChildHasntCome != null && vacationDays != null)
+            {
+                foreach (RegisteredDay rb in registeredDaysChildHasntCome)
+                {
+                    foreach (VacationDay vd in vacationDays)
+                    {
+                        if(rb.DayInDaycare == vd.Day)
+                        {
+                            allClosingDays.Add(rb.DayInDaycare);
+                        }
+                    }
+                }
+            }
+            
+            
+
+            return allClosingDays;
+        }
+
+
+        /// <summary>
+        /// Return the ONLY AgreedDays where the NextMonth falls in
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
         private AgreedDays agreedDaysThatApply(int year, int month)
         {
             List<AgreedDays> allAgreedDaysForToddler = new List<AgreedDays>(); //TODO return from database
