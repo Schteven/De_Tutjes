@@ -30,10 +30,10 @@ namespace De_Tutjes.Services
 
         }
         /// <summary>
-        /// This function will build the invoice for a specific toddler. It will call private functions to get the days.
+        /// This function will build the invoice for a specific toddler. It will only save if there is a need for an Invoice
         /// </summary>
         /// <param name="toddler"></param>
-        public void BuildInvoice(Toddler toddler)
+        private void BuildInvoice(Toddler toddler)
         {
             Invoice lastInvoice = getLastInvoice(toddler);
             DateTime startdate = lastInvoice.CreationDate; // Startdate to calculate the extra days and closing days
@@ -42,20 +42,43 @@ namespace De_Tutjes.Services
             DateTime lastInvoicePeriod = new DateTime(lastInvoice.Year, lastInvoice.Month, 1);
             DateTime newInvoicePeriod = lastInvoicePeriod.AddMonths(1); // This is done to handle december of a year and jump to the new year.
 
-            Invoice newInvoice = new Invoice();
-            newInvoice.CreationDate = enddate; // setting the new CreationDate
-            newInvoice.Month = newInvoicePeriod.Month;
-            newInvoice.Year = newInvoicePeriod.Year;
-            newInvoice.Toddler = toddler;
-            newInvoice.NormalDaysNextMonth = getAllAgreedDaysInMonth(newInvoice.Month, newInvoice.Year).Count;
-            newInvoice.ExtraDaysThisMonth = getAllExtraDaysinPeriod(startdate, enddate).Count;
-            newInvoice.DayCareClosedThisMonth = getAllClosingDaysInPeriod(startdate, enddate).Count;
-            newInvoice.Payed = false;
-            newInvoice.HasSibling = false;
-            newInvoice.TotalAmount = 0;
+            int ndnm = getAllAgreedDaysInMonth(toddler, newInvoicePeriod.Month, newInvoicePeriod.Year).Count;
+            int edtm = getAllExtraDaysinPeriod(toddler, startdate, enddate).Count;
+            int dcctm = getAllClosingDaysInPeriod(toddler, startdate, enddate).Count;
             
-            
+            if(ndnm != 0 || edtm != 0 || dcctm != 0)
+            {
+                Invoice newInvoice = new Invoice();
+                newInvoice.CreationDate = enddate; // setting the new CreationDate
+                newInvoice.Month = newInvoicePeriod.Month;
+                newInvoice.Year = newInvoicePeriod.Year;
+                newInvoice.Toddler = toddler;
+                newInvoice.NormalDaysNextMonth = ndnm;
+                newInvoice.ExtraDaysThisMonth = edtm;
+                newInvoice.DayCareClosedThisMonth = dcctm;
+                newInvoice.Payed = false;
+                newInvoice.HasSibling = false;
+                newInvoice.TotalAmount = 0;
+                //load invoice to db
+            }
+
         }
+
+        /// <summary>
+        /// Create invoices for active child which come next month and/or have not payed extra days since last Invoice
+        /// </summary>
+        /// <param name="toddler"></param>
+        public void CreateInvoices()
+        {
+            List<Toddler> allActiveToddlers = db.Toddlers.Where(at => at.Person.Active == true).ToList();
+
+            foreach (Toddler t in allActiveToddlers)
+            {
+                BuildInvoice(t);
+            }
+        }
+
+
         /// <summary>
         /// This function will calculate the total amount of days the toddler has to pay.
         /// </summary>
@@ -104,10 +127,10 @@ namespace De_Tutjes.Services
             Check if the toddler has to come that day 
             Add that day to the list
         */
-        private List<DateTime> getAllAgreedDaysInMonth(int year, int month)
+        private List<DateTime> getAllAgreedDaysInMonth(Toddler t, int year, int month)
         {
             List<DateTime> ADays = new List<DateTime>();
-            AgreedDays ADnextMonth = agreedDaysThatApply(year, month);
+            AgreedDays ADnextMonth = agreedDaysThatApply(t, year, month);
             int days = DateTime.DaysInMonth(year, month);
             for (int day = 1; day <= days; day++)
             {
@@ -160,7 +183,7 @@ namespace De_Tutjes.Services
         /// <param name="startdate"></param>
         /// <param name="enddate"></param>
         /// <returns></returns>
-        private List<DateTime> getAllExtraDaysinPeriod(DateTime startdate, DateTime enddate)
+        private List<DateTime> getAllExtraDaysinPeriod(Toddler t, DateTime startdate, DateTime enddate)
         {
             List<DateTime> extraDays = new List<DateTime>();
             // TODO: DB get the days from RegisteredDays where CheckedIN == true and ExtraDay == true.
@@ -174,7 +197,7 @@ namespace De_Tutjes.Services
         /// <param name="startdate"></param>
         /// <param name="enddate"></param>
         /// <returns></returns>
-        private List<DateTime> getAllClosingDaysInPeriod(DateTime startdate, DateTime enddate)
+        private List<DateTime> getAllClosingDaysInPeriod(Toddler t, DateTime startdate, DateTime enddate)
         {
             List<RegisteredDay> registeredDaysChildHasntCome = new List<RegisteredDay>();
             // TODO: DB get the days where rb.CheckedIn == false.
@@ -199,14 +222,13 @@ namespace De_Tutjes.Services
             return allClosingDays;
         }
 
-
         /// <summary>
         /// Return the ONLY AgreedDays where the NextMonth falls in
         /// </summary>
         /// <param name="year"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        private AgreedDays agreedDaysThatApply(int year, int month)
+        private AgreedDays agreedDaysThatApply(Toddler t, int year, int month)
         {
             List<AgreedDays> allAgreedDaysForToddler = new List<AgreedDays>(); //TODO return from database
             
@@ -220,5 +242,18 @@ namespace De_Tutjes.Services
             return null;
         }
 
+        private string buildOGM(int childid, int month, int year)
+        {
+            string challenge = "";
+            if(childid < 100)
+            {
+                challenge += "0";
+            }
+            challenge += childid.ToString();
+            challenge += month.ToString();
+            
+
+            return null;
+        }
     }
 }
