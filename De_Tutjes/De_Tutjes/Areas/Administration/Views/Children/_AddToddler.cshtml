@@ -1,6 +1,6 @@
 ﻿@model De_Tutjes.Areas.Administration.Models.CreateToddlerOverview
 
-
+    
     @using (Ajax.BeginForm("CreateToddler", 
                             null, 
                             new AjaxOptions { UpdateTargetId = "toddlerList", OnSuccess = "submitToddlerForm()" }, 
@@ -12,7 +12,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addToddlerLabel">
-                            Kind toevoegen 
+                            Kind toevoegen
                             <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

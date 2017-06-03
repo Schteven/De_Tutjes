@@ -2,7 +2,12 @@
 @{
     string disabledCreate = "";
     string completed = "fa-square-o";
-    if (Model.ToddlerId != 0) {
+    int id = 0;
+    if (Model != null)
+    {
+        id = Model.ToddlerId;
+    }
+    if (id != 0) {
         completed = "fa-check-square-o";
         disabledCreate = "disabled";
     }
@@ -14,7 +19,7 @@
         <div class="panel-body">
             <div class="row">
             @{
-                if (Model.ToddlerId != 0)
+                if (id != 0)
                 {
                     <div class="col-md-2">
                         <blockquote class="blockquote">
