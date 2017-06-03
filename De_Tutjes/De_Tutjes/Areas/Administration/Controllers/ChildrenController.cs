@@ -13,6 +13,7 @@ using De_Tutjes.Models;
 using De_Tutjes.Functions;
 using De_Tutjes.Areas.Administration.Models;
 using De_Tutjes.Services;
+using System.Diagnostics;
 
 namespace De_Tutjes.Areas.Administration.Controllers
 {
@@ -21,6 +22,12 @@ namespace De_Tutjes.Areas.Administration.Controllers
         private DateTime CreateAgreedDays_StartDate;
         private DateTime CreateAgreedDays_EndDate;
         NewChildWizardSession ncws;
+
+        private Toddler newToddler;
+        private ICollection<Parent> newParents;
+        private ICollection<AgreedDays> newAgreedDays;
+        private ICollection<Pickup> newPickups;
+        private ICollection<RelationLink> newRelationLinks;
 
         private DeTutjesContext db = new DeTutjesContext();
 
@@ -117,7 +124,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             db.Entry(toddler).State = EntityState.Modified;
 
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            
             string emailIsDouble = "";
 
             foreach (Parent parent in parents)
@@ -127,12 +134,12 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
                 if (email != emailIsDouble)
                 {
-
+                    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     parent.Person.UserAccount = new ApplicationUser();
                     parent.Person.UserAccount.UserName = email;
                     parent.Person.UserAccount.Email = email;
 
-                    string userPWD = Membership.GeneratePassword(5, 1);
+                    string userPWD = Membership.GeneratePassword(6, 1);
 
                     var chkUser = UserManager.Create(parent.Person.UserAccount, userPWD);
 
@@ -150,7 +157,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 }
 
                 db.Entry(parent).State = EntityState.Modified;
-
                 emailIsDouble = email;
             }
 
@@ -207,6 +213,18 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 toddler.Person.BirthDate = model.toddler.Person.BirthDate;
                 toddler.Person.RegistrationDate = DateTime.Now;
                 toddler.Person.Active = false;
+                if (model.toddler.Person.Gender == "male")
+                {
+                    toddler.Person.Photo = "male.png";
+                } else if (model.toddler.Person.Gender == "female")
+                {
+                    toddler.Person.Photo = "female.png";
+                } else
+                {
+                    toddler.Person.Photo = "stork.png";
+                }
+
+                //newToddler = toddler;
 
                 db.Toddlers.Add(toddler);
                 db.SaveChanges();
@@ -215,6 +233,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 relationLink.RelationToChild = "isChild";
                 relationLink.Toddler = db.Toddlers.Find(toddler.ToddlerId);
                 relationLink.Person = db.Persons.Find(toddler.Person.PersonId);
+
+                //newRelationLinks.Add(relationLink);
 
                 db.RelationLinks.Add(relationLink);
                 db.SaveChanges();
@@ -651,6 +671,15 @@ namespace De_Tutjes.Areas.Administration.Controllers
         }
 
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         /** FUNCTIONS *******************************************/
 
         public string GetNewChildWizardSession()
@@ -660,6 +689,30 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 session = Session["NewChildWizardSession"].ToString();
             }
             return session;
+        }
+
+        public ICollection<Toddler> GetToddlersOfCurrentSession()
+        {
+            string session = GetNewChildWizardSession();
+
+            ICollection<Toddler> Toddlers = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).Include(i => i.Person).ToList();
+
+            return Toddlers;
+        }
+
+        public Toddler GetCurrentToddler()
+        {
+            Toddler toddler;
+            string session = GetNewChildWizardSession();
+            toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session))
+
+                .Include(i => i.Person)
+                .Include(i => i.Medical)
+                .Include(i => i.Sleep)
+                .Include(i => i.Food)
+
+                .FirstOrDefault();
+            return toddler;
         }
 
         public ICollection<RelationLink> GetRelationLinksOfCurrentToddler()
@@ -728,29 +781,6 @@ namespace De_Tutjes.Areas.Administration.Controllers
             }
 
             return Parents;
-        }
-
-        public ICollection<Toddler> GetToddlersOfCurrentSession()
-        {
-            string session = GetNewChildWizardSession();
-
-            ICollection<Toddler> Toddlers = db.Toddlers.Where(s => s.ToddlerSession.Equals(session)).Include(i => i.Person).ToList();
-
-            return Toddlers;
-        }
-
-        public Toddler GetCurrentToddler()
-        {
-            string session = GetNewChildWizardSession();
-            Toddler toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session))
-
-                .Include(i => i.Person)
-                .Include(i => i.Medical)
-                .Include(i => i.Sleep)
-                .Include(i => i.Food)
-                
-                .FirstOrDefault();
-            return toddler;
         }
 
         public ICollection<AgreedDays> GetAgreedDaysOfCurrentToddler()
@@ -907,20 +937,24 @@ namespace De_Tutjes.Areas.Administration.Controllers
 
             return Json(new { freeplace = max });
         }
+
         [HttpPost]
         public JsonResult CalculateReadyDateAJAX(string birthdate)
         {
+
             string format = "ddd MMM dd yyyy HH:mm:ss";
             if (string.IsNullOrEmpty(birthdate))
             {
+
                 birthdate = birthdate.Substring(0, 24);
 
                 DateTime birthdateDT;
                 DateTime readyForSchool;
                 DateTime readyForDaycare;
 
-                bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
-                Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
+                birthdateDT = DateTime.ParseExact(birthdate, format, CultureInfo.InvariantCulture);
+                //bool validFormat = DateTime.TryParseExact(birthdate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out birthdateDT);
+                //Console.Write(validFormat ? birthdateDT.ToString() : "Not a valid format");
 
                 SchoolHolidays schoolHolidays = new SchoolHolidays(birthdateDT);
 

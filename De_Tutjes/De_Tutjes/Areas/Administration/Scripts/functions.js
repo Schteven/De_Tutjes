@@ -7,7 +7,7 @@ function readyDatesAJAX() {
     $(function () {
         $.ajax({
             type: "POST",
-            url: "/Children/CalculateReadyDateAJAX",
+            url: "/children/CalculateReadyDateAJAX",
             data: '{birthdate: "' + $('#toddler_Person_BirthDate').datepicker('getDate') + '" }',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -167,9 +167,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
-                    }))
+                    }));
                 }
-            })
+            });
         },
         select: function (e, ui) {
             $.ajax({
@@ -180,7 +180,7 @@ $(function () {
                 success: function (data) {
                     $("#parent_Person_Address_City").val(data);
                 }
-            })
+            });
         }
     });
     $('#parent_Person_Address_Street').autocomplete({
@@ -193,9 +193,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Street, value: item.Street };
-                    }))
+                    }));
                 }
-            })
+            });
         }
     });
 
@@ -259,9 +259,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
-                    }))
+                    }));
                 }
-            })
+            });
         },
         select: function (e, ui) {
             $.ajax({
@@ -272,7 +272,7 @@ $(function () {
                 success: function (data) {
                     $("#pickup_Person_Address_City").val(data);
                 }
-            })
+            });
         }
     });
     $('#pickup_Person_Address_Street').autocomplete({
@@ -285,9 +285,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Street, value: item.Street };
-                    }))
+                    }));
                 }
-            })
+            });
         }
     });
 
@@ -365,9 +365,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
-                    }))
+                    }));
                 }
-            })
+            });
         },
         select: function (e, ui) {
             $.ajax({
@@ -378,7 +378,7 @@ $(function () {
                 success: function (data) {
                     $("#medical_Doctor_Person_Address_City").val(data);
                 }
-            })
+            });
         }
     });
     $('#medical_Doctor_Person_Address_Street').autocomplete({
@@ -391,9 +391,9 @@ $(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Street, value: item.Street };
-                    }))
+                    }));
                 }
-            })
+            });
         }
     });
 
@@ -489,9 +489,9 @@ $(document).ready(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Postalcode + ' (' + item.Borough + ')', value: item.Postalcode };
-                    }))
+                    }));
                 }
-            })
+            });
         },
         select: function (e, ui) {
             $.ajax({
@@ -502,7 +502,7 @@ $(document).ready(function () {
                 success: function (data) {
                     $("#city").val(data);
                 }
-            })
+            });
         }
     });
     $('#personalDiv #street').autocomplete({
@@ -515,9 +515,9 @@ $(document).ready(function () {
                 success: function (data) {
                     response($.map(data, function (item) {
                         return { label: item.Street, value: item.Street };
-                    }))
+                    }));
                 }
-            })
+            });
         }
     });
 

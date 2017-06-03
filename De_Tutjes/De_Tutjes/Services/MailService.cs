@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 
@@ -57,7 +58,7 @@ namespace De_Tutjes.Services
         {
 
             this.host = "localhost";
-            this.sender = "noreply@detutjes.be";
+            this.sender = "no-reply@detutjes.be";
 
 #if DEBUG
             this.host = "relay.proximus.be";
@@ -85,9 +86,11 @@ namespace De_Tutjes.Services
 
             MailMessage mail = new MailMessage(sender, receiver);
             SmtpClient client = new SmtpClient();
-            client.Port = 25;
+            NetworkCredential auth = new NetworkCredential("no-reply@detutjes.be", "Tutjes2017");
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Port = 25;
             client.UseDefaultCredentials = false;
+            client.Credentials = auth;
             client.Host = host;
 
             mail.Subject = subject;
