@@ -23,11 +23,12 @@ namespace De_Tutjes.Areas.Administration.Controllers
         private DateTime CreateAgreedDays_EndDate;
         NewChildWizardSession ncws;
 
-        private Toddler newToddler;
+        /*private Toddler newToddler;
         private ICollection<Parent> newParents;
         private ICollection<AgreedDays> newAgreedDays;
         private ICollection<Pickup> newPickups;
         private ICollection<RelationLink> newRelationLinks;
+        */
 
         private DeTutjesContext db = new DeTutjesContext();
 
@@ -224,7 +225,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     toddler.Person.Photo = "stork.png";
                 }
 
-                //newToddler = toddler;
+                //newToddler = toddler; // TRYOUT
 
                 db.Toddlers.Add(toddler);
                 db.SaveChanges();
@@ -234,7 +235,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 relationLink.Toddler = db.Toddlers.Find(toddler.ToddlerId);
                 relationLink.Person = db.Persons.Find(toddler.Person.PersonId);
 
-                //newRelationLinks.Add(relationLink);
+                //newRelationLinks.Add(relationLink); // TRYOUT
 
                 db.RelationLinks.Add(relationLink);
                 db.SaveChanges();
@@ -666,6 +667,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
         [HttpPost]
         public PartialViewResult EditToddler(EditToddler et)
         {
+            db.Entry(et.toddler).State = EntityState.Modified;
+            db.SaveChanges();
 
             return PartialView("_OverviewShowToddler", et);
         }
@@ -703,6 +706,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
         public Toddler GetCurrentToddler()
         {
             Toddler toddler;
+            
             string session = GetNewChildWizardSession();
             toddler = db.Toddlers.Where(s => s.ToddlerSession.Equals(session))
 
@@ -712,6 +716,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 .Include(i => i.Food)
 
                 .FirstOrDefault();
+                
             return toddler;
         }
 

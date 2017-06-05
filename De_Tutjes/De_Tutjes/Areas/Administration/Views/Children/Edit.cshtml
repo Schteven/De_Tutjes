@@ -71,10 +71,42 @@
         </div>
     </div>
         @using (Ajax.BeginForm("EditToddler",
-            null,
-            new AjaxOptions { UpdateTargetId = "content", OnSuccess = "" },
-            new { id = "EditToddlerInfo" }))
+        null,
+        new AjaxOptions { UpdateTargetId = "content", OnSuccess = "" },
+        new { id = "EditToddlerInfo" }))
         {
+            @Html.HiddenFor(model => model.toddler.ToddlerId)
+            @Html.HiddenFor(model => model.toddler.Medical.MedicalID)
+            @Html.HiddenFor(model => model.toddler.MedicalId)
+            @Html.HiddenFor(model => model.toddler.Medical.DoctorId)
+            @Html.HiddenFor(model => model.toddler.Food.FoodID)
+            @Html.HiddenFor(model => model.toddler.FoodId)
+            @Html.HiddenFor(model => model.toddler.Sleep.SleepID)
+            @Html.HiddenFor(model => model.toddler.SleepId)
+            @Html.HiddenFor(model => model.toddler.Person.PersonId)
+            @Html.HiddenFor(model => model.toddler.PersonId)
+
+            foreach (var parent in Model.parents)
+            {
+                @Html.Hidden(parent.ParentId.ToString())
+                @Html.Hidden(parent.PersonId.ToString())
+                @Html.Hidden(parent.Person.ContactDetail.ContactDetailId.ToString())
+                @Html.Hidden(parent.Person.Address.AddressId.ToString())
+            }
+
+            foreach (var pickup in Model.pickups)
+            {
+                @Html.Hidden(pickup.PickupId.ToString())
+                @Html.Hidden(pickup.PersonId.ToString())
+                @Html.Hidden(pickup.Person.ContactDetail.ContactDetailId.ToString())
+                @Html.Hidden(pickup.Person.Address.AddressId.ToString())
+            }
+
+            foreach (var agreedday in Model.agreedDays)
+            {
+                @Html.Hidden(agreedday.AgreedDaysId.ToString())
+            }
+
         <div class="tab-content col-md-9" id="content">
             <div name="personal">
                 <div class="panel panel-default">
@@ -84,9 +116,10 @@
                     <div class="panel-body">
                         <div class="row" id="personalDiv">
 
-                            <button value="sendmail" onclick="sendDemoMail();">sendMail</button>
+                            <!--<button value="sendmail" onclick="sendDemoMail();">sendMail</button>-->
 
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            
                             <fieldset>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.toddler.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -128,33 +161,149 @@
                 </div>
             </div>
             <div name="medical">
-                Medisch
-            </div>
-            <div name="food">
-                Eten
-            </div>
-            <div name="sleep">
-                Slapen
-            </div>
-            <div name="daily">
-                Dagelijks verloop
-            </div>
-            <div name="submitter">
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Medisch document</h3>
+                    </div>
                     <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-3">
+                        <div class="row" id="medicalDiv">
+                            <div class="form-group">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <fieldset>
+                                    <h4>Huisarts <input class="" type="checkbox" name="HasDoctor" id="HasDoctor" value="1" /></h4>
+                                    <div class="row" id="DoctorForm">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.FirstName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.FirstName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.Address.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.Address.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.Address.PostalCode, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.Address.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.Address.City, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.Address.City, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.Address.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.Address.Street, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.Address.Street, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.Address.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.Address.Number, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.Address.Number, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.Address.Bus, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.Address.Bus, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.Address.Bus, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.toddler.Medical.Doctor.Person.ContactDetail.CellPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-sm-10">
+                                                @Html.EditorFor(model => model.toddler.Medical.Doctor.Person.ContactDetail.CellPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.toddler.Medical.Doctor.Person.ContactDetail.CellPhone, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>Medicatie <input class="" type="checkbox" name="HasMedication" id="HasMedication" value="1" /></h4>
+                                    <div class="row" id="MedicationForm">
+                                        @Html.LabelFor(model => model.toddler.Medical.MedicationName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-sm-12">
 
-                            </div>
-                            <div class="col-md-3">
-                                <input class="btn btn-success btn-block btn-sm" value="Opslaan" type="submit">
+                                            @Html.TextAreaFor(model => model.toddler.Medical.MedicationName, new { @class = "form-control", @rows = "4" })
+                                            @Html.ValidationMessageFor(model => model.toddler.Medical.MedicationName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <h4>Allergieën <input class="" type="checkbox" name="HasAllergies" id="HasAllergies" value="1" /></h4>
+                                    <div class="row" id="AllergiesForm">
+                                        @Html.LabelFor(model => model.toddler.Medical.Allergies, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-sm-12">
+
+                                            @Html.TextAreaFor(model => model.toddler.Medical.Allergies, new { @class = "form-control", @rows = "4" })
+                                            @Html.ValidationMessageFor(model => model.toddler.Medical.Allergies, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <h4>Kinderziektes <input class="" type="checkbox" name="HadChildDiseases" id="HadChildDiseases" value="1" /></h4>
+                                    <div class="row" id="ChildDiseasesForm">
+                                        @Html.LabelFor(model => model.toddler.Medical.ChildDisease, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-sm-12">
+
+                                            @Html.TextAreaFor(model => model.toddler.Medical.ChildDisease, new { @class = "form-control", @rows = "4" })
+                                            @Html.ValidationMessageFor(model => model.toddler.Medical.ChildDisease, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <h4>Extra</h4>
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.toddler.Medical.HealthServiceNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-sm-12">
+                                            @Html.EditorFor(model => model.toddler.Medical.HealthServiceNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.toddler.Medical.HealthServiceNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.toddler.Medical.SpecialNotice, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-sm-12">
+                                            @Html.TextAreaFor(model => model.toddler.Medical.SpecialNotice, new { @class = "form-control", @rows = "4" })
+                                            @Html.ValidationMessageFor(model => model.toddler.Medical.SpecialNotice, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-    }
-</div>
+                        <div name="food">
+                            Eten
+                        </div>
+                        <div name="sleep">
+                            Slapen
+                        </div>
+                        <div name="daily">
+                            Dagelijks verloop
+                        </div>
+                        <div name="submitter">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-3">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="btn btn-success btn-block btn-sm" value="Opslaan" type="submit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
