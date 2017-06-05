@@ -124,8 +124,8 @@ namespace De_Tutjes.Areas.Administration.Controllers
             toddler.Person.Active = true;
 
             db.Entry(toddler).State = EntityState.Modified;
+            db.SaveChanges();
 
-            
             string emailIsDouble = "";
 
             foreach (Parent parent in parents)
@@ -133,7 +133,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 string email = parent.Person.ContactDetail.Email;
                 parent.Person.Active = true;
 
-                if (email != emailIsDouble)
+                /*if (email != emailIsDouble)
                 {
                     var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     parent.Person.UserAccount = new ApplicationUser();
@@ -150,14 +150,15 @@ namespace De_Tutjes.Areas.Administration.Controllers
                     cna.email = email;
                     cna.password = userPWD;
 
-                    ms.SendMail(cna);
+                    //ms.SendMail(cna);
                 }
                 else
                 {
                     parent.Person.UserAccountId = db.Users.Where(e => e.Email == emailIsDouble).FirstOrDefault().Id;
                 }
-
+                */
                 db.Entry(parent).State = EntityState.Modified;
+                db.SaveChanges();
                 emailIsDouble = email;
             }
 
@@ -167,7 +168,7 @@ namespace De_Tutjes.Areas.Administration.Controllers
             //ncws.Complete = true;
             //db.Entry(ncws).State = EntityState.Modified;
 
-            db.SaveChanges();
+            //db.SaveChanges();
             return RedirectToAction("Overview", "Children");
         }
 
@@ -216,10 +217,10 @@ namespace De_Tutjes.Areas.Administration.Controllers
                 toddler.Person.Active = false;
                 if (model.toddler.Person.Gender == "male")
                 {
-                    toddler.Person.Photo = "male.png";
+                    toddler.Person.Photo = "baby-boy.png";
                 } else if (model.toddler.Person.Gender == "female")
                 {
-                    toddler.Person.Photo = "female.png";
+                    toddler.Person.Photo = "baby-girl.png";
                 } else
                 {
                     toddler.Person.Photo = "stork.png";

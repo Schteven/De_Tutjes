@@ -89,27 +89,35 @@
         <div id="collapseThree" class="panel-collapse collapse">
             <div class="panel-body">
                 @{
-                    if (Model.Sleep.SleepingPosition != null)
+                    if (Model.Sleep == null)
                     {
+                        <p>@Model.Person.FirstName heeft nog geen slaapgegevens.</p>
+                    }
+                    else
+                    {
+
+                        if (Model.Sleep.SleepingPosition != null)
+                        {
                         <h6>Slaaphouding</h6>
                         <p>@Model.Sleep.SleepingPosition</p>
-                    }
-                    if (Model.Sleep.Toy != null)
-                    {
+                        }
+                        if (Model.Sleep.Toy != null)
+                        {
                         <h6>Knuffel</h6>
                         <p>@Model.Sleep.Toy</p>
-                    }
-                    if (Model.Sleep.Soother != null)
-                    {
+                        }
+                        if (Model.Sleep.Soother != null)
+                        {
                         <h6>Tutje</h6>
                         <p>@Model.Sleep.Soother</p>
-                    }
-                    if (Model.Sleep.SpecialNotice != null)
-                    {
+                        }
+                        if (Model.Sleep.SpecialNotice != null)
+                        {
                         <h6>Speciale opmerking</h6>
                         <p>@Model.Sleep.SpecialNotice</p>
+                            }
+                        }
                     }
-                }
             </div>
         </div>
     </div>
@@ -121,19 +129,25 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse">
             <div class="panel-body">
-                @{ 
-                    if (Model.Medical.HealthServiceNumber != null)
+                @{
+                    if (Model.Medical == null)
                     {
+                        <p>@Model.Person.FirstName heeft nog geen medische gegevens.</p>
+                    }
+                    else
+                    {
+                        if (Model.Medical.HealthServiceNumber != null)
+                        {
                         <h6>Rijksregisternummer</h6>
                         <p>@Model.Medical.HealthServiceNumber</p>
-                    }
-                    if (Model.Medical.MedicationName != null)
-                    {
+                        }
+                        if (Model.Medical.MedicationName != null)
+                        {
                         <h6>Medicatie</h6>
                         <p>@Model.Medical.MedicationName</p>
-                    }
-                    if (Model.Medical.Allergies != null)
-                    {
+                        }
+                        if (Model.Medical.Allergies != null)
+                        {
                         <h6>Allergieën</h6>
                         <p>@Model.Medical.Allergies</p>
                         <p>
@@ -148,18 +162,18 @@
                                 Html.Raw("geen");
                             }
                         </p>
-                    }
-                    if (Model.Medical.ChildDisease != null)
-                    {
+                        }
+                        if (Model.Medical.ChildDisease != null)
+                        {
                         <h6>Kinderziektes</h6>
                         <p>@Model.Medical.ChildDisease</p>
-                        if (Model.Medical.DiseaseWhen != null)
-                        {
+                            if (Model.Medical.DiseaseWhen != null)
+                            {
                             <p>Gehad op: @Model.Medical.DiseaseWhen</p>
+                            }
                         }
-                    }
-                    if (Model.Medical.DoctorId != null)
-                    {
+                        if (Model.Medical.DoctorId != null)
+                        {
                         <h6>Huisarts</h6>
                         <p>
                             @Model.Medical.Doctor.Person.FirstName @Model.Medical.Doctor.Person.LastName<br />
@@ -167,13 +181,14 @@
                             @Model.Medical.Doctor.Person.Address.PostalCode @Model.Medical.Doctor.Person.Address.City<br />
                             Tel: @Model.Medical.Doctor.Person.ContactDetail.CellPhone
                         </p>
-                    }
-                    if (Model.Medical.SpecialNotice != null)
-                    {
+                        }
+                        if (Model.Medical.SpecialNotice != null)
+                        {
                         <h6>Speciale opmerking</h6>
                         <p>@Model.Medical.SpecialNotice</p>
+                            }
+                        }
                     }
-                }
             </div>
         </div>
     </div>
