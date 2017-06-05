@@ -131,6 +131,24 @@ namespace De_Tutjes.Areas.Diary.Controllers
             return PartialView("ShortToddlerInfo", child);
         }
 
+        public ActionResult AddToddler(string button, FormCollection col)
+        {
+            switch (button)
+            {
+                case "back":
+                    break;
+                case "add":
+                    foreach (var c in col)
+                    {
+                        cm.AddExtraDay(c.ToString());
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult ShowUpdates()
         {
             return View(cm.GetChildrenWithUpdates());
@@ -153,14 +171,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
 
                     ms.SendMail(dom);
                 }
-                
-
             }
-
-
-
         }
-
-
     }
 }

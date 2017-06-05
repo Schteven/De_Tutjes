@@ -448,6 +448,7 @@
     <Content Include="Areas\Administration\Views\Children\Edit.cshtml" />
     <Content Include="Areas\Diary\Views\Diary\ShortToddlerInfo.cshtml" />
     <Content Include="Areas\Diary\Views\Diary\ShowUpdates.cshtml" />
+    <Content Include="Areas\Diary\Views\Diary\AddToddler.cshtml" />
     <None Include="Properties\PublishProfiles\DeTutjes - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\DeTutjes - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\detutjes.be - Web Deploy %282%29.pubxml" />

@@ -41,6 +41,8 @@ namespace De_Tutjes.Models
 
         public DateTime CreationDate { get; set; }
 
-        
+        public string EmailSendToAddress { get; set; }
+
+        public DateTime Emailsend { get; set; }
     }
 }

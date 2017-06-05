@@ -3,5 +3,135 @@
     ViewBag.Title = "Overview";
 }
 
-<h2>Overview</h2>
+<!-- INVOICE OVERVIEW -->
+
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        <img class="center-block" src="@Url.Content("~/Images/detutjes-logo-mini.png")" alt="logo" width="150px" />
+    </div>
+    <div class="col-lg-9 col-md-9">
+
+        @Html.Partial("_MenuPartial")
+
+        <div class="panel panel-default" style="">
+            <div class="panel-body">
+                <div class="col-md-1">
+                    
+                        <button class="btn btn-info btn-sm" id="calculateInvoices"><span>Creëer<br />nieuwe<br />facturen</span></button>
+                    
+                </div>
+                <div class="col-md-4" id="">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Voornaam</span>
+                        <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Achternaam</span>
+                        <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                    </div>              
+                </div>
+                <div class="col-md-3" id="">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Maand</span>
+                        <input type="text" class="form-control" placeholder="(2)" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Jaar</span>
+                        <input type="text" class="form-control" placeholder="(2017)" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-md-2" id="">
+                    <div class="input-group">
+                        <input type="checkbox" aria-label="...">
+                        <span class="input-group-addon" id="basic-addon2">Openstaand</span>
+                    </div><!-- /input-group -->
+                    <div class="input-group">
+                        
+                        <input type="checkbox" aria-label="...">
+                        <span class="input-group-addon" id="basic-addon2">Checkbox</span>
+                    </div><!-- /input-group -->
+                    <div class="input-group">
+
+                        <input type="checkbox" aria-label="...">
+                        <span class="input-group-addon" id="basic-addon2">Checkbox</span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info" id="calculateInvoices" style="margin-bottom:3px"><span class="glyphicon glyphicon-search"></span><span> Zoeken</span></button><br />
+                    <button class="btn btn-default" id="erase"><span class="glyphicon glyphicon-remove"></span><span> Wissen</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Controleer overschrijvingen</b></h3>
+            </div>
+            <div class="panel-body">
+                <span><b>OGM:</b></span>
+                +++<input type="text" style="width:30px;" maxlength="3" placeholder="000"/>/<input type="text" style="width:38px;" maxlength="4" placeholder="0000" />/<input type="text" style="width:45px;" maxlength="5" placeholder="00000" />+++
+                <span><i>(Gestructureerde Mededeling)</i></span><br />
+                
+                <span class="glyphicon glyphicon-euro"></span>
+                <input type="text" style="width:50px;" placeholder="000" aria-label="Bedrag">
+                    
+                <button class="btn btn-success" id="calculateInvoices"><span>Betalen</span></button>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Help</b></h3>
+            </div>
+            <div class="panel-body">
+                <span><b>Maak Nieuwe Facturen:</b><br />Met een druk op de knop worden de nieuwe facturen voor alle kinderen aangemaakt.</span><br />
+                <span><b>Controleer overschrijvingen:</b><br />Geef de gestructureerde mededeling en het betaalde bedrag in. Als een factuur met die gestructureerde mededeling wordt gevonden en het bedrag is juist, dan wordt het factuur betaald.</span><br />
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-9">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Onbetaalde facturen:</b> (te laat)</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead><tr><th>Naam kind</th><th>Periode</th><th># Dagen</th><th># Extra Dagen</th><th># Verlofdagen</th><th>Totaal dagen</th><th>2de kind</th><th><span class="glyphicon glyphicon-euro"></span></th><th>Email verzonden</th><th>Details</th></tr></thead>
+                    <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Openstaande facturen: (einddatum nog niet bereikt)</b></h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead><tr><th>Naam kind</th><th>Periode</th><th># Dagen</th><th># Extra Dagen</th><th># Verlofdagen</th><th>Totaal dagen</th><th>2de kind</th><th><span class="glyphicon glyphicon-euro"></span></th><th>Email verzonden</th><th>Details</th></tr></thead>
+                    <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Betaalde facturen</b></h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead><tr><th>Naam kind</th><th>Periode</th><th># Dagen</th><th># Extra Dagen</th><th># Verlofdagen</th><th>Totaal dagen</th><th>2de kind</th><th><span class="glyphicon glyphicon-euro"></span></th><th>Email verzonden</th><th>Details</th></tr></thead>
+                    <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+
+                </table>
+            </div>
+        </div>
+        <div id="content">
+            
+        </div>
+    </div>
+</div>
+
 

@@ -40,7 +40,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
             this.location = loc;
         }
 
-        // RETURN FUNCTIONS
+        // PUBLIC  FUNCTIONS
         // return all Childs from children
         public List<Child> GetAllChilds()
         {
@@ -75,86 +75,37 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         cc.Name = tod.Person.FirstName;
                         cc.Photo = tod.Person.Photo;
                         cc.Status = (ChildStatus)getDiaryToddlerStatus(tod).Status;
-
                         ccList.Add(cc);
+
+                        // Creating RegisteredDay with checkedIn == false
+                        RegisteredDay rd = new RegisteredDay();
+                        rd.DayInDaycare = today;
+                        rd.CheckedIn = false;
+                        rd.DaycareIsClosed = false;
+                        rd.ExtraDay = false;
+                        rd.Toddler = tod;
+                        db.RegisteredDays.Add(rd);
+                        db.SaveChanges();
+
                     }
+                }
+            }
+            List<RegisteredDay> extraDays = db.RegisteredDays.Where(erd => (erd.ExtraDay == true) && (erd.DayInDaycare == DateTime.Now)).ToList();
+            if (extraDays != null)
+            {
+                foreach (RegisteredDay rd in extraDays)
+                {
+                    ChildCard cc = new ChildCard();
+                    cc.Id = rd.ToddlerId.ToString();
+                    cc.Name = rd.Toddler.Person.FirstName;
+                    cc.Photo = rd.Toddler.Person.Photo;
+                    cc.Status = (ChildStatus)getDiaryToddlerStatus(rd.Toddler).Status;
+                    ccList.Add(cc);
                 }
             }
             return ccList;
         }
-
-        // SET FUNCTIONS
-        // Sets the Status (Home, Sleeping, Normal) of the child
-        public void SetChildStatus(string ChildId, ChildStatus status)
-        {
-            foreach (Child c in children)
-            {
-                if (c.Id == ChildId)
-                {
-                    ChildStatus realStatus = status;
-                    if(status == ChildStatus.Sleeping && c.Status == ChildStatus.Sleeping)
-                    {
-                        realStatus = ChildStatus.Normal;
-                    }
-                    if(status == ChildStatus.Sleeping && c.Status == ChildStatus.Home)
-                    {
-                        return;
-                    }
-                    //Send to database DiaryToddlerStatus
-                    try
-                    {
-                        /*
-                        DiaryToddlerStatus dts = new DiaryToddlerStatus();
-                        dts.Toddler = db.Toddlers.Find(c.Toddler.ToddlerId);
-                        dts.Status = (int)realStatus;
-                        db.DiaryToddlerStatus.Add(dts);*/
-                        DiaryToddlerStatus dts = getDiaryToddlerStatus(c.Toddler);
-                        dts.Status = (int)realStatus;
-                        db.SaveChanges();
-                        
-                        children.First(ch => ch.Id == ChildId).Status = realStatus;
-                    }
-                    catch
-                    {
-
-                    }
-                    
-                }
-            }
-        }
-        //Sends the child update to the database (diary entry)
-        public void SetChildUpdate(string ChildId, ChildUpdate update, String comment)
-        {
-            foreach (Child c in children)
-            {
-                if (c.Id == ChildId)
-                {
-                    //Toggles between sleep and wake up (because its only one button)
-                    ChildUpdate realUpdate = update;
-                    if (c.Status == ChildStatus.Sleeping && update == ChildUpdate.Sleeping)
-                    {
-                        realUpdate = ChildUpdate.WakeUp;
-                    }
-                    //If the child is at home, you can't do anything else than check it in or place a comment. (safetycheck)
-                    if(c.Status == ChildStatus.Home && (update != ChildUpdate.CheckIn && update != ChildUpdate.Comment)){
-                        return;
-                    }
-                    //Send diary entry to database (DiaryToddlerUpdate)
-                    try
-                    {                        
-                        DiaryToddlerUpdate dtu = new DiaryToddlerUpdate();
-                        dtu.Toddler = db.Toddlers.Find(c.Toddler.ToddlerId);
-                        dtu.Timestamp = DateTime.Now;
-                        dtu.UpdateType = (int)realUpdate;
-                        if (comment != null) dtu.Comment = comment;
-                        db.DiaryToddlerUpdate.Add(dtu);
-                        db.SaveChanges();
-                    }
-                    catch { }
-                }
-            }
-        }
-
+        
         public List<Child> GetChildrenWithUpdates()
         {
             List<Child> childrenWithUpdates = new List<Child>();
@@ -191,6 +142,98 @@ namespace De_Tutjes.Areas.Diary.Controllers
                 return cwu;
             }
             return null;
+            
+        }
+
+        // SET FUNCTIONS
+        // Sets the Status (Home, Sleeping, Normal) of the child
+        public void SetChildStatus(string ChildId, ChildStatus status)
+        {
+            foreach (Child c in children)
+            {
+                if (c.Id == ChildId)
+                {
+                    ChildStatus realStatus = status;
+                    if(status == ChildStatus.Sleeping && c.Status == ChildStatus.Sleeping)
+                    {
+                        realStatus = ChildStatus.Normal;
+                    }
+                    if(status == ChildStatus.Sleeping && c.Status == ChildStatus.Home)
+                    {
+                        return;
+                    }
+                    //Send to database DiaryToddlerStatus
+                    try
+                    {
+                        DiaryToddlerStatus dts = getDiaryToddlerStatus(c.Toddler);
+                        dts.Status = (int)realStatus;
+                        db.SaveChanges();
+                        
+                        children.First(ch => ch.Id == ChildId).Status = realStatus;
+                    }
+                    catch
+                    {
+
+                    }
+                    
+                }
+            }
+        }
+        // Sends the child update to the database (diary entry)
+        public void SetChildUpdate(string ChildId, ChildUpdate update, String comment)
+        {
+            foreach (Child c in children)
+            {
+                if (c.Id == ChildId)
+                {
+                    //Toggles between sleep and wake up (because its only one button)
+                    ChildUpdate realUpdate = update;
+                    if (c.Status == ChildStatus.Sleeping && update == ChildUpdate.Sleeping)
+                    {
+                        realUpdate = ChildUpdate.WakeUp;
+                    }
+                    //If the child is at home, you can't do anything else than check it in or place a comment. (safetycheck)
+                    if(c.Status == ChildStatus.Home && (update != ChildUpdate.CheckIn && update != ChildUpdate.Comment)){
+                        return;
+                    }
+                    // CheckIn on registeredday
+                    if(update == ChildUpdate.CheckIn)
+                    {
+                        RegisteredDay rd = db.RegisteredDays.Where(rdc => (rdc.ToddlerId == int.Parse(c.Id)) && (rdc.DayInDaycare == DateTime.Now)).First();
+                        rd.CheckedIn = true;
+                        db.SaveChanges();
+                    }
+                    //Send diary entry to database (DiaryToddlerUpdate)
+                    try
+                    {                        
+                        DiaryToddlerUpdate dtu = new DiaryToddlerUpdate();
+                        dtu.Toddler = db.Toddlers.Find(c.Toddler.ToddlerId);
+                        dtu.Timestamp = DateTime.Now;
+                        dtu.UpdateType = (int)realUpdate;
+                        if (comment != null) dtu.Comment = comment;
+                        db.DiaryToddlerUpdate.Add(dtu);
+                        db.SaveChanges();
+                    }
+                    catch { }
+                }
+            }
+        }
+        // Add ExtraDay for a child
+        public void AddExtraDay(string childId)
+        {
+            Toddler tod = getToddler(int.Parse(childId));
+
+            if(tod != null)
+            {
+                RegisteredDay rd = new RegisteredDay();
+                rd.DayInDaycare = DateTime.Now;
+                rd.CheckedIn = false;
+                rd.DaycareIsClosed = false;
+                rd.ExtraDay = true;
+                rd.Toddler = tod;
+                db.RegisteredDays.Add(rd);
+                db.SaveChanges();
+            }
             
         }
 

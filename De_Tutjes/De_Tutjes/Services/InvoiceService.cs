@@ -10,9 +10,9 @@ namespace De_Tutjes.Services
         Calculating an invoice
         Amount of Days the child has to come next month
         +
-        Amount of Extra Days the child was registered since last Invoice
+        Amount of Extra Days the child was registered since last Invoice (!)
         -
-        Amount of Closed Days since last Invoice
+        Amount of Closed Days since last Invoice (!)
         =
         Total amount of Days that are going to be payed
     */
@@ -21,18 +21,135 @@ namespace De_Tutjes.Services
     public class InvoiceService
     {
         private DeTutjesContext db = new DeTutjesContext();
-        public Invoice Invoice { get; set; }
-        public Toddler Toddler { get; set; }
-        public AgreedDays AgreedDaysPeriodThatApplies { get; set; }
-
+        private double priceDay = 25;
+        private double priceDaySibling = 24;
+        
         public InvoiceService()
         {
 
         }
+
+        // PUBLIC FUNCTIONS
+
         /// <summary>
-        /// This function will build the invoice for a specific toddler. It will only save if there is a need for an Invoice
+        /// Create the first Invoice for the new Child.
+        /// </summary>
+        /// <param name="toddlerId"></param>
+        public void CreateFirstInvoice(string toddlerId)
+        {
+            Toddler t = db.Toddlers.Find(toddlerId);
+            AgreedDays ad = db.AgreedDays.Where(ads => ads.Toddler == t).OrderBy(add => add.StartDate).First();
+
+            Invoice firstInvoice = new Invoice();
+            firstInvoice.CreationDate = DateTime.Now;
+            firstInvoice.Month = ad.StartDate.Month;
+            firstInvoice.Year = ad.StartDate.Year;
+            firstInvoice.Toddler = t;
+            firstInvoice.NormalDaysNextMonth = getAllAgreedDaysInMonth(t, firstInvoice.Month, firstInvoice.Year).Count;
+            firstInvoice.ExtraDaysThisMonth = 0;
+            firstInvoice.DayCareClosedThisMonth = 0;
+            firstInvoice.Payed = false;
+            firstInvoice.HasSibling = false;
+            firstInvoice.TotalAmount = 0;
+            db.Invoices.Add(firstInvoice);
+            db.SaveChanges();
+
+        }
+        
+        /// <summary>
+        /// Creates invoices for all active childs which come next month and/or have not payed extra days since last Invoice
         /// </summary>
         /// <param name="toddler"></param>
+        public void CreateInvoices()
+        {
+            List<Toddler> allActiveToddlers = db.Toddlers.Where(at => at.Person.Active == true).ToList();
+
+            foreach (Toddler t in allActiveToddlers)
+            {
+                BuildInvoice(t);
+            }
+        }
+        
+        /// <summary>
+        /// This function will calculate the total amount of days the toddler has to pay.
+        /// </summary>
+        public double CalculateTotalPrice(int invoiceid, Boolean hasSibling)
+        {
+            Invoice invoice = db.Invoices.Find(invoiceid);
+            int totalDays = 0;
+            totalDays += invoice.NormalDaysNextMonth;
+            totalDays += invoice.ExtraDaysThisMonth;
+            totalDays -= invoice.DayCareClosedThisMonth;
+            double totalPrice;
+            if (hasSibling) totalPrice = totalDays * priceDaySibling;
+            else totalPrice = totalDays * priceDay;
+
+            return totalPrice;
+        }
+
+        /// <summary>
+        /// Returns all the invoices for a given month and year
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public List<Invoice> GetAllInvoicesForMonth(int month, int year)
+        {
+            return db.Invoices.Where(i => (i.Month == month) && (i.Year == year)).ToList();;
+        }
+
+        /// <summary>
+        /// Returns all the invoices for a given toddlerid
+        /// </summary>
+        /// <param name="toddlerid"></param>
+        /// <returns></returns>
+        public List<Invoice> GetAllInvoicesForToddler(int toddlerid)
+        {
+            return db.Invoices.Where(i => (i.Toddler.PersonId == toddlerid)).ToList();
+        }
+
+        /// <summary>
+        /// Returns the invoice when you give an OGM ( string = "+++012/3456/78910+++" )
+        /// </summary>
+        /// <param name="ogm"></param>
+        /// <returns></returns>
+        public Invoice GetInvoiceWithOGM(string ogm)
+        {
+            Invoice invoice = db.Invoices.Where(i => i.OGM == ogm).First();
+            return invoice;
+        }
+
+        /// <summary>
+        /// Pays the invoice for the specific OGM ( string = "+++012/3456/78910+++" )
+        /// </summary>
+        /// <param name="ogm"></param>
+        public void PayInvoiceWithOGM(string ogm)
+        {
+            Invoice invoice = db.Invoices.Where(i => i.OGM == ogm).First();
+            invoice.Payed = true;
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Pays the invoice for the given invoice id
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        public void PayInvoice(int invoiceId)
+        {
+            Invoice invoice = db.Invoices.Find(invoiceId);
+            invoice.Payed = true;
+            db.SaveChanges();
+        }
+
+        // PRIVATE FUNCTIONS
+
+        // Returns the last invoice that was made for a specific toddler
+        private Invoice getLastInvoice(Toddler t)
+        {
+            return db.Invoices.Where(i => i.Toddler == t).Last();
+        }
+
+        // This function will build the invoice for a given toddler. It will only create an invoice if there is a need for one.
         private void BuildInvoice(Toddler toddler)
         {
             Invoice lastInvoice = getLastInvoice(toddler);
@@ -59,50 +176,10 @@ namespace De_Tutjes.Services
                 newInvoice.Payed = false;
                 newInvoice.HasSibling = false;
                 newInvoice.TotalAmount = 0;
-                //load invoice to db
+                newInvoice.OGM = buildOGM(toddler.ToddlerId, newInvoicePeriod.Month, newInvoicePeriod.Year);
+                db.Invoices.Add(newInvoice);
+                db.SaveChanges();
             }
-
-        }
-
-        /// <summary>
-        /// Create invoices for active child which come next month and/or have not payed extra days since last Invoice
-        /// </summary>
-        /// <param name="toddler"></param>
-        public void CreateInvoices()
-        {
-            List<Toddler> allActiveToddlers = db.Toddlers.Where(at => at.Person.Active == true).ToList();
-
-            foreach (Toddler t in allActiveToddlers)
-            {
-                BuildInvoice(t);
-            }
-        }
-
-
-        /// <summary>
-        /// This function will calculate the total amount of days the toddler has to pay.
-        /// </summary>
-        // How many days will have to be payed 
-        public int CalculateAmountOfPayedDays()
-        {
-            int totalDays = 0;
-            // add the days for next month
-            // add the extra days for last month
-
-            // subtract the closed days for last month
-            return totalDays;
-        }
-
-        // Return the last invoice that was made for a specific toddler
-        private Invoice getLastInvoice(Toddler t)
-        {
-            Invoice lastInvoice = new Invoice();
-            lastInvoice.CreationDate = new DateTime(2017, 5, 30);
-            lastInvoice.Month = 6;
-            lastInvoice.Year = 2017;
-            //TODO : Get last Invoice from DB
-
-            return lastInvoice;
         }
 
         // Generating all DateTimes that are in the next month
@@ -114,13 +191,8 @@ namespace De_Tutjes.Services
                 yield return new DateTime(year, month, day);
             }
         }
-        /// <summary>
-        /// This function will generate a list of all the days the toddler will come next month.
-        /// Based on the year and the month integers that are provided in the parameters.
-        /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <returns>List of all the days that the child has to come</returns>
+        
+        // This function will generate a list of all the days the toddler will come next month.
         /*
             Get the Agreed days for nex month
             Generate every day in the next month
@@ -177,30 +249,22 @@ namespace De_Tutjes.Services
             return ADays;
         }
         
-        /// <summary>
-        /// Returns all the extra days the child has come, not according to the AgreedDays.
-        /// </summary>
-        /// <param name="startdate"></param>
-        /// <param name="enddate"></param>
-        /// <returns></returns>
+        // Returns all the extra days the child has come that are not in the AgreedDays. startdate = creationdate last created invoice, enddate = creationdate new invoice
         private List<DateTime> getAllExtraDaysinPeriod(Toddler t, DateTime startdate, DateTime enddate)
         {
+            List<RegisteredDay> extraRegisteredDays = db.RegisteredDays.Where(rd => (rd.CheckedIn == true) && (rd.ExtraDay == true)).ToList();
             List<DateTime> extraDays = new List<DateTime>();
-            // TODO: DB get the days from RegisteredDays where CheckedIN == true and ExtraDay == true.
-            
+            foreach(RegisteredDay rd in extraRegisteredDays)
+            {
+                extraDays.Add(rd.DayInDaycare);
+            }
             return extraDays;
         }
 
-        /// <summary>
-        /// Returns all the Closing Days that the child couldn't come, but the day was already payed.
-        /// </summary>
-        /// <param name="startdate"></param>
-        /// <param name="enddate"></param>
-        /// <returns></returns>
+        // Returns all the Closing Days when the child couldn't come, but the day was already payed. startdate = creationdate last created invoice, enddate = creationdate new invoice
         private List<DateTime> getAllClosingDaysInPeriod(Toddler t, DateTime startdate, DateTime enddate)
         {
-            List<RegisteredDay> registeredDaysChildHasntCome = new List<RegisteredDay>();
-            // TODO: DB get the days where rb.CheckedIn == false.
+            List<RegisteredDay> registeredDaysChildHasntCome = db.RegisteredDays.Where(rd => (rd.Toddler == t)&&(rd.CheckedIn==false)).ToList();
             List<VacationDay> vacationDays = db.VacationDays.Where(vd => (vd.Day >= startdate)&&(vd.Day <= enddate)).ToList();
             List<DateTime> allClosingDays = new List<DateTime>();
             if(registeredDaysChildHasntCome != null && vacationDays != null)
@@ -221,16 +285,11 @@ namespace De_Tutjes.Services
 
             return allClosingDays;
         }
-
-        /// <summary>
-        /// Return the ONLY AgreedDays where the NextMonth falls in
-        /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <returns></returns>
+        
+        // Return the ONLY AgreedDays row where the invoice month falls in
         private AgreedDays agreedDaysThatApply(Toddler t, int year, int month)
         {
-            List<AgreedDays> allAgreedDaysForToddler = new List<AgreedDays>(); //TODO return from database
+            List<AgreedDays> allAgreedDaysForToddler = db.AgreedDays.Where(ad => ad.Toddler == t).ToList();
             
             foreach (AgreedDays AD in allAgreedDaysForToddler)
             {
@@ -242,18 +301,34 @@ namespace De_Tutjes.Services
             return null;
         }
 
+        //Build Structured Comment for Invoice (year = 2017, it will be cut to just 17)
         private string buildOGM(int childid, int month, int year)
         {
+            string yearstr = year.ToString();
+            string shortyear = yearstr.Substring(yearstr.Length - 2);
             string challenge = "";
-            if(childid < 100)
-            {
-                challenge += "0";
-            }
             challenge += childid.ToString();
             challenge += month.ToString();
-            
+            challenge += year.ToString();
+            challenge += "001";
+            int tocalculate = int.Parse(challenge);
+            int mod = tocalculate % 97;
 
-            return null;
+            string stringbuild = "+++";
+            if(childid < 100)
+            {
+                stringbuild += "0";
+            }
+            stringbuild += childid.ToString();
+            stringbuild += "/";
+            stringbuild += month.ToString();
+            stringbuild += year.ToString();
+            stringbuild += "/";
+            stringbuild += "001";
+            stringbuild += mod;
+            stringbuild += "+++";
+
+            return stringbuild;
         }
     }
 }

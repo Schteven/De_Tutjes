@@ -1,0 +1,72 @@
+﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.ChildCard>
+@{
+    ViewBag.Title = "ShowUpdates";
+    Layout = "~/Areas/Diary/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("ChildStatus", "Diary", FormMethod.Post)){
+<!-- ************************* ACTIVE WORKER BUTTON ****************************** -->
+<div class="main-header">
+    <div class="main-header-worker">
+        <a href="#" class="btn btn-default btn-lg" role="button">
+            <img src="~/Images/detutjes-logo-mini.png" class="img-responsive" alt="" style="height:100px; ">
+        </a>
+    </div>
+
+    <!-- ************************* EXIT BUTTON ****************************** -->
+    <div class="main-header-exit">
+        <a href="#" class="btn btn-warning btn-lg verylargebtn" role="button">
+            <span class="glyphicon glyphicon-off"></span>
+        </a>
+    </div>
+
+    <!-- ************************* CHILD STATUS BUTTONS ****************************** -->
+    <div class="main-header-buttons">
+        <button name="button" value="back" id="ChildCheckInButton" class="btn btn-default btn-lg text-center">
+            Terug
+        </button>
+        <button name="button" value="add" id="ChildCheckInButton" class="btn btn-default btn-lg text-center" type="submit">
+            Voeg Toe
+        </button>
+    </div>
+</div>
+
+<!-- ************************* MAIN BODY ****************************** -->
+<div class="main-body">
+    <!-- ************************* MAIN SIDEBAR ****************************** -->
+    <div id="mainsidebar">
+        <!-- ************************* SIDEBAR INFOBOX ****************************** -->
+        
+    </div>
+
+    <!-- ************************* MAIN CONTENT ****************************** -->
+    <div class="main-content">
+        <!-- ************************* CHILDREN INFO ****************************** -->
+        
+        @if (Model != null)
+        {
+            foreach (var childcard in Model)
+            {
+                <div class="checkbox">
+                    <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
+                    <label for="@childcard.Id" class="img-rounded">
+                        @{
+                            if (childcard.Photo == "" || childcard.Photo == null)
+                            {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
+                            else
+                            {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
+                        }
+                        <span>@childcard.Name</span>
+                    </label>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+
+</script>
