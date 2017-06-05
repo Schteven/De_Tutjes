@@ -284,6 +284,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
         private void fillChildrenList()
         {
             DateTime today = DateTime.Now;
+            DateTime todaydate = DateTime.Now.Date;
             string dayOfWeek = DateTime.Now.DayOfWeek.ToString();
             List<AgreedDays> agreedDaysList = whoHasToComeToday(dayOfWeek, today);
             
@@ -303,6 +304,24 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         children.Add(child);
 
                         
+                    }
+                }
+            }
+            List<RegisteredDay> extraDays = db.RegisteredDays.Include(erd => erd.Toddler).Include(erd => erd.Toddler.Person).Where(erd => (erd.ExtraDay == true) && (erd.DayInDaycare == todaydate)).ToList();
+            if (extraDays != null)
+            {
+                foreach (RegisteredDay rd in extraDays)
+                {
+                    Toddler tod = getToddler(rd.ToddlerId);
+                    if (tod != null)
+                    {
+                        Child child = new Child();
+                        child.Id = tod.ToddlerId.ToString();
+                        child.Toddler = tod;
+                        child.dts = getDiaryToddlerStatus(tod);
+                        child.Status = (ChildStatus)child.dts.Status;
+                        child.Parents = GetParentsOfToddler(tod.ToddlerId);
+                        children.Add(child);
                     }
                 }
             }
