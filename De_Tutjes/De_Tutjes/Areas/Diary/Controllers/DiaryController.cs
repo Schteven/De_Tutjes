@@ -115,7 +115,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
             }
             catch
             {
-                return Index();
+                return RedirectToAction("Index");
             }
             
         }
@@ -131,7 +131,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
             return PartialView("ShortToddlerInfo", child);
         }
 
-        public ActionResult AddToddler(string button, FormCollection col)
+        public ActionResult AddNewToddler(string button, FormCollection col)
         {
             switch (button)
             {
@@ -152,6 +152,11 @@ namespace De_Tutjes.Areas.Diary.Controllers
         public ActionResult ShowUpdates()
         {
             return View(cm.GetChildrenWithUpdates());
+        }
+
+        public ActionResult AddToddler()
+        {
+            return View(cm.GetChildCards());
         }
 
         public void SendUpdateMail(string id)

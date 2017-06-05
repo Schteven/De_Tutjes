@@ -24,25 +24,25 @@
     <!-- ************************* CHILD STATUS BUTTONS ****************************** -->
     <div class="main-header-buttons">
         <button name="submitButton" value="ChildCheckIn" id="ChildCheckInButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="glyphicon glyphicon-log-in"></span>
+            <span class="glyphicon glyphicon-log-in" style="color:blue;"></span>
         </button>
         <button name="submitButton" value="ChildSleeping" id="ChildSleepingButton" class="btn btn-default btn-lg text-center" type="submit">
             <span class="glyphicon glyphicon-cloud" style="color:blue;"></span>
         </button>
         <button name="submitButton" value="ChildEating" id="ChildEatingButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="glyphicon glyphicon-cutlery" style="color:grey;"></span>
+            <span class="glyphicon glyphicon-cutlery" style="color:blue;"></span>
         </button>
         <button name="submitButton" value="ChildDiaper" id="ChildDiaperButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="" style="color:grey; font-size:1em;">Luier</span>
+            <span class="" style="color:blue; font-size:1em;">Luier</span>
         </button>
         <button name="submitButton" value="ChildComment" id="ChildCommentButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="glyphicon glyphicon-comment" style="color:grey;"></span>
+            <span class="glyphicon glyphicon-comment" style="color:blue;"></span>
         </button>
         <button name="submitButton" value="ChildOverview" id="ChildOverviewButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="glyphicon glyphicon-th-list" style="color:grey;"></span>
+            <span class="glyphicon glyphicon-th-list" style="color:blue;"></span>
         </button>
         <button name="submitButton" value="ChildCheckOut" id="ChildCheckOutButton"class="btn btn-default btn-lg text-center" type="submit">
-            <span class="glyphicon glyphicon-log-out"></span>
+            <span class="glyphicon glyphicon-log-out" style="color:blue;"></span>
         </button>
     </div>
 </div>
@@ -78,7 +78,7 @@
                                 <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
                                 <label for="@childcard.Id" class="img-rounded">
                                     @{
-                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        if (childcard.Photo == "" || childcard.Photo == null || childcard.Photo == "baby-boy.png" || childcard.Photo == "baby-girl.png")
                                         {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                         else
                                         {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
@@ -95,7 +95,7 @@
                                 <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                     <span class="status-child glyphicon glyphicon-home" style="margin-left:30px"></span>
                                     @{
-                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        if (childcard.Photo == "" || childcard.Photo == null || childcard.Photo == "baby-boy.png" || childcard.Photo == "baby-girl.png")
                                         {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                         else
                                         {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
@@ -113,7 +113,7 @@
                                 <label for="@childcard.Id" class="img-rounded has-status" style="margin-top: -10px; height:150px;">
                                     <span class="status-child glyphicon glyphicon-cloud" style="margin-left:30px"></span>
                                     @{
-                                        if (childcard.Photo == "" || childcard.Photo == null)
+                                        if (childcard.Photo == "" || childcard.Photo == null || childcard.Photo == "baby-boy.png" || childcard.Photo == "baby-girl.png")
                                         {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                                         else
                                         {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }
@@ -140,7 +140,7 @@
                                         }
 
 
-        <div class="checkbox">
+        <div class="checkbox" onclick="location.href='@Url.Action("AddToddler", "Diary")'">
             <input type="checkbox" id="addchild">
             <label for="addchild">
                 <!-- ************************* add a child that isn't cheduled today ****************************** -->
@@ -177,5 +177,15 @@
                 document.getElementById(idend).style.height = 0;
             }
             return false;
+        }
+        var i = 0;
+        function AddNewChild() {
+            $(function () {
+                alert("hey ik ga proberen. " + i);
+                $.ajax({
+                    location.href = "/{controller}/{action}";
+                });
+                i++;
+            });
         }
 </script>

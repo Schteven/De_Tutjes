@@ -60,6 +60,7 @@ namespace De_Tutjes.Areas.Diary.Controllers
         public List<ChildCard> GetChildCardsForToday()
         {
             DateTime today = DateTime.Now;
+            DateTime todaydate = DateTime.Now.Date;
             string dayOfWeek = DateTime.Now.DayOfWeek.ToString();
             List<AgreedDays> agreedDaysList = whoHasToComeToday(dayOfWeek, today);
             List<ChildCard> ccList = new List<ChildCard>();
@@ -77,20 +78,25 @@ namespace De_Tutjes.Areas.Diary.Controllers
                         cc.Status = (ChildStatus)getDiaryToddlerStatus(tod).Status;
                         ccList.Add(cc);
 
-                        // Creating RegisteredDay with checkedIn == false
-                        RegisteredDay rd = new RegisteredDay();
-                        rd.DayInDaycare = today;
-                        rd.CheckedIn = false;
-                        rd.DaycareIsClosed = false;
-                        rd.ExtraDay = false;
-                        rd.Toddler = tod;
-                        db.RegisteredDays.Add(rd);
-                        db.SaveChanges();
 
+                        // Creating RegisteredDay with checkedIn == false
+                        
+                        RegisteredDay rd = db.RegisteredDays.Where(rdc => (rdc.ToddlerId == tod.ToddlerId) && (rdc.DayInDaycare == todaydate)).FirstOrDefault();
+                        if(rd == null || rd.RegisteredDayId == 0)
+                        {
+                            rd = new RegisteredDay();
+                            rd.DayInDaycare = todaydate;
+                            rd.CheckedIn = false;
+                            rd.DaycareIsClosed = false;
+                            rd.ExtraDay = false;
+                            rd.Toddler = tod;
+                            db.RegisteredDays.Add(rd);
+                            db.SaveChanges();
+                        }
                     }
                 }
             }
-            List<RegisteredDay> extraDays = db.RegisteredDays.Where(erd => (erd.ExtraDay == true) && (erd.DayInDaycare == DateTime.Now)).ToList();
+            List<RegisteredDay> extraDays = db.RegisteredDays.Include(erd => erd.Toddler).Include(erd => erd.Toddler.Person).Where(erd => (erd.ExtraDay == true) && (erd.DayInDaycare == todaydate)).ToList();
             if (extraDays != null)
             {
                 foreach (RegisteredDay rd in extraDays)
@@ -143,6 +149,32 @@ namespace De_Tutjes.Areas.Diary.Controllers
             }
             return null;
             
+        }
+
+        public List<ChildCard> GetChildCards()
+        {
+            DateTime today = DateTime.Now;
+            string dayOfWeek = DateTime.Now.DayOfWeek.ToString();
+            List<Toddler> toddlers = db.Toddlers.Include(t => t.Person).Where(t => t.Person.Active == true).ToList();
+            List<ChildCard> ccList = new List<ChildCard>();
+            if (toddlers != null)
+            {
+                foreach (Toddler t in toddlers)
+                {
+                    Toddler tod = t;
+                    if (tod != null)
+                    {
+                        ChildCard cc = new ChildCard();
+                        cc.Id = tod.ToddlerId.ToString();
+                        cc.Name = tod.Person.FirstName;
+                        cc.Photo = tod.Person.Photo;
+                        cc.Status = (ChildStatus)getDiaryToddlerStatus(tod).Status;
+                        ccList.Add(cc);
+                        
+                    }
+                }
+            }
+            return ccList;
         }
 
         // SET FUNCTIONS
@@ -199,9 +231,15 @@ namespace De_Tutjes.Areas.Diary.Controllers
                     // CheckIn on registeredday
                     if(update == ChildUpdate.CheckIn)
                     {
-                        RegisteredDay rd = db.RegisteredDays.Where(rdc => (rdc.ToddlerId == int.Parse(c.Id)) && (rdc.DayInDaycare == DateTime.Now)).First();
-                        rd.CheckedIn = true;
-                        db.SaveChanges();
+                        DateTime todaydate = DateTime.Now.Date;
+                        
+                        RegisteredDay rd = db.RegisteredDays.Where(rdc => (rdc.ToddlerId == c.Toddler.ToddlerId) && (rdc.DayInDaycare == todaydate)).FirstOrDefault();
+                        if (rd != null || rd.ToddlerId != 0)
+                        {
+                            rd.CheckedIn = true;
+                            db.SaveChanges();
+                        }
+                        
                     }
                     //Send diary entry to database (DiaryToddlerUpdate)
                     try
@@ -221,19 +259,24 @@ namespace De_Tutjes.Areas.Diary.Controllers
         // Add ExtraDay for a child
         public void AddExtraDay(string childId)
         {
-            Toddler tod = getToddler(int.Parse(childId));
-
-            if(tod != null)
+            int idint = 0;
+            bool tryit = int.TryParse(childId, out idint);
+            if (idint!= 0)
             {
-                RegisteredDay rd = new RegisteredDay();
-                rd.DayInDaycare = DateTime.Now;
-                rd.CheckedIn = false;
-                rd.DaycareIsClosed = false;
-                rd.ExtraDay = true;
-                rd.Toddler = tod;
-                db.RegisteredDays.Add(rd);
-                db.SaveChanges();
+                Toddler tod = getToddler(idint);
+                if(tod != null)
+                {
+                    RegisteredDay rd = new RegisteredDay();
+                    rd.DayInDaycare = DateTime.Now.Date;
+                    rd.CheckedIn = false;
+                    rd.DaycareIsClosed = false;
+                    rd.ExtraDay = true;
+                    rd.Toddler = tod;
+                    db.RegisteredDays.Add(rd);
+                    db.SaveChanges();
+                }
             }
+            
             
         }
 

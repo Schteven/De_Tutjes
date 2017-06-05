@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.ChildCard>
 @{
-    ViewBag.Title = "ShowUpdates";
+    ViewBag.Title = "AddToddler";
     Layout = "~/Areas/Diary/Views/Shared/_Layout.cshtml";
 }
-@using (Html.BeginForm("ChildStatus", "Diary", FormMethod.Post)){
+@using (Html.BeginForm("AddNewToddler", "Diary", FormMethod.Post)){
 <!-- ************************* ACTIVE WORKER BUTTON ****************************** -->
 <div class="main-header">
     <div class="main-header-worker">
@@ -50,7 +50,7 @@
                     <input type="checkbox" class="childcard" value="@childcard.Id" id="@childcard.Id" name="@childcard.Id" />
                     <label for="@childcard.Id" class="img-rounded">
                         @{
-                            if (childcard.Photo == "" || childcard.Photo == null)
+                            if (childcard.Photo == "" || childcard.Photo == null || childcard.Photo == "baby-boy.png" || childcard.Photo == "baby-girl.png")
                             {<span class="glyphicon glyphicon-user" style="font-size:6em; margin:0; padding:0;"></span><br /> }
                             else
                             {<img src="@Url.Content("~/Images/Photos/" + childcard.Photo)" class="img-rounded img-responsive" alt="" /> }

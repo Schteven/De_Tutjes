@@ -1,4 +1,4 @@
-﻿@model IEnumerable<De_Tutjes.Models.Invoice>
+﻿@model IEnumerable<De_Tutjes.Areas.Diary.Models.Child>
 @{
     ViewBag.Title = "ShowUpdates";
     Layout = "~/Areas/Diary/Views/Shared/_Layout.cshtml";
@@ -21,9 +21,9 @@
 
     <!-- ************************* CHILD STATUS BUTTONS ****************************** -->
     <div class="main-header-buttons">
-        <button name="submitButton" value="ChildCheckIn" id="ChildCheckInButton" class="btn btn-default btn-lg text-center" type="submit">
+        <div name="submitButton" value="ChildCheckIn" id="ChildCheckInButton" class="btn btn-default btn-lg text-center">
             @Html.ActionLink("Terug", "Index", "Diary")
-        </button>
+        </div>
     </div>
 </div>
 
